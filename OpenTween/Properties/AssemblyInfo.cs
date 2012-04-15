@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // アセンブリに関する一般情報は以下の属性セットをとおして制御されます。
 // アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
-[assembly: AssemblyTitle("OpenTween")]
+[assembly: AssemblyTitle("AdventureTween")]
 [assembly: AssemblyDescription("Client of Twitter. Free software(GPLv3)")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("OpenTween")]
-[assembly: AssemblyCopyright("(C) OpenTween Project 2011-")]
+[assembly: AssemblyCompany("AdventureTween")]
+[assembly: AssemblyProduct("AdventureTween")]
+[assembly: AssemblyCopyright("(C) AdventureTween Project 2012-")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -33,4 +33,4 @@ using System.Runtime.InteropServices;
 // 既定値にすることができます:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyFileVersion("1.0.1.0")]
+[assembly: AssemblyFileVersion("0.0.0.0")]

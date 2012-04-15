@@ -35,12 +35,12 @@ namespace OpenTween
         /// <summary>
         /// フィードバック送信先 (メール)
         /// </summary>
-        public const string FeedbackEmailAddress = "kim.upsilon@bucyou.net";
+        public const string FeedbackEmailAddress = "deltanpayo@gmail.com";
 
         /// <summary>
         /// フィードバック送信先 (Twitter)
         /// </summary>
-        public const string FeedbackTwitterName = "@kim_upsilon";
+        public const string FeedbackTwitterName = "@deltan12345";
 
         //=====================================================================
         // Web サイト
@@ -48,7 +48,7 @@ namespace OpenTween
         /// <summary>
         /// 「ヘルプ」メニューの「(アプリ名) ウェブサイト」クリック時に外部ブラウザで表示する URL
         /// </summary>
-        public const string WebsiteUrl = "http://sourceforge.jp/projects/opentween/wiki/FrontPage";
+        public const string WebsiteUrl = "https://github.com/deltan/AdventureTween";
 
         /// <summary>
         /// 「ヘルプ」メニューの「ショートカットキー一覧」クリック時に外部ブラウザで表示する URL
@@ -65,8 +65,8 @@ namespace OpenTween
         /// <summary>
         /// Twitter コンシューマーキー
         /// </summary>
-        public const string TwitterConsumerKey = "ST6eAABKDRKTqbN7pPo2A";
-        public const string TwitterConsumerSecret = "BJMEiivrXlqGESzdb8D0bvLfNYf3fifXRDMFjMogXg";
+        public const string TwitterConsumerKey = "efO6ZLdzivdjVwGMNwAhw";
+        public const string TwitterConsumerSecret = "bHjLiyrjoTth3uCT4p3H81SSjC7PmBdOTLUuQfeA9w";
 
         //=====================================================================
         // Lockerz (旧Plixi)
@@ -75,7 +75,7 @@ namespace OpenTween
         /// <summary>
         /// Lockerz APIキー
         /// </summary>
-        public const string LockerzApiKey = "91083b55-f8f9-4b91-a0b3-f999e2e45af2";
+        public const string LockerzApiKey = "faf25f85-3563-4dfa-94ff-27a87f6174c8";
 
         //=====================================================================
         // Twitpic
@@ -84,7 +84,7 @@ namespace OpenTween
         /// <summary>
         /// Twitpic APIキー
         /// </summary>
-        public const string TwitpicApiKey = "bbc6449ceac87ef10c546e4a0ca06ef4";
+        public const string TwitpicApiKey = "7a5a708032fb57a4ac385d4455c68eba";
 
         //=====================================================================
         // TwitVideo
@@ -93,7 +93,7 @@ namespace OpenTween
         /// <summary>
         /// TwitVideo コンシューマキー
         /// </summary>
-        public const string TwitVideoConsumerKey = "7c4dc004a88e821b02c87a0cde2fa85c";
+        public const string TwitVideoConsumerKey = "";
 
         //=====================================================================
         // yfrog
@@ -102,7 +102,7 @@ namespace OpenTween
         /// <summary>
         /// yfrog APIキー
         /// </summary>
-        public const string YfrogApiKey = "HIDP42ZO6314ee2218e2995662bad5ae320c32f1";
+        public const string YfrogApiKey = "05DEQSVWab6be890e09762ab895153a1726a3920";
 
         //=====================================================================
         // Bing
@@ -111,7 +111,7 @@ namespace OpenTween
         /// <summary>
         /// Bing AppId
         /// </summary>
-        public const string BingAppId = "ABD3DFF1AB47F3899A2203E0C5873CBE3E14E8D3";
+        public const string BingAppId = "481A885564E130699BC12D46885352F751A9A294";
 
         //=====================================================================
         // Foursquare
@@ -120,12 +120,12 @@ namespace OpenTween
         /// <summary>
         /// Foursquare Client Id
         /// </summary>
-        public const string FoursquareClientId = "5H3K5YQPT55DNQUFEOAJFNJA5D01ZJGO2ITEAJ3ASRIDONUB";
+        public const string FoursquareClientId = "WXPNTZ0ABJQ2BUPTCOIZPNFZY1KN12OSBQZ2QYZIQD35T0J4";
 
         /// <summary>
         /// Foursquare Client Secret
         /// </summary>
-        public const string FoursquareClientSecret = "JFRHP1L451M3AEPF11UZLTIIUZCZTZRVHVOWB5TQ0AJOVPBB";
+        public const string FoursquareClientSecret = "WFWI4JSYVNY2OWTRXXKMA2JBNJMGWKSFH1KVMG4SMXAPUUE2";
 
         //=====================================================================
         // bit.ly
@@ -134,12 +134,12 @@ namespace OpenTween
         /// <summary>
         /// bit.ly ログイン名
         /// </summary>
-        public const string BitlyLoginId = "opentween";
+        public const string BitlyLoginId = "adventuretween";
 
         /// <summary>
         /// bit.ly APIキー
         /// </summary>
-        public const string BitlyApiKey = "R_76319a25e2420b8d2c42e812fe177d8b";
+        public const string BitlyApiKey = "R_d2fdac04dd213233f37228dc96ab5ea2";
 
         //=====================================================================
         // TINAMI
@@ -148,6 +148,6 @@ namespace OpenTween
         /// <summary>
         /// TINAMI APIキー
         /// </summary>
-        public const string TINAMIApiKey = "4f48bb4858d36";
+        public const string TINAMIApiKey = "4f8ad0b7dec6f";
     }
 }

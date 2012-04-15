@@ -1,21 +1,9 @@
 ﻿更新履歴
 
-==== Ver 1.0.1(2012/04/09)
- * FIX: OpenTweenアイコンが表示方法によって低解像度で表示されてしまう問題を修正
- * FIX: リスト表示上での一部のショートカットキーが動作しない問題を修正
- * FIX: 「常に最前面に表示」が有効な状態でバージョン情報ダイアログを表示できない問題を修正
- * FIX: 「最小化したときにアイコン化する」が強制的にオンになる問題を修正
- * FIX: STOT形式コピー時にprotectedユーザのつぶやきが混ざっているとエラーが発生する問題を修正 (thanks @tests_peer!)
- * FIX: PublicSearchタブで、一度クリアしたツイートがタブ更新時に再び表示されてしまう問題を修正 (thanks @5px!)
- * NEW: TwitrPixとPcklesのサムネイル画像表示に対応
- * NEW: fb.meとon.fb.meのURL展開に対応
+==== Ver 0.0.0(2012/04/16)
+ * OpenTween Ver 1.0.1までの修正が適用されています。
 
-==== Ver 1.0.0(2012/03/30)
- * 相変わらずオープンソースです。
+ * FIX: AdventureTweenとして開発が開始されました。
 
- * NEW: OpenTweenのアイコンが追加されました
- * CHG: バージョン番号の表記を変更しました
- * CHG: bit.ly短縮におけるプライバシー問題の対処としてAPIキーの指定を必須としました
-   http://sourceforge.jp/projects/opentween/lists/archive/dev/2012-January/000020.html
-
+OpenTweenの変更履歴はOpenTweenのWebサイトを参照してください。
 OpenTween以前のTweenの変更履歴はTweenのWebサイトを参照してください。
