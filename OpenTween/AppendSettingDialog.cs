@@ -1,13 +1,14 @@
-﻿// OpenTween - Client of Twitter
+﻿// AdventureTween - Client of Twitter
 // Copyright (c) 2007-2011 kiri_feather (@kiri_feather) <kiri.feather@gmail.com>
 //           (c) 2008-2011 Moz (@syo68k)
 //           (c) 2008-2011 takeshik (@takeshik) <http://www.takeshik.org/>
 //           (c) 2010-2011 anis774 (@anis774) <http://d.hatena.ne.jp/anis774/>
 //           (c) 2010-2011 fantasticswallow (@f_swallow) <http://twitter.com/f_swallow>
 //           (c) 2011      kim_upsilon (@kim_upsilon) <https://upsilo.net/~upsilon/>
+//           (c) 2012      deltan (@deltan12345) <deltanpayo@gmail.com>
 // All rights reserved.
 // 
-// This file is part of OpenTween.
+// This file is part of AdventureTween.
 // 
 // This program is free software; you can redistribute it and/or modify it
 // under the terms of the GNU General Public License as published by the Free
@@ -40,7 +41,7 @@ namespace OpenTween
 {
     public partial class AppendSettingDialog : Form
     {
-        private static AppendSettingDialog _instance = new AppendSettingDialog();
+        private static AppendSettingDialog _instance = new AppendSettingDialog(false);
         private Twitter tw;
         private HttpConnection.ProxyType _MyProxyType;
 
@@ -65,6 +66,11 @@ namespace OpenTween
         public TwitterDataModel.Configuration TwitterConfiguration = new TwitterDataModel.Configuration();
 
         private string _pin;
+
+        /// <summary>
+        /// コンポーネントの初期化が行われたかどうかのフラグ
+        /// </summary>
+        private bool InitializedComponent { get; set; }
 
         public class IntervalChangedEventArgs : EventArgs
         {
@@ -1606,7 +1612,8 @@ namespace OpenTween
             set
             {
                 _MyTranslateLanguage = value;
-                ComboBoxTranslateLanguage.SelectedIndex = (new Bing()).GetIndexFromLanguageEnum(value);
+                if (ComboBoxTranslateLanguage != null)
+                    ComboBoxTranslateLanguage.SelectedIndex = (new Bing()).GetIndexFromLanguageEnum(value);
             }
         }
 
@@ -2400,11 +2407,67 @@ namespace OpenTween
             ShortenTcoCheck.Enabled = CheckAutoConvertUrl.Checked;
         }
 
-        public AppendSettingDialog()
+        /// <summary>
+        /// AppendSettingDialogのコンストラクタ
+        /// フォームのコンポーネントを初期化します。
+        /// </summary>
+        public AppendSettingDialog() : this(true)
         {
-            InitializeComponent();
+        }
+
+        /// <summary>
+        /// AppendSettingDialogのコンストラクタ
+        /// 引数を指定することでフォームのコンポーネントの初期化を
+        /// 遅延させることができます。
+        /// </summary>
+        /// <param name="initializeComponent">コンポーネントを初期化する場合true</param>
+        public AppendSettingDialog(bool initializeComponent)
+        {
+            InitializedComponent = false;
+            if (initializeComponent)
+            {
+                InitializeComponentOnlyOnce();
+            }
 
             this.Icon = Properties.Resources.MIcon;
+        }
+
+        /// <summary>
+        /// フォームのコンポーネントを初期化します。
+        /// すでに初期化が行われている場合は初期化は行われません。
+        /// </summary>
+        private void InitializeComponentOnlyOnce()
+        {
+            if (!InitializedComponent)
+            {
+                InitializeComponent();
+                InitializedComponent = true;
+            }
+        }
+
+        /// <summary>
+        /// フォームを表示します。
+        /// フォームのコンポーネントの初期化が行われていなければ初期化されます。
+        /// </summary>
+        /// <returns>DialogResult</returns>
+        public new DialogResult ShowDialog()
+        {
+            InitializeComponentOnlyOnce();
+
+            return base.ShowDialog();
+        }
+
+        /// <summary>
+        /// フォームを表示します。
+        /// フォームのコンポーネントの初期化が行われていなければ初期化されます。
+        /// </summary>
+        /// <param name="owner">親フォーム</param>
+        /// <returns>DialogResult</returns>
+        public new DialogResult ShowDialog(IWin32Window owner)
+        {
+            InitializeComponentOnlyOnce();
+
+            return base.ShowDialog(owner);
         }
     }
 }
