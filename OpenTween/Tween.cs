@@ -219,6 +219,9 @@ namespace OpenTween
 
         private ImageListViewItem displayItem;
 
+        // 規制通知
+        private PostLimitNotice.PostLimitNotice PostLimitNotice { get; set; }
+
         //URL短縮のUndo用
         private struct urlUndo
         {
@@ -1282,6 +1285,9 @@ namespace OpenTween
                     break;
                 }
             }
+
+            // 規制通知
+            PostLimitNotice = new PostLimitNotice.PostLimitNotice(tw, 120);
         }
 
         private void CreatePictureServices()
@@ -10623,6 +10629,9 @@ namespace OpenTween
 
             if (this.IsNetworkAvailable())
             {
+                // 規制通知開始
+                PostLimitNotice.Start();
+
                 GetTimeline(MyCommon.WORKERTYPE.BlockIds, 0, 0, "");
                 if (SettingDialog.StartupFollowers)
                 {

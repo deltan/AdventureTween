@@ -1,13 +1,14 @@
-﻿// OpenTween - Client of Twitter
+﻿// AdventureTween - Client of Twitter
 // Copyright (c) 2007-2011 kiri_feather (@kiri_feather) <kiri.feather@gmail.com>
 //           (c) 2008-2011 Moz (@syo68k)
 //           (c) 2008-2011 takeshik (@takeshik) <http://www.takeshik.org/>
 //           (c) 2010-2011 anis774 (@anis774) <http://d.hatena.ne.jp/anis774/>
 //           (c) 2010-2011 fantasticswallow (@f_swallow) <http://twitter.com/f_swallow>
 //           (c) 2011      Egtra (@egtra) <http://dev.activebasic.com/egtra/>
+//           (c) 2012      deltan (@deltan12345) <deltanpayo@gmail.com>
 // All rights reserved.
 //
-// This file is part of OpenTween.
+// This file is part of AdventureTween.
 //
 // This program is free software; you can redistribute it and/or modify it
 // under the terms of the GNU General Public License as published by the Free
@@ -76,6 +77,11 @@ namespace OpenTween
         public int RetweetedCount { get; set; }
         public long RetweetedByUserId { get; set; }
         public Dictionary<string, string> Media { get; set; }
+        /// <summary>
+        /// RTじゃないポストの場合はポストした時間、
+        /// RTしたポストの場合はRTした時間が入ります。
+        /// </summary>
+        public DateTime PostedOrRetweetedAt { get; set; }
 
         [Flags]
         private enum States
@@ -603,6 +609,10 @@ namespace OpenTween
 
     public sealed class TabInformations
     {
+        #region イベント
+        public event EventHandler<Event.PostClassEventArgs> AddPostCalled;
+        #endregion
+
         //個別タブの情報をDictionaryで保持
         private IdComparerClass _sorter;
         private Dictionary<string, TabClass> _tabs = new Dictionary<string, TabClass>();
@@ -1411,6 +1421,7 @@ namespace OpenTween
 
         public void AddPost(PostClass Item)
         {
+            CallAddPostCalled(Item);
             lock (LockObj)
             {
                 if (string.IsNullOrEmpty(Item.RelTabName))
@@ -2232,6 +2243,16 @@ namespace OpenTween
                 return _statuses;
             }
         }
+
+        #region イベントコール
+        private void CallAddPostCalled(PostClass post)
+        {
+            if (AddPostCalled != null)
+            {
+                AddPostCalled(this, new Event.PostClassEventArgs(post));
+            }
+        }
+        #endregion
     }
 
     [Serializable]

@@ -1,13 +1,15 @@
-﻿// OpenTween - Client of Twitter
+﻿// Adventureween - Client of Twitter
 // Copyright (c) 2007-2011 kiri_feather (@kiri_feather) <kiri.feather@gmail.com>
 //           (c) 2008-2011 Moz (@syo68k)
 //           (c) 2008-2011 takeshik (@takeshik) <http://www.takeshik.org/>
 //           (c) 2010-2011 anis774 (@anis774) <http://d.hatena.ne.jp/anis774/>
 //           (c) 2010-2011 fantasticswallow (@f_swallow) <http://twitter.com/f_swallow>
 //           (c) 2011      Egtra (@egtra) <http://dev.activebasic.com/egtra/>
+//           (c) 2012      deltan (@deltan12345) <deltanpayo@gmail.com>
+//
 // All rights reserved.
 //
-// This file is part of OpenTween.
+// This file is part of AdventureTween.
 //
 // This program is free software; you can redistribute it and/or modify it
 // under the terms of the GNU General Public License as published by the Free
@@ -1899,10 +1901,7 @@ namespace OpenTween
 
             if (MyCommon._endingFlag) return "";
 
-            HttpStatusCode res = HttpStatusCode.BadRequest;
-            var content = "";
-
-            if (count == 0) count = 20;
+            IList<TwitterDataModel.Status> items;
             try
             {
                 if (string.IsNullOrEmpty(userName))
@@ -1910,58 +1909,29 @@ namespace OpenTween
                     var target = tab.User;
                     if (string.IsNullOrEmpty(target)) return "";
                     userName = target;
-                    res = twCon.UserTimeline(0, target, count, 0, 0, ref content);
+                    items = GetUserTimelineStatusApi(target, count, 0);
                 }
                 else
                 {
                     if (more)
                     {
-                        res = twCon.UserTimeline(0, userName, count, tab.OldestId, 0, ref content);
+                        items = GetUserTimelineStatusApi(userName, count, tab.OldestId);
                     }
                     else
                     {
-                        res = twCon.UserTimeline(0, userName, count, 0, 0, ref content);
+                        items = GetUserTimelineStatusApi(userName, count, 0);
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return "Err:" + ex.Message;
-            }
-            switch (res)
-            {
-                case HttpStatusCode.OK:
-                    Twitter.AccountState = MyCommon.ACCOUNT_STATE.Valid;
-                    break;
-                case HttpStatusCode.Unauthorized:
-                    Twitter.AccountState = MyCommon.ACCOUNT_STATE.Valid;
-                    return "Err:@" + userName + "'s Tweets are protected.";
-                case HttpStatusCode.BadRequest:
-                    return "Err:API Limits?";
-                default:
-                    return "Err:" + res.ToString() + "(" + MethodBase.GetCurrentMethod().Name + ")";
+                return ex.Message;
             }
 
-            List<TwitterDataModel.Status> items;
-            try
-            {
-                items = MyCommon.CreateDataFromJson<List<TwitterDataModel.Status>>(content);
-            }
-            catch(SerializationException ex)
-            {
-                MyCommon.TraceOut(ex.Message + Environment.NewLine + content);
-                return "Json Parse Error(DataContractJsonSerializer)";
-            }
-            catch(Exception ex)
-            {
-                MyCommon.TraceOut(ex, MethodBase.GetCurrentMethod().Name + " " + content);
-                return "Invalid Json!";
-            }
+            IList<PostClass> postList = StatusListToPostClassList(items);
 
-            foreach (var status in items)
+            foreach (var item in postList)
             {
-                var item = CreatePostsFromStatusData(status);
-                if (item == null) continue;
                 if (item.StatusId < tab.OldestId) tab.OldestId = item.StatusId;
                 item.IsRead = read;
                 if (item.IsMe && !read && _readOwnPost) item.IsRead = true;
@@ -1971,6 +1941,142 @@ namespace OpenTween
             }
 
             return "";
+        }
+
+        /// <summary>
+        /// 指定したユーザー名が選択中アカウントのユーザー名かどうかを返します。
+        /// </summary>
+        /// <param name="userName">ユーザー名(ScreenName)</param>
+        /// <returns>選択中アカウントのユーザー名の場合true,それ以外はfalse</returns>
+        public bool IsCurrentUser(string userName)
+        {
+            return _uname == userName;
+        }
+
+        /// <summary>
+        /// APIを使って選択中アカウントのUserTimelineをPostClassのリストとして取得します。
+        /// 
+        /// 何らかのエラーが発生すると、InvalidOperationExceptionを発生します。
+        /// エラーメッセージは、Messageプロパティから取得できます。
+        /// また、エラーが例外によって発生した場合は、InnerExceptionプロパティから原因の例外を取得できます。
+        /// </summary>
+        /// <param name="count">取得する件数</param>
+        /// <param name="maxId">取得する最大のStatusID。この値未満のStatusを取得する。0の場合無関係に取得する。</param>
+        /// <returns>PostClassクラスのリスト</returns>
+        public IList<PostClass> GetUserTimelinePostClassApi(
+            int count,
+            long maxId)
+        {
+            return GetUserTimelinePostClassApi(_uname, count, maxId);
+        }
+
+        /// <summary>
+        /// APIを使ってUserTimelineをPostClassのリストとして取得します。
+        /// 
+        /// 何らかのエラーが発生すると、InvalidOperationExceptionを発生します。
+        /// エラーメッセージは、Messageプロパティから取得できます。
+        /// また、エラーが例外によって発生した場合は、InnerExceptionプロパティから原因の例外を取得できます。
+        /// </summary>
+        /// <param name="userName">取得するユーザー名(ScreenName)</param>
+        /// <param name="count">取得する件数</param>
+        /// <param name="maxId">取得する最大のStatusID。この値未満のStatusを取得する。0の場合無関係に取得する。</param>
+        /// <returns>PostClassクラスのリスト</returns>
+        public IList<PostClass> GetUserTimelinePostClassApi(
+            string userName,
+            int count,
+            long maxId)
+        {
+            var statusList = GetUserTimelineStatusApi(userName, count, maxId);
+
+            return StatusListToPostClassList(statusList);
+        }
+
+        /// <summary>
+        /// APIを使ってUserTimelineをStatusクラスのリストして取得します。
+        /// 
+        /// このメソッドは、UsetTimelineのJSONデータをAPIを使って取得し、
+        /// TwitterDataModel.Statusのリストに変換する部分を、
+        /// OpenTweenのGetUserTimelineApiメソッドからTabクラスに依存しないように抜き出したものです。
+        /// 
+        /// 何らかのエラーが発生すると、今まで返していたString型のエラーメッセージの代わりに
+        /// InvalidOperationExceptionを発生します。
+        /// 今まで返していたエラーメッセージは、Messageプロパティから取得できます。
+        /// また、エラーが例外によって発生した場合は、InnerExceptionプロパティから原因の例外を取得できます。
+        /// </summary>
+        /// <param name="userName">取得するユーザー名(ScreenName)</param>
+        /// <param name="count">取得する件数</param>
+        /// <param name="maxId">取得する最大のStatusID。この値未満のStatusを取得する。0の場合無関係に取得する。</param>
+        /// <returns>TwitterDataModel.Statusのリスト</returns>
+        public IList<TwitterDataModel.Status> GetUserTimelineStatusApi(
+            string userName,
+            int count,
+            long maxId)
+        {
+            HttpStatusCode res = HttpStatusCode.BadRequest;
+            var content = "";
+
+            if (count == 0) count = 20;
+            try
+            {
+                res = twCon.UserTimeline(0, userName, count, maxId, 0, ref content);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Err:" + ex.Message, ex);
+            }
+            switch (res)
+            {
+                case HttpStatusCode.OK:
+                    Twitter.AccountState = MyCommon.ACCOUNT_STATE.Valid;
+                    break;
+                case HttpStatusCode.Unauthorized:
+                    Twitter.AccountState = MyCommon.ACCOUNT_STATE.Valid;
+                    throw new InvalidOperationException("Err:@" + userName + "'s Tweets are protected.");
+                case HttpStatusCode.BadRequest:
+                    throw new InvalidOperationException("Err:API Limits?");
+                default:
+                    throw new InvalidOperationException("Err:" + res.ToString() + "(" + MethodBase.GetCurrentMethod().Name + ")");
+            }
+
+            List<TwitterDataModel.Status> items;
+            try
+            {
+                items = MyCommon.CreateDataFromJson<List<TwitterDataModel.Status>>(content);
+            }
+            catch (SerializationException ex)
+            {
+                MyCommon.TraceOut(ex.Message + Environment.NewLine + content);
+                throw new InvalidOperationException("Json Parse Error(DataContractJsonSerializer)", ex);
+            }
+            catch (Exception ex)
+            {
+                MyCommon.TraceOut(ex, MethodBase.GetCurrentMethod().Name + " " + content);
+                throw new InvalidOperationException("Invalid Json!", ex);
+            }
+
+            return items;
+        }
+
+        /// <summary>
+        /// TwitterDataModel.Statusクラスのリストを、PostClassクラスのリストに変換します。
+        /// 
+        /// このメソッドは、OpenTweenのGetUserTimelineApiメソッドからこの処理の部分を
+        /// Tabクラスに依存しないように抜き出したものです。
+        /// </summary>
+        /// <param name="statusList">TwitterDataModel.Statusクラスのリスト</param>
+        /// <returns>PostClassクラスのリスト</returns>
+        public IList<PostClass> StatusListToPostClassList(IList<TwitterDataModel.Status> statusList)
+        {
+            var postList = new List<PostClass>(statusList.Count);
+
+            foreach (var status in statusList)
+            {
+                var item = CreatePostsFromStatusData(status);
+                if (item == null) continue;
+                postList.Add(item);
+            }
+
+            return postList;
         }
 
         public string GetStatusApi(bool read,
@@ -2061,6 +2167,7 @@ namespace OpenTween
                 var retweeted = status.RetweetedStatus;
 
                 post.CreatedAt = MyCommon.DateTimeParse(retweeted.CreatedAt);
+                post.PostedOrRetweetedAt = MyCommon.DateTimeParse(status.CreatedAt);
 
                 //Id
                 post.RetweetedId = retweeted.Id;
@@ -2103,6 +2210,8 @@ namespace OpenTween
             else
             {
                 post.CreatedAt = MyCommon.DateTimeParse(status.CreatedAt);
+                post.PostedOrRetweetedAt = post.CreatedAt;
+
                 //本文
                 post.TextFromApi = status.Text;
                 entities = status.Entities;
@@ -2607,6 +2716,7 @@ namespace OpenTween
                     post.StatusId = long.Parse(xentry["id"].InnerText.Split(':')[2]);
                     if (TabInformations.GetInstance().ContainsKey(post.StatusId, tab.TabName)) continue;
                     post.CreatedAt = DateTime.Parse(xentry["published"].InnerText);
+                    post.PostedOrRetweetedAt = post.CreatedAt;
                     //本文
                     post.TextFromApi = xentry["title"].InnerText;
                     //Source取得（htmlの場合は、中身を取り出し）
@@ -2808,6 +2918,7 @@ namespace OpenTween
                     //sender_id
                     //recipient_id
                     post.CreatedAt = MyCommon.DateTimeParse(message.CreatedAt);
+                    post.PostedOrRetweetedAt = post.CreatedAt;
                     //本文
                     post.TextFromApi = message.Text;
                     //HTMLに整形
@@ -3024,7 +3135,7 @@ namespace OpenTween
                     {
                         var retweeted = status.RetweetedStatus;
                         post.CreatedAt = MyCommon.DateTimeParse(retweeted.CreatedAt);
-
+                        post.PostedOrRetweetedAt = MyCommon.DateTimeParse(status.CreatedAt);
                         //Id
                         post.RetweetedId = post.StatusId;
                         //本文
@@ -3057,7 +3168,7 @@ namespace OpenTween
                     else
                     {
                         post.CreatedAt = MyCommon.DateTimeParse(status.CreatedAt);
-
+                        post.PostedOrRetweetedAt = post.CreatedAt;
                         //本文
                         post.TextFromApi = status.Text;
                         entities = status.Entities;
