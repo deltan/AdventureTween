@@ -1,13 +1,14 @@
-﻿// OpenTween - Client of Twitter
+﻿// AdventureTween - Client of Twitter
 // Copyright (c) 2007-2011 kiri_feather (@kiri_feather) <kiri.feather@gmail.com>
 //           (c) 2008-2011 Moz (@syo68k)
 //           (c) 2008-2011 takeshik (@takeshik) <http://www.takeshik.org/>
 //           (c) 2010-2011 anis774 (@anis774) <http://d.hatena.ne.jp/anis774/>
 //           (c) 2010-2011 fantasticswallow (@f_swallow) <http://twitter.com/f_swallow>
 //           (c) 2011      kim_upsilon (@kim_upsilon) <https://upsilo.net/~upsilon/>
+//           (c) 2012      deltan (@deltan12345) <deltanpayo@gmail.com>
 // All rights reserved.
 // 
-// This file is part of OpenTween.
+// This file is part of AdventureTween.
 // 
 // This program is free software; you can redistribute it and/or modify it
 // under the terms of the GNU General public License as published by the Free
@@ -858,6 +859,14 @@ namespace OpenTween
             SettingDialog.TabMouseLock = _cfgCommon.TabMouseLock;
             SettingDialog.IsRemoveSameEvent = _cfgCommon.IsRemoveSameEvent;
             SettingDialog.IsNotifyUseGrowl = _cfgCommon.IsUseNotifyGrowl;
+
+            // 規制通知設定
+            SettingDialog.PostLimitNoticeEnabled = _cfgCommon.PostLimitNoticeEnabled;
+            SettingDialog.PostLimitNoticeTweet = _cfgCommon.PostLimitNoticeTweet;
+            SettingDialog.PostLimitNoticeCount = _cfgCommon.PostLimitNoticeCount;
+            SettingDialog.PostLimitNoticeMessage = _cfgCommon.PostLimitNoticeMessage;
+            SettingDialog.PostLimitNoticeEndTimeFormat = _cfgCommon.PostLimitNoticeEndTimeFormat;
+            SettingDialog.PostLimitNoticeNotAccuracyMessage = _cfgCommon.PostLimitNoticeNotAccuracyMessage;
 
             //ハッシュタグ関連
             HashSupl = new AtIdSupplement(_cfgCommon.HashTags, "#");
@@ -7807,6 +7816,14 @@ namespace OpenTween
                 _cfgCommon.TabMouseLock = SettingDialog.TabMouseLock;
                 _cfgCommon.IsRemoveSameEvent = SettingDialog.IsRemoveSameEvent;
                 _cfgCommon.IsUseNotifyGrowl = SettingDialog.IsNotifyUseGrowl;
+
+                // 規制通知設定
+                _cfgCommon.PostLimitNoticeEnabled = SettingDialog.PostLimitNoticeEnabled;
+                _cfgCommon.PostLimitNoticeTweet = SettingDialog.PostLimitNoticeTweet;
+                _cfgCommon.PostLimitNoticeCount = SettingDialog.PostLimitNoticeCount;
+                _cfgCommon.PostLimitNoticeMessage = SettingDialog.PostLimitNoticeMessage;
+                _cfgCommon.PostLimitNoticeEndTimeFormat = SettingDialog.PostLimitNoticeEndTimeFormat;
+                _cfgCommon.PostLimitNoticeNotAccuracyMessage = SettingDialog.PostLimitNoticeNotAccuracyMessage;
 
                 _cfgCommon.Save();
             }

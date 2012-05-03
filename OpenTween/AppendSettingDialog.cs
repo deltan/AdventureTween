@@ -497,6 +497,14 @@ namespace OpenTween
                 this.TabMouseLock = this.TabMouseLockCheck.Checked;
                 this.IsRemoveSameEvent = this.IsRemoveSameFavEventCheckBox.Checked;
                 this.IsNotifyUseGrowl = this.IsNotifyUseGrowlCheckBox.Checked;
+
+                // 規制通知設定
+                this.PostLimitNoticeEnabled = CheckPostLimitNoticeEnabled.Checked;
+                this.PostLimitNoticeTweet = CheckPostLimitNoticeTweet.Checked;
+                this.PostLimitNoticeCount = Convert.ToInt32(EditPostLimitNoticeCount.Text);
+                this.PostLimitNoticeMessage = EditPostLimitNoticeMessage.Text;
+                this.PostLimitNoticeEndTimeFormat = EditPostLimitNoticeEndTimeFormat.Text;
+                this.PostLimitNoticeNotAccuracyMessage = EditPostLimitNoticeNotAccuracyMessage.Text;
             }
             catch(Exception)
             {
@@ -906,6 +914,14 @@ namespace OpenTween
                 IsNotifyUseGrowlCheckBox.Enabled = false;
             }
 
+            // 規制通知設定
+            CheckPostLimitNoticeEnabled.Checked = this.PostLimitNoticeEnabled;
+            CheckPostLimitNoticeTweet.Checked = this.PostLimitNoticeTweet;
+            EditPostLimitNoticeCount.Text = this.PostLimitNoticeCount.ToString();
+            EditPostLimitNoticeMessage.Text = this.PostLimitNoticeMessage;
+            EditPostLimitNoticeEndTimeFormat.Text = this.PostLimitNoticeEndTimeFormat;
+            EditPostLimitNoticeNotAccuracyMessage.Text = this.PostLimitNoticeNotAccuracyMessage;
+
             this.TreeViewSetting.Nodes["BasedNode"].Tag = BasedPanel;
             this.TreeViewSetting.Nodes["BasedNode"].Nodes["PeriodNode"].Tag = GetPeriodPanel;
             this.TreeViewSetting.Nodes["BasedNode"].Nodes["StartUpNode"].Tag = StartupPanel;
@@ -913,6 +929,7 @@ namespace OpenTween
             //this.TreeViewSetting.Nodes["BasedNode"].Nodes["UserStreamNode"].Tag = UserStreamPanel;
             this.TreeViewSetting.Nodes["ActionNode"].Tag = ActionPanel;
             this.TreeViewSetting.Nodes["ActionNode"].Nodes["TweetActNode"].Tag = TweetActPanel;
+            this.TreeViewSetting.Nodes["ActionNode"].Nodes["PostLimitNoticeNode"].Tag = PostLimitNoticePanel;
             this.TreeViewSetting.Nodes["PreviewNode"].Tag = PreviewPanel;
             this.TreeViewSetting.Nodes["PreviewNode"].Nodes["TweetPrvNode"].Tag = TweetPrvPanel;
             this.TreeViewSetting.Nodes["PreviewNode"].Nodes["NotifyNode"].Tag = NotifyPanel;
@@ -1390,6 +1407,13 @@ namespace OpenTween
         public string TwitterApiUrl { get; set; }
         public string TwitterSearchApiUrl { get; set; }
         public string Language { get; set; }
+
+        public bool PostLimitNoticeEnabled { get; set; }
+        public bool PostLimitNoticeTweet { get; set; }
+        public int PostLimitNoticeCount { get; set; }
+        public string PostLimitNoticeMessage { get; set; }
+        public string PostLimitNoticeEndTimeFormat { get; set; }
+        public string PostLimitNoticeNotAccuracyMessage { get; set; }
 
         private void Button3_Click(object sender, EventArgs e)
         {
@@ -2468,6 +2492,104 @@ namespace OpenTween
             InitializeComponentOnlyOnce();
 
             return base.ShowDialog(owner);
+        }
+
+        /// <summary>
+        /// 規制通知の通知を行う投稿数を検証
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EditPostLimitNoticeCount_Validating(object sender, CancelEventArgs e)
+        {
+            int count;
+            try
+            {
+                count = Convert.ToInt32(EditPostLimitNoticeCount.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Properties.Resources.EditPostLimitNoticeCount_Validating1);
+                e.Cancel = true;
+                return;
+            }
+
+            if (count < 10)
+            {
+                e.Cancel = true;
+                MessageBox.Show(Properties.Resources.EditPostLimitNoticeCount_Validating1);
+                return;
+            }
+        }
+
+        /// <summary>
+        /// 規制通知の通知メッセージを検証
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EditPostLimitNoticeMessage_Validating(object sender, CancelEventArgs e)
+        {
+            try
+            {
+                string message = String.Format(
+                    EditPostLimitNoticeMessage.Text,
+                    100,
+                    Properties.Resources.EditPostLimitNoticeMessage_Validating2, 
+                    Properties.Resources.EditPostLimitNoticeMessage_Validating3);
+            }
+            catch (Exception ex)
+            {
+                e.Cancel = true;
+                MessageBox.Show(Properties.Resources.EditPostLimitNoticeMessage_Validating1);
+                return;
+            }
+
+            if (EditPostLimitNoticeMessage.Text.Length <= 0)
+            {
+                e.Cancel = true;
+                MessageBox.Show(Properties.Resources.EditPostLimitNoticeMessage_Validating1);
+                return;
+            }
+        }
+
+        /// <summary>
+        /// 規制通知の規制終了時刻のフォーマットを検証
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EditPostLimitNoticeEndTimeFormat_Validating(object sender, CancelEventArgs e)
+        {
+            try
+            {
+                string dateString = DateTime.Now.ToString(EditPostLimitNoticeEndTimeFormat.Text);
+            }
+            catch (Exception ex)
+            {
+                e.Cancel = true;
+                MessageBox.Show(Properties.Resources.EditPostLimitNoticeEndTimeFormat_Validating1);
+                return;
+            }
+
+            if (EditPostLimitNoticeEndTimeFormat.Text.Length <= 0)
+            {
+                e.Cancel = true;
+                MessageBox.Show(Properties.Resources.EditPostLimitNoticeEndTimeFormat_Validating1);
+                return;
+            }
+        }
+
+        /// <summary>
+        /// 規制通知の不正確なときのメッセージを検証
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EditPostLimitNoticeNotAccuracyMessage_Validating(object sender, CancelEventArgs e)
+        {
+            if (EditPostLimitNoticeNotAccuracyMessage.Text.Length <= 0)
+            {
+                e.Cancel = true;
+                MessageBox.Show(Properties.Resources.EditPostLimitNoticeNotAccuracyMessage_Validating1);
+                return;
+            }
         }
     }
 }

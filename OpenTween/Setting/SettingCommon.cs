@@ -1,13 +1,14 @@
-﻿// OpenTween - Client of Twitter
+﻿// AdventureTween - Client of Twitter
 // Copyright (c) 2007-2011 kiri_feather (@kiri_feather) <kiri.feather@gmail.com>
 //           (c) 2008-2011 Moz (@syo68k)
 //           (c) 2008-2011 takeshik (@takeshik) <http://www.takeshik.org/>
 //           (c) 2010-2011 anis774 (@anis774) <http://d.hatena.ne.jp/anis774/>
 //           (c) 2010-2011 fantasticswallow (@f_swallow) <http://twitter.com/f_swallow>
 //           (c) 2011      kim_upsilon (@kim_upsilon) <https://upsilo.net/~upsilon/>
+//           (c) 2012      deltan (@deltan12345) <deltanpayo@gmail.com>
 // All rights reserved.
 // 
-// This file is part of OpenTween.
+// This file is part of AdventureTween.
 // 
 // This program is free software; you can redistribute it and/or modify it
 // under the terms of the GNU General Public License as published by the Free
@@ -157,7 +158,7 @@ namespace OpenTween
         public bool HashIsPermanent = false;
         public bool HashIsHead = false;
         public bool HashIsNotAddToAtReply = true;
-        public bool PreviewEnable = true;
+        public bool PreviewEnable = true; 
 
         [XmlIgnore]
         public string OutputzKey = "";
@@ -219,6 +220,14 @@ namespace OpenTween
         public bool TabMouseLock = false;
         public bool IsRemoveSameEvent = false;
         public bool IsUseNotifyGrowl = false;
+
+        // 規制通知設定
+        public bool PostLimitNoticeEnabled = true;
+        public bool PostLimitNoticeTweet = true;
+        public int PostLimitNoticeCount = 120;
+        public string PostLimitNoticeMessage = "【規制情報】規制が近いので注意しましょう。規制解除時刻(予想)は、{1}です。セクション中、{0}回ポストしました。{2}";
+        public string PostLimitNoticeEndTimeFormat = "HH時mm分ss秒";
+        public string PostLimitNoticeNotAccuracyMessage = "（この規制情報は不正確です。）";
     }
 
     public class UserAccount
