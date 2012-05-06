@@ -48,6 +48,10 @@ namespace OpenTween
 {
     public class Twitter : IDisposable
     {
+        #region イベント
+        public event EventHandler<EventArgs> ChangedUserName;
+        #endregion
+
         //Hashtag用正規表現
         private const string LATIN_ACCENTS = @"\xc0-\xd6\xd8-\xf6\xf8-\xff";
         private const string NON_LATIN_HASHTAG_CHARS = @"\u0400-\u04ff\u0500-\u0527\u1100-\u11ff\u3130-\u3185\uA960-\uA97F\uAC00-\uD7AF\uD7B0-\uD7FF";
@@ -95,6 +99,24 @@ namespace OpenTween
 
         //プロパティからアクセスされる共通情報
         private string _uname;
+        public string UserName
+        {
+            private set
+            {
+                // 設定するユーザー名と現在設定されているユーザー名が違う場合のみ
+                // 新しいユーザー名を設定し、イベントをコールします
+                if (_uname != value)
+                {
+                    _uname = value;
+                    CallChangedUserNameEvent();
+                }
+            }
+            get
+            {
+                return _uname;
+            }
+        }
+
         private int _iconSz;
         private bool _getIcon;
         private IDictionary<string, Image> _dIcon;
@@ -137,7 +159,7 @@ namespace OpenTween
             {
             case HttpStatusCode.OK:
                 Twitter.AccountState = MyCommon.ACCOUNT_STATE.Valid;
-                _uname = username.ToLower();
+                UserName = username.ToLower();
                 if (AppendSettingDialog.Instance.UserstreamStartup) this.ReconnectUserStream();
                 return "";
             case HttpStatusCode.Unauthorized:
@@ -207,7 +229,7 @@ namespace OpenTween
             {
             case HttpStatusCode.OK:
                 Twitter.AccountState = MyCommon.ACCOUNT_STATE.Valid;
-                _uname = Username.ToLower();
+                UserName = Username.ToLower();
                 if (AppendSettingDialog.Instance.UserstreamStartup) this.ReconnectUserStream();
                 return "";
             case HttpStatusCode.Unauthorized:
@@ -316,7 +338,7 @@ namespace OpenTween
             }
             MyCommon.TwitterApiInfo.Initialize();
             twCon.Initialize(token, tokenSecret, username, userId);
-            _uname = username.ToLower();
+            UserName = username.ToLower();
             if (AppendSettingDialog.Instance.UserstreamStartup) this.ReconnectUserStream();
         }
 
@@ -4287,7 +4309,19 @@ namespace OpenTween
             ApiInformationChanged += Twitter_ApiInformationChanged;
         }
 
-#region "UserStream"
+        #region イベントコール
+
+        private void CallChangedUserNameEvent()
+        {
+            if (ChangedUserName != null)
+            {
+                ChangedUserName(this, new EventArgs());
+            }
+        }
+
+        #endregion
+
+        #region "UserStream"
         private string trackWord_ = "";
         public string TrackWord
         {

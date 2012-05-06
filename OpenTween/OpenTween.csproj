@@ -198,7 +198,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Event\PostClassEventArgs.cs" />
-    <Compile Include="PostLimitNotice\PostLimitNotice.cs" />
+    <Compile Include="UpdateLimitNotification\UpdateLimitNotification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
