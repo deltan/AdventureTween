@@ -221,7 +221,7 @@ namespace OpenTween
         private ImageListViewItem displayItem;
 
         // 規制通知
-        private PostLimitNotice.PostLimitNotice PostLimitNotice { get; set; }
+        private UpdateLimitNotification.UpdateLimitNotification UpdateLimitNotification { get; set; }
 
         //URL短縮のUndo用
         private struct urlUndo
@@ -1296,7 +1296,12 @@ namespace OpenTween
             }
 
             // 規制通知
-            PostLimitNotice = new PostLimitNotice.PostLimitNotice(tw, 120);
+            UpdateLimitNotification = new UpdateLimitNotification.UpdateLimitNotification(
+                tw, 
+                _cfgCommon.PostLimitNoticeCount,
+                _cfgCommon.PostLimitNoticeMessage, 
+                _cfgCommon.PostLimitNoticeEndTimeFormat, 
+                _cfgCommon.PostLimitNoticeNotAccuracyMessage);
         }
 
         private void CreatePictureServices()
@@ -4220,6 +4225,13 @@ namespace OpenTween
                     catch (Exception)
                     {
                     }
+
+                    // 規制通知設定変更
+                    UpdateLimitNotification.ChangeSetting(
+                        SettingDialog.PostLimitNoticeCount,
+                        SettingDialog.PostLimitNoticeMessage,
+                        SettingDialog.PostLimitNoticeEndTimeFormat,
+                        SettingDialog.PostLimitNoticeNotAccuracyMessage);
                 }
             }
 
@@ -10647,7 +10659,7 @@ namespace OpenTween
             if (this.IsNetworkAvailable())
             {
                 // 規制通知開始
-                PostLimitNotice.Start();
+                UpdateLimitNotification.Start();
 
                 GetTimeline(MyCommon.WORKERTYPE.BlockIds, 0, 0, "");
                 if (SettingDialog.StartupFollowers)
