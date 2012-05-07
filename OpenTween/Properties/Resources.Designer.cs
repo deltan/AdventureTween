@@ -148,7 +148,7 @@ namespace OpenTween.Properties {
         ///&lt;/script&gt;
         ///&lt;!-- &lt;meta http-equiv=&quot;refresh&quot; content=&quot;45&quot;&gt; --&gt;
         ///&lt;/head&gt;
-        ///&lt;body style=&quot;te [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
+        ///&lt;body style=&quot;text-align:center [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ads {
             get {
@@ -946,54 +946,54 @@ namespace OpenTween.Properties {
         /// <summary>
         ///   通知を行う投稿数は、10以上の整数値を入力してください。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string EditPostLimitNoticeCount_Validating1 {
+        internal static string EditUpdateLimitNotificationCount_Validating1 {
             get {
-                return ResourceManager.GetString("EditPostLimitNoticeCount_Validating1", resourceCulture);
+                return ResourceManager.GetString("EditUpdateLimitNotificationCount_Validating1", resourceCulture);
             }
         }
         
         /// <summary>
         ///   規制解除時刻のフォーマットを適切に設定してください。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string EditPostLimitNoticeEndTimeFormat_Validating1 {
+        internal static string EditUpdateLimitNotificationLimitReleaseDateFormat_Validating1 {
             get {
-                return ResourceManager.GetString("EditPostLimitNoticeEndTimeFormat_Validating1", resourceCulture);
+                return ResourceManager.GetString("EditUpdateLimitNotificationLimitReleaseDateFormat_Validating1", resourceCulture);
             }
         }
         
         /// <summary>
         ///   通知メッセージを適切に設定してください。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string EditPostLimitNoticeMessage_Validating1 {
+        internal static string EditUpdateLimitNotificationMessage_Validating1 {
             get {
-                return ResourceManager.GetString("EditPostLimitNoticeMessage_Validating1", resourceCulture);
+                return ResourceManager.GetString("EditUpdateLimitNotificationMessage_Validating1", resourceCulture);
             }
         }
         
         /// <summary>
         ///   12時34分56秒 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string EditPostLimitNoticeMessage_Validating2 {
+        internal static string EditUpdateLimitNotificationMessage_Validating2 {
             get {
-                return ResourceManager.GetString("EditPostLimitNoticeMessage_Validating2", resourceCulture);
+                return ResourceManager.GetString("EditUpdateLimitNotificationMessage_Validating2", resourceCulture);
             }
         }
         
         /// <summary>
         ///   (不正確です) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string EditPostLimitNoticeMessage_Validating3 {
+        internal static string EditUpdateLimitNotificationMessage_Validating3 {
             get {
-                return ResourceManager.GetString("EditPostLimitNoticeMessage_Validating3", resourceCulture);
+                return ResourceManager.GetString("EditUpdateLimitNotificationMessage_Validating3", resourceCulture);
             }
         }
         
         /// <summary>
         ///   規制通知が不正確な時のメッセージを適切に設定してください。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string EditPostLimitNoticeNotAccuracyMessage_Validating1 {
+        internal static string EditUpdateLimitNotificationNotAccuracyMessage_Validating1 {
             get {
-                return ResourceManager.GetString("EditPostLimitNoticeNotAccuracyMessage_Validating1", resourceCulture);
+                return ResourceManager.GetString("EditUpdateLimitNotificationNotAccuracyMessage_Validating1", resourceCulture);
             }
         }
         

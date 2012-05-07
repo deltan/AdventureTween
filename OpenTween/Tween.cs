@@ -861,12 +861,12 @@ namespace OpenTween
             SettingDialog.IsNotifyUseGrowl = _cfgCommon.IsUseNotifyGrowl;
 
             // 規制通知設定
-            SettingDialog.PostLimitNoticeEnabled = _cfgCommon.PostLimitNoticeEnabled;
-            SettingDialog.PostLimitNoticeTweet = _cfgCommon.PostLimitNoticeTweet;
-            SettingDialog.PostLimitNoticeCount = _cfgCommon.PostLimitNoticeCount;
-            SettingDialog.PostLimitNoticeMessage = _cfgCommon.PostLimitNoticeMessage;
-            SettingDialog.PostLimitNoticeEndTimeFormat = _cfgCommon.PostLimitNoticeEndTimeFormat;
-            SettingDialog.PostLimitNoticeNotAccuracyMessage = _cfgCommon.PostLimitNoticeNotAccuracyMessage;
+            SettingDialog.UpdateLimitNotificationEnabled = _cfgCommon.UpdateLimitNotificationEnabled;
+            SettingDialog.UpdateLimitNotificationTweet = _cfgCommon.UpdateLimitNotificationTweet;
+            SettingDialog.UpdateLimitNotificationCount = _cfgCommon.UpdateLimitNotificationCount;
+            SettingDialog.UpdateLimitNotificationMessage = _cfgCommon.UpdateLimitNotificationMessage;
+            SettingDialog.UpdateLimitNitificationLimitReleaseDateFormat = _cfgCommon.UpdateLimitNotificationLimitReleaseDateFormat;
+            SettingDialog.UpdateLimitNotificationNotAccuracyMessage = _cfgCommon.UpdateLimitNotificationNotAccuracyMessage;
 
             //ハッシュタグ関連
             HashSupl = new AtIdSupplement(_cfgCommon.HashTags, "#");
@@ -1298,10 +1298,10 @@ namespace OpenTween
             // 規制通知
             UpdateLimitNotification = new UpdateLimitNotification.UpdateLimitNotification(
                 tw, 
-                _cfgCommon.PostLimitNoticeCount,
-                _cfgCommon.PostLimitNoticeMessage, 
-                _cfgCommon.PostLimitNoticeEndTimeFormat, 
-                _cfgCommon.PostLimitNoticeNotAccuracyMessage);
+                _cfgCommon.UpdateLimitNotificationCount,
+                _cfgCommon.UpdateLimitNotificationMessage, 
+                _cfgCommon.UpdateLimitNotificationLimitReleaseDateFormat, 
+                _cfgCommon.UpdateLimitNotificationNotAccuracyMessage);
         }
 
         private void CreatePictureServices()
@@ -4228,10 +4228,10 @@ namespace OpenTween
 
                     // 規制通知設定変更
                     UpdateLimitNotification.ChangeSetting(
-                        SettingDialog.PostLimitNoticeCount,
-                        SettingDialog.PostLimitNoticeMessage,
-                        SettingDialog.PostLimitNoticeEndTimeFormat,
-                        SettingDialog.PostLimitNoticeNotAccuracyMessage);
+                        SettingDialog.UpdateLimitNotificationCount,
+                        SettingDialog.UpdateLimitNotificationMessage,
+                        SettingDialog.UpdateLimitNitificationLimitReleaseDateFormat,
+                        SettingDialog.UpdateLimitNotificationNotAccuracyMessage);
 
                     // 規制通知が止まっていたら開始
                     if (!UpdateLimitNotification.IsStart)
@@ -7836,12 +7836,12 @@ namespace OpenTween
                 _cfgCommon.IsUseNotifyGrowl = SettingDialog.IsNotifyUseGrowl;
 
                 // 規制通知設定
-                _cfgCommon.PostLimitNoticeEnabled = SettingDialog.PostLimitNoticeEnabled;
-                _cfgCommon.PostLimitNoticeTweet = SettingDialog.PostLimitNoticeTweet;
-                _cfgCommon.PostLimitNoticeCount = SettingDialog.PostLimitNoticeCount;
-                _cfgCommon.PostLimitNoticeMessage = SettingDialog.PostLimitNoticeMessage;
-                _cfgCommon.PostLimitNoticeEndTimeFormat = SettingDialog.PostLimitNoticeEndTimeFormat;
-                _cfgCommon.PostLimitNoticeNotAccuracyMessage = SettingDialog.PostLimitNoticeNotAccuracyMessage;
+                _cfgCommon.UpdateLimitNotificationEnabled = SettingDialog.UpdateLimitNotificationEnabled;
+                _cfgCommon.UpdateLimitNotificationTweet = SettingDialog.UpdateLimitNotificationTweet;
+                _cfgCommon.UpdateLimitNotificationCount = SettingDialog.UpdateLimitNotificationCount;
+                _cfgCommon.UpdateLimitNotificationMessage = SettingDialog.UpdateLimitNotificationMessage;
+                _cfgCommon.UpdateLimitNotificationLimitReleaseDateFormat = SettingDialog.UpdateLimitNitificationLimitReleaseDateFormat;
+                _cfgCommon.UpdateLimitNotificationNotAccuracyMessage = SettingDialog.UpdateLimitNotificationNotAccuracyMessage;
 
                 _cfgCommon.Save();
             }

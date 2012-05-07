@@ -1138,22 +1138,22 @@
   <data name="LogoImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\logoimage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="EditPostLimitNoticeCount_Validating1" xml:space="preserve">
+  <data name="EditUpdateLimitNotificationCount_Validating1" xml:space="preserve">
     <value>通知を行う投稿数は、10以上の整数値を入力してください。</value>
   </data>
-  <data name="EditPostLimitNoticeEndTimeFormat_Validating1" xml:space="preserve">
+  <data name="EditUpdateLimitNotificationLimitReleaseDateFormat_Validating1" xml:space="preserve">
     <value>規制解除時刻のフォーマットを適切に設定してください。</value>
   </data>
-  <data name="EditPostLimitNoticeMessage_Validating1" xml:space="preserve">
+  <data name="EditUpdateLimitNotificationMessage_Validating1" xml:space="preserve">
     <value>通知メッセージを適切に設定してください。</value>
   </data>
-  <data name="EditPostLimitNoticeMessage_Validating2" xml:space="preserve">
+  <data name="EditUpdateLimitNotificationMessage_Validating2" xml:space="preserve">
     <value>12時34分56秒</value>
   </data>
-  <data name="EditPostLimitNoticeMessage_Validating3" xml:space="preserve">
+  <data name="EditUpdateLimitNotificationMessage_Validating3" xml:space="preserve">
     <value>(不正確です)</value>
   </data>
-  <data name="EditPostLimitNoticeNotAccuracyMessage_Validating1" xml:space="preserve">
+  <data name="EditUpdateLimitNotificationNotAccuracyMessage_Validating1" xml:space="preserve">
     <value>規制通知が不正確な時のメッセージを適切に設定してください。</value>
   </data>
 </root>

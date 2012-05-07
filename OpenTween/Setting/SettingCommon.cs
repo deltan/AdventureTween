@@ -222,12 +222,12 @@ namespace OpenTween
         public bool IsUseNotifyGrowl = false;
 
         // 規制通知設定
-        public bool PostLimitNoticeEnabled = true;
-        public bool PostLimitNoticeTweet = true;
-        public int PostLimitNoticeCount = 120;
-        public string PostLimitNoticeMessage = "【規制情報】規制が近いので注意しましょう。規制解除時刻(予想)は、{1}です。セクション中、{0}回ポストしました。{2}";
-        public string PostLimitNoticeEndTimeFormat = "HH時mm分ss秒";
-        public string PostLimitNoticeNotAccuracyMessage = "（この規制情報は不正確です。）";
+        public bool UpdateLimitNotificationEnabled = true;
+        public bool UpdateLimitNotificationTweet = true;
+        public int UpdateLimitNotificationCount = 120;
+        public string UpdateLimitNotificationMessage = "【規制情報】規制が近いので注意しましょう。規制解除時刻(予想)は、{1}です。セクション中、{0}回ポストしました。{2}";
+        public string UpdateLimitNotificationLimitReleaseDateFormat = "HH時mm分ss秒";
+        public string UpdateLimitNotificationNotAccuracyMessage = "（この規制情報は不正確です。）";
     }
 
     public class UserAccount

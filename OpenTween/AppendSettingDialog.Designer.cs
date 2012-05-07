@@ -36,15 +36,15 @@
             this.label58 = new System.Windows.Forms.Label();
             this.label56 = new System.Windows.Forms.Label();
             this.label54 = new System.Windows.Forms.Label();
-            this.EditPostLimitNoticeEndTimeFormat = new System.Windows.Forms.TextBox();
-            this.EditPostLimitNoticeNotAccuracyMessage = new System.Windows.Forms.TextBox();
+            this.EditUpdateLimitNotificationLimitReleaseDateFormat = new System.Windows.Forms.TextBox();
+            this.EditUpdateLimitNotificationNotAccuracyMessage = new System.Windows.Forms.TextBox();
             this.label51 = new System.Windows.Forms.Label();
-            this.EditPostLimitNoticeMessage = new System.Windows.Forms.TextBox();
+            this.EditUpdateLimitNotificationMessage = new System.Windows.Forms.TextBox();
             this.label50 = new System.Windows.Forms.Label();
-            this.EditPostLimitNoticeCount = new System.Windows.Forms.TextBox();
+            this.EditUpdateLimitNotificationCount = new System.Windows.Forms.TextBox();
             this.label48 = new System.Windows.Forms.Label();
-            this.CheckPostLimitNoticeTweet = new System.Windows.Forms.CheckBox();
-            this.CheckPostLimitNoticeEnabled = new System.Windows.Forms.CheckBox();
+            this.CheckUpdateLimitNotificationTweet = new System.Windows.Forms.CheckBox();
+            this.CheckUpdateLimitNotificationEnabled = new System.Windows.Forms.CheckBox();
             this.StartupPanel = new System.Windows.Forms.Panel();
             this.StartupReaded = new System.Windows.Forms.CheckBox();
             this.CheckStartupFollowers = new System.Windows.Forms.CheckBox();
@@ -386,15 +386,15 @@
             this.PostLimitNoticePanel.Controls.Add(this.label58);
             this.PostLimitNoticePanel.Controls.Add(this.label56);
             this.PostLimitNoticePanel.Controls.Add(this.label54);
-            this.PostLimitNoticePanel.Controls.Add(this.EditPostLimitNoticeEndTimeFormat);
-            this.PostLimitNoticePanel.Controls.Add(this.EditPostLimitNoticeNotAccuracyMessage);
+            this.PostLimitNoticePanel.Controls.Add(this.EditUpdateLimitNotificationLimitReleaseDateFormat);
+            this.PostLimitNoticePanel.Controls.Add(this.EditUpdateLimitNotificationNotAccuracyMessage);
             this.PostLimitNoticePanel.Controls.Add(this.label51);
-            this.PostLimitNoticePanel.Controls.Add(this.EditPostLimitNoticeMessage);
+            this.PostLimitNoticePanel.Controls.Add(this.EditUpdateLimitNotificationMessage);
             this.PostLimitNoticePanel.Controls.Add(this.label50);
-            this.PostLimitNoticePanel.Controls.Add(this.EditPostLimitNoticeCount);
+            this.PostLimitNoticePanel.Controls.Add(this.EditUpdateLimitNotificationCount);
             this.PostLimitNoticePanel.Controls.Add(this.label48);
-            this.PostLimitNoticePanel.Controls.Add(this.CheckPostLimitNoticeTweet);
-            this.PostLimitNoticePanel.Controls.Add(this.CheckPostLimitNoticeEnabled);
+            this.PostLimitNoticePanel.Controls.Add(this.CheckUpdateLimitNotificationTweet);
+            this.PostLimitNoticePanel.Controls.Add(this.CheckUpdateLimitNotificationEnabled);
             this.PostLimitNoticePanel.Name = "PostLimitNoticePanel";
             this.ToolTip1.SetToolTip(this.PostLimitNoticePanel, resources.GetString("PostLimitNoticePanel.ToolTip"));
             // 
@@ -418,17 +418,17 @@
             // 
             // EditPostLimitNoticeEndTimeFormat
             // 
-            resources.ApplyResources(this.EditPostLimitNoticeEndTimeFormat, "EditPostLimitNoticeEndTimeFormat");
-            this.EditPostLimitNoticeEndTimeFormat.Name = "EditPostLimitNoticeEndTimeFormat";
-            this.ToolTip1.SetToolTip(this.EditPostLimitNoticeEndTimeFormat, resources.GetString("EditPostLimitNoticeEndTimeFormat.ToolTip"));
-            this.EditPostLimitNoticeEndTimeFormat.Validating += new System.ComponentModel.CancelEventHandler(this.EditPostLimitNoticeEndTimeFormat_Validating);
+            resources.ApplyResources(this.EditUpdateLimitNotificationLimitReleaseDateFormat, "EditPostLimitNoticeEndTimeFormat");
+            this.EditUpdateLimitNotificationLimitReleaseDateFormat.Name = "EditPostLimitNoticeEndTimeFormat";
+            this.ToolTip1.SetToolTip(this.EditUpdateLimitNotificationLimitReleaseDateFormat, resources.GetString("EditPostLimitNoticeEndTimeFormat.ToolTip"));
+            this.EditUpdateLimitNotificationLimitReleaseDateFormat.Validating += new System.ComponentModel.CancelEventHandler(this.EditUpdateLimitNotificationLimitReleaseDateFormat_Validating);
             // 
             // EditPostLimitNoticeNotAccuracyMessage
             // 
-            resources.ApplyResources(this.EditPostLimitNoticeNotAccuracyMessage, "EditPostLimitNoticeNotAccuracyMessage");
-            this.EditPostLimitNoticeNotAccuracyMessage.Name = "EditPostLimitNoticeNotAccuracyMessage";
-            this.ToolTip1.SetToolTip(this.EditPostLimitNoticeNotAccuracyMessage, resources.GetString("EditPostLimitNoticeNotAccuracyMessage.ToolTip"));
-            this.EditPostLimitNoticeNotAccuracyMessage.Validating += new System.ComponentModel.CancelEventHandler(this.EditPostLimitNoticeNotAccuracyMessage_Validating);
+            resources.ApplyResources(this.EditUpdateLimitNotificationNotAccuracyMessage, "EditPostLimitNoticeNotAccuracyMessage");
+            this.EditUpdateLimitNotificationNotAccuracyMessage.Name = "EditPostLimitNoticeNotAccuracyMessage";
+            this.ToolTip1.SetToolTip(this.EditUpdateLimitNotificationNotAccuracyMessage, resources.GetString("EditPostLimitNoticeNotAccuracyMessage.ToolTip"));
+            this.EditUpdateLimitNotificationNotAccuracyMessage.Validating += new System.ComponentModel.CancelEventHandler(this.EditUpdateLimitNotificationNotAccuracyMessage_Validating);
             // 
             // label51
             // 
@@ -438,10 +438,10 @@
             // 
             // EditPostLimitNoticeMessage
             // 
-            resources.ApplyResources(this.EditPostLimitNoticeMessage, "EditPostLimitNoticeMessage");
-            this.EditPostLimitNoticeMessage.Name = "EditPostLimitNoticeMessage";
-            this.ToolTip1.SetToolTip(this.EditPostLimitNoticeMessage, resources.GetString("EditPostLimitNoticeMessage.ToolTip"));
-            this.EditPostLimitNoticeMessage.Validating += new System.ComponentModel.CancelEventHandler(this.EditPostLimitNoticeMessage_Validating);
+            resources.ApplyResources(this.EditUpdateLimitNotificationMessage, "EditPostLimitNoticeMessage");
+            this.EditUpdateLimitNotificationMessage.Name = "EditPostLimitNoticeMessage";
+            this.ToolTip1.SetToolTip(this.EditUpdateLimitNotificationMessage, resources.GetString("EditPostLimitNoticeMessage.ToolTip"));
+            this.EditUpdateLimitNotificationMessage.Validating += new System.ComponentModel.CancelEventHandler(this.EditUpdateLimitNotificationMessage_Validating);
             // 
             // label50
             // 
@@ -451,10 +451,10 @@
             // 
             // EditPostLimitNoticeCount
             // 
-            resources.ApplyResources(this.EditPostLimitNoticeCount, "EditPostLimitNoticeCount");
-            this.EditPostLimitNoticeCount.Name = "EditPostLimitNoticeCount";
-            this.ToolTip1.SetToolTip(this.EditPostLimitNoticeCount, resources.GetString("EditPostLimitNoticeCount.ToolTip"));
-            this.EditPostLimitNoticeCount.Validating += new System.ComponentModel.CancelEventHandler(this.EditPostLimitNoticeCount_Validating);
+            resources.ApplyResources(this.EditUpdateLimitNotificationCount, "EditPostLimitNoticeCount");
+            this.EditUpdateLimitNotificationCount.Name = "EditPostLimitNoticeCount";
+            this.ToolTip1.SetToolTip(this.EditUpdateLimitNotificationCount, resources.GetString("EditPostLimitNoticeCount.ToolTip"));
+            this.EditUpdateLimitNotificationCount.Validating += new System.ComponentModel.CancelEventHandler(this.EditUpdateLimitNotificationCount_Validating);
             // 
             // label48
             // 
@@ -464,17 +464,17 @@
             // 
             // CheckPostLimitNoticeTweet
             // 
-            resources.ApplyResources(this.CheckPostLimitNoticeTweet, "CheckPostLimitNoticeTweet");
-            this.CheckPostLimitNoticeTweet.Name = "CheckPostLimitNoticeTweet";
-            this.ToolTip1.SetToolTip(this.CheckPostLimitNoticeTweet, resources.GetString("CheckPostLimitNoticeTweet.ToolTip"));
-            this.CheckPostLimitNoticeTweet.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.CheckUpdateLimitNotificationTweet, "CheckPostLimitNoticeTweet");
+            this.CheckUpdateLimitNotificationTweet.Name = "CheckPostLimitNoticeTweet";
+            this.ToolTip1.SetToolTip(this.CheckUpdateLimitNotificationTweet, resources.GetString("CheckPostLimitNoticeTweet.ToolTip"));
+            this.CheckUpdateLimitNotificationTweet.UseVisualStyleBackColor = true;
             // 
             // CheckPostLimitNoticeEnabled
             // 
-            resources.ApplyResources(this.CheckPostLimitNoticeEnabled, "CheckPostLimitNoticeEnabled");
-            this.CheckPostLimitNoticeEnabled.Name = "CheckPostLimitNoticeEnabled";
-            this.ToolTip1.SetToolTip(this.CheckPostLimitNoticeEnabled, resources.GetString("CheckPostLimitNoticeEnabled.ToolTip"));
-            this.CheckPostLimitNoticeEnabled.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.CheckUpdateLimitNotificationEnabled, "CheckPostLimitNoticeEnabled");
+            this.CheckUpdateLimitNotificationEnabled.Name = "CheckPostLimitNoticeEnabled";
+            this.ToolTip1.SetToolTip(this.CheckUpdateLimitNotificationEnabled, resources.GetString("CheckPostLimitNoticeEnabled.ToolTip"));
+            this.CheckUpdateLimitNotificationEnabled.UseVisualStyleBackColor = true;
             // 
             // StartupPanel
             // 
@@ -2995,15 +2995,15 @@
         internal System.Windows.Forms.Panel PostLimitNoticePanel;
         private System.Windows.Forms.Label label56;
         private System.Windows.Forms.Label label54;
-        private System.Windows.Forms.TextBox EditPostLimitNoticeEndTimeFormat;
-        private System.Windows.Forms.TextBox EditPostLimitNoticeNotAccuracyMessage;
+        private System.Windows.Forms.TextBox EditUpdateLimitNotificationLimitReleaseDateFormat;
+        private System.Windows.Forms.TextBox EditUpdateLimitNotificationNotAccuracyMessage;
         private System.Windows.Forms.Label label51;
-        private System.Windows.Forms.TextBox EditPostLimitNoticeMessage;
+        private System.Windows.Forms.TextBox EditUpdateLimitNotificationMessage;
         private System.Windows.Forms.Label label50;
-        private System.Windows.Forms.TextBox EditPostLimitNoticeCount;
+        private System.Windows.Forms.TextBox EditUpdateLimitNotificationCount;
         private System.Windows.Forms.Label label48;
-        internal System.Windows.Forms.CheckBox CheckPostLimitNoticeTweet;
-        internal System.Windows.Forms.CheckBox CheckPostLimitNoticeEnabled;
+        internal System.Windows.Forms.CheckBox CheckUpdateLimitNotificationTweet;
+        internal System.Windows.Forms.CheckBox CheckUpdateLimitNotificationEnabled;
         private System.Windows.Forms.Label label58;
     }
 }

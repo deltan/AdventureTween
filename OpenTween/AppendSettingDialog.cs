@@ -499,12 +499,12 @@ namespace OpenTween
                 this.IsNotifyUseGrowl = this.IsNotifyUseGrowlCheckBox.Checked;
 
                 // 規制通知設定
-                this.PostLimitNoticeEnabled = CheckPostLimitNoticeEnabled.Checked;
-                this.PostLimitNoticeTweet = CheckPostLimitNoticeTweet.Checked;
-                this.PostLimitNoticeCount = Convert.ToInt32(EditPostLimitNoticeCount.Text);
-                this.PostLimitNoticeMessage = EditPostLimitNoticeMessage.Text;
-                this.PostLimitNoticeEndTimeFormat = EditPostLimitNoticeEndTimeFormat.Text;
-                this.PostLimitNoticeNotAccuracyMessage = EditPostLimitNoticeNotAccuracyMessage.Text;
+                this.UpdateLimitNotificationEnabled = CheckUpdateLimitNotificationEnabled.Checked;
+                this.UpdateLimitNotificationTweet = CheckUpdateLimitNotificationTweet.Checked;
+                this.UpdateLimitNotificationCount = Convert.ToInt32(EditUpdateLimitNotificationCount.Text);
+                this.UpdateLimitNotificationMessage = EditUpdateLimitNotificationMessage.Text;
+                this.UpdateLimitNitificationLimitReleaseDateFormat = EditUpdateLimitNotificationLimitReleaseDateFormat.Text;
+                this.UpdateLimitNotificationNotAccuracyMessage = EditUpdateLimitNotificationNotAccuracyMessage.Text;
             }
             catch(Exception)
             {
@@ -915,12 +915,12 @@ namespace OpenTween
             }
 
             // 規制通知設定
-            CheckPostLimitNoticeEnabled.Checked = this.PostLimitNoticeEnabled;
-            CheckPostLimitNoticeTweet.Checked = this.PostLimitNoticeTweet;
-            EditPostLimitNoticeCount.Text = this.PostLimitNoticeCount.ToString();
-            EditPostLimitNoticeMessage.Text = this.PostLimitNoticeMessage;
-            EditPostLimitNoticeEndTimeFormat.Text = this.PostLimitNoticeEndTimeFormat;
-            EditPostLimitNoticeNotAccuracyMessage.Text = this.PostLimitNoticeNotAccuracyMessage;
+            CheckUpdateLimitNotificationEnabled.Checked = this.UpdateLimitNotificationEnabled;
+            CheckUpdateLimitNotificationTweet.Checked = this.UpdateLimitNotificationTweet;
+            EditUpdateLimitNotificationCount.Text = this.UpdateLimitNotificationCount.ToString();
+            EditUpdateLimitNotificationMessage.Text = this.UpdateLimitNotificationMessage;
+            EditUpdateLimitNotificationLimitReleaseDateFormat.Text = this.UpdateLimitNitificationLimitReleaseDateFormat;
+            EditUpdateLimitNotificationNotAccuracyMessage.Text = this.UpdateLimitNotificationNotAccuracyMessage;
 
             this.TreeViewSetting.Nodes["BasedNode"].Tag = BasedPanel;
             this.TreeViewSetting.Nodes["BasedNode"].Nodes["PeriodNode"].Tag = GetPeriodPanel;
@@ -1408,12 +1408,12 @@ namespace OpenTween
         public string TwitterSearchApiUrl { get; set; }
         public string Language { get; set; }
 
-        public bool PostLimitNoticeEnabled { get; set; }
-        public bool PostLimitNoticeTweet { get; set; }
-        public int PostLimitNoticeCount { get; set; }
-        public string PostLimitNoticeMessage { get; set; }
-        public string PostLimitNoticeEndTimeFormat { get; set; }
-        public string PostLimitNoticeNotAccuracyMessage { get; set; }
+        public bool UpdateLimitNotificationEnabled { get; set; }
+        public bool UpdateLimitNotificationTweet { get; set; }
+        public int UpdateLimitNotificationCount { get; set; }
+        public string UpdateLimitNotificationMessage { get; set; }
+        public string UpdateLimitNitificationLimitReleaseDateFormat { get; set; }
+        public string UpdateLimitNotificationNotAccuracyMessage { get; set; }
 
         private void Button3_Click(object sender, EventArgs e)
         {
@@ -2499,16 +2499,16 @@ namespace OpenTween
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void EditPostLimitNoticeCount_Validating(object sender, CancelEventArgs e)
+        private void EditUpdateLimitNotificationCount_Validating(object sender, CancelEventArgs e)
         {
             int count;
             try
             {
-                count = Convert.ToInt32(EditPostLimitNoticeCount.Text);
+                count = Convert.ToInt32(EditUpdateLimitNotificationCount.Text);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(Properties.Resources.EditPostLimitNoticeCount_Validating1);
+                MessageBox.Show(Properties.Resources.EditUpdateLimitNotificationCount_Validating1);
                 e.Cancel = true;
                 return;
             }
@@ -2516,7 +2516,7 @@ namespace OpenTween
             if (count < 10)
             {
                 e.Cancel = true;
-                MessageBox.Show(Properties.Resources.EditPostLimitNoticeCount_Validating1);
+                MessageBox.Show(Properties.Resources.EditUpdateLimitNotificationCount_Validating1);
                 return;
             }
         }
@@ -2526,27 +2526,27 @@ namespace OpenTween
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void EditPostLimitNoticeMessage_Validating(object sender, CancelEventArgs e)
+        private void EditUpdateLimitNotificationMessage_Validating(object sender, CancelEventArgs e)
         {
             try
             {
                 string message = String.Format(
-                    EditPostLimitNoticeMessage.Text,
+                    EditUpdateLimitNotificationMessage.Text,
                     100,
-                    Properties.Resources.EditPostLimitNoticeMessage_Validating2, 
-                    Properties.Resources.EditPostLimitNoticeMessage_Validating3);
+                    Properties.Resources.EditUpdateLimitNotificationMessage_Validating2, 
+                    Properties.Resources.EditUpdateLimitNotificationMessage_Validating3);
             }
             catch (Exception ex)
             {
                 e.Cancel = true;
-                MessageBox.Show(Properties.Resources.EditPostLimitNoticeMessage_Validating1);
+                MessageBox.Show(Properties.Resources.EditUpdateLimitNotificationMessage_Validating1);
                 return;
             }
 
-            if (EditPostLimitNoticeMessage.Text.Length <= 0)
+            if (EditUpdateLimitNotificationMessage.Text.Length <= 0)
             {
                 e.Cancel = true;
-                MessageBox.Show(Properties.Resources.EditPostLimitNoticeMessage_Validating1);
+                MessageBox.Show(Properties.Resources.EditUpdateLimitNotificationMessage_Validating1);
                 return;
             }
         }
@@ -2556,23 +2556,23 @@ namespace OpenTween
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void EditPostLimitNoticeEndTimeFormat_Validating(object sender, CancelEventArgs e)
+        private void EditUpdateLimitNotificationLimitReleaseDateFormat_Validating(object sender, CancelEventArgs e)
         {
             try
             {
-                string dateString = DateTime.Now.ToString(EditPostLimitNoticeEndTimeFormat.Text);
+                string dateString = DateTime.Now.ToString(EditUpdateLimitNotificationLimitReleaseDateFormat.Text);
             }
             catch (Exception ex)
             {
                 e.Cancel = true;
-                MessageBox.Show(Properties.Resources.EditPostLimitNoticeEndTimeFormat_Validating1);
+                MessageBox.Show(Properties.Resources.EditUpdateLimitNotificationLimitReleaseDateFormat_Validating1);
                 return;
             }
 
-            if (EditPostLimitNoticeEndTimeFormat.Text.Length <= 0)
+            if (EditUpdateLimitNotificationLimitReleaseDateFormat.Text.Length <= 0)
             {
                 e.Cancel = true;
-                MessageBox.Show(Properties.Resources.EditPostLimitNoticeEndTimeFormat_Validating1);
+                MessageBox.Show(Properties.Resources.EditUpdateLimitNotificationLimitReleaseDateFormat_Validating1);
                 return;
             }
         }
@@ -2582,12 +2582,12 @@ namespace OpenTween
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void EditPostLimitNoticeNotAccuracyMessage_Validating(object sender, CancelEventArgs e)
+        private void EditUpdateLimitNotificationNotAccuracyMessage_Validating(object sender, CancelEventArgs e)
         {
-            if (EditPostLimitNoticeNotAccuracyMessage.Text.Length <= 0)
+            if (EditUpdateLimitNotificationNotAccuracyMessage.Text.Length <= 0)
             {
                 e.Cancel = true;
-                MessageBox.Show(Properties.Resources.EditPostLimitNoticeNotAccuracyMessage_Validating1);
+                MessageBox.Show(Properties.Resources.EditUpdateLimitNotificationNotAccuracyMessage_Validating1);
                 return;
             }
         }
