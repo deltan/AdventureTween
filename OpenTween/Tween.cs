@@ -4232,6 +4232,12 @@ namespace OpenTween
                         SettingDialog.PostLimitNoticeMessage,
                         SettingDialog.PostLimitNoticeEndTimeFormat,
                         SettingDialog.PostLimitNoticeNotAccuracyMessage);
+
+                    // 規制通知が止まっていたら開始
+                    if (!UpdateLimitNotification.IsStart)
+                    {
+                        UpdateLimitNotification.Start();
+                    }
                 }
             }
 

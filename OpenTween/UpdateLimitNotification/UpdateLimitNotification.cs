@@ -172,11 +172,6 @@ namespace OpenTween.UpdateLimitNotification
         {
             lock (SyncObj)
             {
-                if (!IsStart)
-                {
-                    return;
-                }
-
                 NotifyCount = notifyCount;
                 NotificationMessage = notificationMassage;
                 LimitReleaseDateFormat = limitReleaseDateFormat;
@@ -301,11 +296,26 @@ namespace OpenTween.UpdateLimitNotification
 
             if (!foundNoPostSection)
             {
-                IsAccuracy = false;
-
                 var postCreatedDescArray = postCreatedDescQuery.ToArray();
-                LastSectionEndTime = postCreatedDescArray[126].PostedOrRetweetedAt.AddSeconds(-1);
-                SectionStartPost = postCreatedDescArray[126];
+
+                if (postCreatedDescArray.Count() == 0)
+                {
+                    LastSectionEndTime = now;
+                    IsAccuracy = true;
+                }
+                else if (postCreatedDescArray.Count() <= FINDING_GET_COUNT - 1)
+                {
+                    int firstPostIndex = postCreatedDescArray.Count() - 1;
+                    LastSectionEndTime = postCreatedDescArray[firstPostIndex].PostedOrRetweetedAt.AddSeconds(-1);
+                    SectionStartPost = postCreatedDescArray[firstPostIndex];
+                    IsAccuracy = true;
+                }
+                else
+                {
+                    LastSectionEndTime = postCreatedDescArray[126].PostedOrRetweetedAt.AddSeconds(-1);
+                    SectionStartPost = postCreatedDescArray[126];
+                    IsAccuracy = false;
+                }
             }
 
             if (SectionStartPost != null)
