@@ -4233,10 +4233,18 @@ namespace OpenTween
                         SettingDialog.UpdateLimitNitificationLimitReleaseDateFormat,
                         SettingDialog.UpdateLimitNotificationNotAccuracyMessage);
 
-                    // 規制通知が止まっていたら開始
-                    if (!UpdateLimitNotification.IsStart)
+                    if (SettingDialog.UpdateLimitNotificationEnabled)
                     {
-                        UpdateLimitNotification.Start();
+                        // 規制通知が有効で、規制通知が止まっていたら規制通知開始
+                        if (!UpdateLimitNotification.IsStart)
+                        {
+                            UpdateLimitNotification.Start();
+                        }
+                    }
+                    else
+                    {
+                        // 規制通知が無効なら、規制通知を停止する
+                        UpdateLimitNotification.Stop();
                     }
                 }
             }
@@ -10665,7 +10673,10 @@ namespace OpenTween
             if (this.IsNetworkAvailable())
             {
                 // 規制通知開始
-                UpdateLimitNotification.Start();
+                if (SettingDialog.UpdateLimitNotificationEnabled)
+                {
+                    UpdateLimitNotification.Start();
+                }
 
                 GetTimeline(MyCommon.WORKERTYPE.BlockIds, 0, 0, "");
                 if (SettingDialog.StartupFollowers)
