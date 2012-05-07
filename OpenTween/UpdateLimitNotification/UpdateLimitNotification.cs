@@ -30,6 +30,8 @@ namespace OpenTween.UpdateLimitNotification
     /// <summary>
     /// 規制通知を行うクラス
     /// 
+    /// このクラスはスレッドセーフ、にしているつもりです。
+    /// 
     /// このクラスは、Twitterクラスに依存していて、Twitterクラスが接続しているアカウントの規制情報を管理し、
     /// 規制通知の投稿もTwitterクラスが接続しているアカウントに対して行います。
     /// Twitterクラスが接続しているアカウントが変更された場合は、
@@ -45,13 +47,24 @@ namespace OpenTween.UpdateLimitNotification
     /// </summary>
     class UpdateLimitNotification
     {
+        #region イベント
+
+        /// <summary>
+        /// TaskExceptionイベント
+        /// 
+        /// このイベントはクラス内で実行される非同期な処理（Task）で例外が発生したときに呼び出されます。
+        /// このイベントはクラスを作成したスレッドとは別スレッドで呼び出されます。
+        /// </summary>
+        public event EventHandler<Event.AggregateExceptionEventArgs> TaskException;
+        #endregion
+
         private const int FINDING_GET_COUNT = 200;
         private const int SECTION_HOUR = 3;
 
         private Twitter Twitter { get; set; }
         private int NotifyCount { get; set; }
 
-        private bool IsStart { get; set; }
+        public bool IsStart { get; private set; }
         private PostClass SectionStartPost { get; set; }
         private DateTime? LastSectionEndTime { get; set; }
         private IDictionary<long, PostClass> PostInSection { get; set; }
@@ -102,8 +115,15 @@ namespace OpenTween.UpdateLimitNotification
 
         /// <summary>
         /// 規制通知を開始します。
-        /// まず最初に、過去のポストを遡り、セクションを探します。
-        /// その後、投稿されたポストから規制通知を行います。
+        /// 
+        /// このメソッドを実行すると、最初に過去のポストを遡り、セクションを探します。
+        /// セクションが探し終わると規制通知が開始されます。
+        /// 
+        /// このメソッドは、他のスレッドがこのクラスを使用中でなければ、
+        /// セクションを探す処理を待つことなく、すぐに処理を返します。
+        /// 
+        /// セクションを探している最中にエラーが発生した場合は、
+        /// TaskExceptionイベントが呼び出され、規制通知は開始されません。
         /// </summary>
         public void Start()
         {
@@ -184,6 +204,8 @@ namespace OpenTween.UpdateLimitNotification
         /// セクションを探している間に新しいポストを受け付けると、
         /// 規制通知のための情報がおかしくなるので、ここでIsFindingフラグをtrueにセットし、
         /// セクションを探している間は新しいポストをバッファに貯めるようにしています。
+        /// 
+        /// セクションを探し終えたら、セクションを探している最中に受信したポストをすべて処理します。
         /// </summary>
         private void StartFindSection()
         {
@@ -195,6 +217,32 @@ namespace OpenTween.UpdateLimitNotification
             IsAccuracy = false;
 
             var t = Task.Factory.StartNew(FindSection);
+
+            // セクションを探し中に例外が発生した場合は、Stopメソッドを呼び出して規制通知を停止します。
+            // 再度規制通知の開始を試みるかは使用者に委ねられます。
+            t.ContinueWith(
+                (task) =>
+                {
+                    Stop();
+                    CallTaskExceptionEvent(task.Exception);
+                }, TaskContinuationOptions.OnlyOnFaulted);
+
+            t.ContinueWith(
+                (task) =>
+                {
+                    lock (SyncObj)
+                    {
+                        IsFinding = false;
+                        if (PostInFinding.Count() >= 1)
+                        {
+                            foreach (var post in PostInFinding)
+                            {
+                                CheckPost(post);
+                            }
+                            PostInFinding.Clear();
+                        }
+                    }
+                }, TaskContinuationOptions.NotOnFaulted);
         }
 
         /// <summary>
@@ -214,7 +262,9 @@ namespace OpenTween.UpdateLimitNotification
         private void FindSection()
         {
             DateTime now = DateTime.Now;
-            IList<PostClass> postList = Twitter.GetUserTimelinePostClassApi(FINDING_GET_COUNT, 0);
+
+            IList<PostClass> postList = null;
+            postList = Twitter.GetUserTimelinePostClassApi(FINDING_GET_COUNT, 0);
 
             var postCreatedDescQuery =
                 from post in postList
@@ -289,20 +339,8 @@ namespace OpenTween.UpdateLimitNotification
                     }
                 }
             }
-
-            lock (SyncObj)
-            {
-                IsFinding = false;
-                if (PostInFinding.Count() >= 1)
-                {
-                    foreach (var post in PostInFinding)
-                    {
-                        CheckPost(post);
-                    }
-                    PostInFinding.Clear();
-                }
-            }
         }
+
 
         /// <summary>
         /// TabInformationクラスにポストが追加されたときに呼び出されるイベントです。
@@ -410,6 +448,11 @@ namespace OpenTween.UpdateLimitNotification
                                     PostInSection.Count(), limitReleaseDateString, notAccuracyMessage),
                                     0);
                             });
+                        t.ContinueWith(
+                            (task) =>
+                            {
+                                CallTaskExceptionEvent(task.Exception);
+                            }, TaskContinuationOptions.OnlyOnFaulted);
                     }
                 }
             }
@@ -427,5 +470,21 @@ namespace OpenTween.UpdateLimitNotification
         {
             Restart();
         }
+
+        #region イベントコール
+
+        /// <summary>
+        /// TaskExceptionイベントを呼び出します
+        /// </summary>
+        /// <param name="ex">AggregateException例外</param>
+        public void CallTaskExceptionEvent(AggregateException ex)
+        {
+            if (TaskException != null)
+            {
+                TaskException(this, new Event.AggregateExceptionEventArgs(ex));
+            }
+        }
+
+        #endregion
     }
 }
