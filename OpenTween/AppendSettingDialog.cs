@@ -2506,7 +2506,7 @@ namespace OpenTween
             {
                 count = Convert.ToInt32(EditUpdateLimitNotificationCount.Text);
             }
-            catch (Exception ex)
+            catch
             {
                 MessageBox.Show(Properties.Resources.EditUpdateLimitNotificationCount_Validating1);
                 e.Cancel = true;
@@ -2536,7 +2536,7 @@ namespace OpenTween
                     Properties.Resources.EditUpdateLimitNotificationMessage_Validating2, 
                     Properties.Resources.EditUpdateLimitNotificationMessage_Validating3);
             }
-            catch (Exception ex)
+            catch
             {
                 e.Cancel = true;
                 MessageBox.Show(Properties.Resources.EditUpdateLimitNotificationMessage_Validating1);
@@ -2562,7 +2562,7 @@ namespace OpenTween
             {
                 string dateString = DateTime.Now.ToString(EditUpdateLimitNotificationLimitReleaseDateFormat.Text);
             }
-            catch (Exception ex)
+            catch
             {
                 e.Cancel = true;
                 MessageBox.Show(Properties.Resources.EditUpdateLimitNotificationLimitReleaseDateFormat_Validating1);
