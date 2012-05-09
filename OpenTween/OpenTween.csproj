@@ -255,6 +255,7 @@
     </Compile>
     <Compile Include="Twitter.cs" />
     <Compile Include="UserInfo.cs" />
+    <Compile Include="Utility\DelegateUtility.cs" />
     <Compile Include="WebBrowserController.cs" />
     <Compile Include="Win32Api.cs" />
   </ItemGroup>

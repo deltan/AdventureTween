@@ -62,9 +62,27 @@ namespace OpenTween.UpdateLimitNotification
         #region イベント
 
         /// <summary>
+        /// FindingCompletedイベント
+        /// 
+        /// このイベントは、StartAsyncメソッドを実行すると開始される
+        /// セクションを探す処理が成功したことを通知するイベントです。
+        /// このイベントが発生した場合、規制通知は開始されています。
+        /// </summary>
+        public event EventHandler FindingCompleted;
+
+        /// <summary>
+        /// FindingErrorイベント
+        /// 
+        /// このイベントは、StartAsyncメソッドを実行すると開始される
+        /// セクションを探す処理がエラーで失敗したことを通知するイベントです。
+        /// このイベントが発生した場合、規制通知は開始されません。
+        /// </summary>
+        public event EventHandler<Event.AggregateExceptionEventArgs> FindingError;
+
+        /// <summary>
         /// NotifyErrorイベント
         /// 
-        /// このイベントは規制通知の際に発生したエラーをお知らせするイベントです
+        /// このイベントは規制通知の際に発生したエラーを通知するイベントです。
         /// </summary>
         public event EventHandler<Event.AggregateExceptionEventArgs> NotifyError;
         #endregion
@@ -195,18 +213,15 @@ namespace OpenTween.UpdateLimitNotification
                 (task) =>
                 {
                     Stop();
-                    if (callback != null)
-                    {
-                        callback(task.Exception);
-                    }
+                    Utility.DelegateUtility.CallAction<AggregateException>(callback, task.Exception);
+                    Utility.DelegateUtility.CallEvent<Event.AggregateExceptionEventArgs>
+                        (FindingError, this, new Event.AggregateExceptionEventArgs(task.Exception));
                 }, TaskContinuationOptions.OnlyOnFaulted);
             t.ContinueWith(
                 (task) =>
                 {
-                    if (callback != null)
-                    {
-                        callback(task.Exception);
-                    }
+                    Utility.DelegateUtility.CallAction<AggregateException>(callback, task.Exception);
+                    Utility.DelegateUtility.CallEvent(FindingCompleted, this, new EventArgs());
                 }, TaskContinuationOptions.NotOnFaulted);
             t.ContinueWith(
                 (task) =>
@@ -516,7 +531,8 @@ namespace OpenTween.UpdateLimitNotification
                             t.ContinueWith(
                                 (task) =>
                                 {
-                                    CallNotifyErrorEvent(task.Exception);
+                                    Utility.DelegateUtility.CallEvent<Event.AggregateExceptionEventArgs>(
+                                        NotifyError, this, new Event.AggregateExceptionEventArgs(task.Exception));
                                 }, TaskContinuationOptions.OnlyOnFaulted);
                         }
                     }
@@ -535,21 +551,5 @@ namespace OpenTween.UpdateLimitNotification
         {
             RestartAsync(null);
         }
-
-        #region イベントコール
-
-        /// <summary>
-        /// TaskExceptionイベントを呼び出します
-        /// </summary>
-        /// <param name="ex">AggregateException例外</param>
-        public void CallNotifyErrorEvent(AggregateException ex)
-        {
-            if (NotifyError != null)
-            {
-                NotifyError(this, new Event.AggregateExceptionEventArgs(ex));
-            }
-        }
-
-        #endregion
     }
 }
