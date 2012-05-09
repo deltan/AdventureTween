@@ -62,12 +62,11 @@ namespace OpenTween.UpdateLimitNotification
         #region イベント
 
         /// <summary>
-        /// TaskExceptionイベント
+        /// NotifyErrorイベント
         /// 
-        /// このイベントはクラス内で実行される非同期な処理（Task）で例外が発生したときに呼び出されます。
-        /// このイベントはクラスを作成したスレッドとは別スレッドで呼び出されます。
+        /// このイベントは規制通知の際に発生したエラーをお知らせするイベントです
         /// </summary>
-        public event EventHandler<Event.AggregateExceptionEventArgs> TaskException;
+        public event EventHandler<Event.AggregateExceptionEventArgs> NotifyError;
         #endregion
 
         private const int FINDING_GET_COUNT = 200;
@@ -117,18 +116,22 @@ namespace OpenTween.UpdateLimitNotification
             twitter.ChangedUserName += new EventHandler<EventArgs>(twitter_ChangedUserName);
         }
 
-        /// <summary>
+        
         /// 規制通知を開始します。
         /// 
-        /// このメソッドを実行すると、最初に過去のポストを遡り、セクションを探します。
+        /// このメソッドを実行すると、最初に過去のポストを遡り、セクションを探す処理が行われます。
         /// セクションが探し終わると規制通知が開始されます。
         /// 
-        /// セクションを探している最中にエラーが発生した場合は、
-        /// TaskExceptionイベントが呼び出され、規制通知は開始されません。
-        /// 
         /// このメソッドは非同期です。すぐに処理が戻ります。
+        /// 非同期で行われる処理が終了した後に呼び出したい処理がある場合は、
+        /// 引数にActionデリゲートを指定します。
         /// </summary>
-        public void StartAsync()
+        /// <param name="callback">
+        /// 処理が終了したあとに呼び出したいデリゲート。
+        /// エラーで処理が終了した場合、原因となる例外がAggregateException型の引数として渡されます。
+        /// 正常に処理が終了した場合、この値はnullです。
+        /// </param>
+        public void StartAsync(Action<AggregateException> callback)
         {
             lock (SyncObj)
             {
@@ -138,7 +141,7 @@ namespace OpenTween.UpdateLimitNotification
                 }
                 IsStart = true;
 
-                StartFindSection();
+                StartFindSection(callback);
             }
         }
 
@@ -169,7 +172,7 @@ namespace OpenTween.UpdateLimitNotification
         /// 
         /// セクションを探し終えたら、セクションを探している最中に受信したポストをすべて処理します。
         /// </summary>
-        private void StartFindSection()
+        private void StartFindSection(Action<AggregateException> callback)
         {
             NotifyInfo = new NotifyInformation();
             NotifyInfo.PostInSection = new Dictionary<long, PostClass>();
@@ -192,9 +195,19 @@ namespace OpenTween.UpdateLimitNotification
                 (task) =>
                 {
                     Stop();
-                    CallTaskExceptionEvent(task.Exception);
+                    if (callback != null)
+                    {
+                        callback(task.Exception);
+                    }
                 }, TaskContinuationOptions.OnlyOnFaulted);
-
+            t.ContinueWith(
+                (task) =>
+                {
+                    if (callback != null)
+                    {
+                        callback(task.Exception);
+                    }
+                }, TaskContinuationOptions.NotOnFaulted);
             t.ContinueWith(
                 (task) =>
                 {
@@ -364,11 +377,20 @@ namespace OpenTween.UpdateLimitNotification
         /// 
         /// Startメソッドでは、過去のポストからセクションを探し出そうとするので、
         /// 規制通知が不正確な時にこのメソッドを呼び出すと正確になるかもしれません。
+        /// 
+        /// このメソッドは非同期です。すぐに処理が戻ります。
+        /// 非同期で行われる処理が終了した後に呼び出したい処理がある場合は、
+        /// 引数にActionデリゲートを指定します。
         /// </summary>
-        public void Restart()
+        /// <param name="callback">
+        /// 処理が終了したあとに呼び出したいデリゲート。
+        /// エラーで処理が終了した場合、原因となる例外がAggregateException型の引数として渡されます。
+        /// 正常に処理が終わった場合、この値はnullです。
+        /// </param>
+        public void RestartAsync(Action<AggregateException> callback)
         {
             Stop();
-            StartAsync();
+            StartAsync(callback);
         }
 
         /// <summary>
@@ -494,7 +516,7 @@ namespace OpenTween.UpdateLimitNotification
                             t.ContinueWith(
                                 (task) =>
                                 {
-                                    CallTaskExceptionEvent(task.Exception);
+                                    CallNotifyErrorEvent(task.Exception);
                                 }, TaskContinuationOptions.OnlyOnFaulted);
                         }
                     }
@@ -511,7 +533,7 @@ namespace OpenTween.UpdateLimitNotification
         /// <param name="e"></param>
         void twitter_ChangedUserName(object sender, EventArgs e)
         {
-            Restart();
+            RestartAsync(null);
         }
 
         #region イベントコール
@@ -520,11 +542,11 @@ namespace OpenTween.UpdateLimitNotification
         /// TaskExceptionイベントを呼び出します
         /// </summary>
         /// <param name="ex">AggregateException例外</param>
-        public void CallTaskExceptionEvent(AggregateException ex)
+        public void CallNotifyErrorEvent(AggregateException ex)
         {
-            if (TaskException != null)
+            if (NotifyError != null)
             {
-                TaskException(this, new Event.AggregateExceptionEventArgs(ex));
+                NotifyError(this, new Event.AggregateExceptionEventArgs(ex));
             }
         }
 
