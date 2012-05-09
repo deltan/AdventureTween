@@ -172,6 +172,10 @@ namespace OpenTween.UpdateLimitNotification
         {
             lock (SyncObj)
             {
+                if (NotifyCount != notifyCount)
+                {
+                    IsNoticed = false;
+                }
                 NotifyCount = notifyCount;
                 NotificationMessage = notificationMassage;
                 LimitReleaseDateFormat = limitReleaseDateFormat;
