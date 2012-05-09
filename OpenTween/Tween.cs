@@ -4238,7 +4238,7 @@ namespace OpenTween
                         // 規制通知が有効で、規制通知が止まっていたら規制通知開始
                         if (!UpdateLimitNotification.IsStart)
                         {
-                            UpdateLimitNotification.Start();
+                            UpdateLimitNotification.StartAsync();
                         }
                     }
                     else
@@ -10675,7 +10675,7 @@ namespace OpenTween
                 // 規制通知開始
                 if (SettingDialog.UpdateLimitNotificationEnabled)
                 {
-                    UpdateLimitNotification.Start();
+                    UpdateLimitNotification.StartAsync();
                 }
 
                 GetTimeline(MyCommon.WORKERTYPE.BlockIds, 0, 0, "");

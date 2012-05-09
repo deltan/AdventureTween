@@ -45,8 +45,20 @@ namespace OpenTween.UpdateLimitNotification
     /// 最終的に、マルチアカウントを考慮するなら、アカウントごとにTwitterクラスを持ち、
     /// そのTwitterアカウントごとにこのクラスがあるようになればいいかもしれません。
     /// </summary>
-    class UpdateLimitNotification
+    sealed class UpdateLimitNotification
     {
+        private class NotifyInformation
+        {
+            public PostClass SectionStartPost { get; set; }
+            public DateTime? LastSectionEndTime { get; set; }
+            public IDictionary<long, PostClass> PostInSection { get; set; }
+            public IList<PostClass> PostInFinding { get; set; }
+
+            public bool IsAccuracy { get; set; }
+            public bool IsFinding { get; set; }
+            public bool IsNoticed { get; set; }
+        }
+
         #region イベント
 
         /// <summary>
@@ -61,22 +73,18 @@ namespace OpenTween.UpdateLimitNotification
         private const int FINDING_GET_COUNT = 200;
         private const int SECTION_HOUR = 3;
 
+        // 他クラス
         private Twitter Twitter { get; set; }
+
+        // 設定
         private int NotifyCount { get; set; }
-
-        public bool IsStart { get; private set; }
-        private PostClass SectionStartPost { get; set; }
-        private DateTime? LastSectionEndTime { get; set; }
-        private IDictionary<long, PostClass> PostInSection { get; set; }
-        private IList<PostClass> PostInFinding { get; set; }
-
-        private bool IsFinding { get; set; }
-        private bool IsNoticed { get; set; }
-        public bool IsAccuracy { get; private set; }
-
         private string NotificationMessage { get; set; }
         private string LimitReleaseDateFormat { get; set; }
         private string NotAccuracyMessage { get; set; }
+
+        private NotifyInformation NotifyInfo { get; set; }
+        
+        public bool IsStart { get; private set; }
 
         private object SyncObj { get; set; }
 
@@ -102,10 +110,6 @@ namespace OpenTween.UpdateLimitNotification
             LimitReleaseDateFormat = limitReleaseDateFormat;
             NotAccuracyMessage = notAccuracyMessage;
 
-            IsStart = false;
-            SectionStartPost = null;
-            LastSectionEndTime = null;
-
             SyncObj = new object();
             
             TabInformations.GetInstance().AddPostCalled +=
@@ -119,13 +123,12 @@ namespace OpenTween.UpdateLimitNotification
         /// このメソッドを実行すると、最初に過去のポストを遡り、セクションを探します。
         /// セクションが探し終わると規制通知が開始されます。
         /// 
-        /// このメソッドは、他のスレッドがこのクラスを使用中でなければ、
-        /// セクションを探す処理を待つことなく、すぐに処理を返します。
-        /// 
         /// セクションを探している最中にエラーが発生した場合は、
         /// TaskExceptionイベントが呼び出され、規制通知は開始されません。
+        /// 
+        /// このメソッドは非同期です。すぐに処理が戻ります。
         /// </summary>
-        public void Start()
+        public void StartAsync()
         {
             lock (SyncObj)
             {
@@ -135,66 +138,26 @@ namespace OpenTween.UpdateLimitNotification
                 }
                 IsStart = true;
 
-                StartFindSection();                
+                StartFindSection();
             }
         }
 
         /// <summary>
         /// 規制通知を終了します。
         /// 現在のアカウントの規制通知のための情報はすべてクリアされます。
+        /// 
+        /// このメソッドは非同期ではありませんが、すぐに処理が終わります。
+        /// 現在動作中の処理があっても、その終了を待ちません。
+        /// タイミングによってはStopメソッド実行後も規制通知が行われるかもしれませんが、
+        /// エラーなどは出ませんし、直ちにStartメソッドを呼び出して次の規制通知を開始することもできます。
         /// </summary>
         public void Stop()
         {
             lock (SyncObj)
             {
                 IsStart = false;
-
-                PostInSection = null;
-                PostInFinding = null;
+                NotifyInfo = null;
             }
-        }
-
-        /// <summary>
-        /// 設定を変更します。
-        /// 
-        /// このメソッドは通知を行う条件や、メッセージなどを変更するだけです。
-        /// 現在の規制通知を止めたり、規制通知情報をクリアしたりなど、主要な動作は変更しません。
-        /// </summary>
-        /// <param name="notifyCount">規制通知を行うポスト数</param>
-        /// <param name="notificationMassage">通知メッセージ</param>
-        /// <param name="limitReleaseDateFormat">規制解除時刻フォーマット</param>
-        /// <param name="notAccuracyMessage">不正確時に付加されるメッセージ</param>
-        public void ChangeSetting(
-            int notifyCount,
-            string notificationMassage,
-            string limitReleaseDateFormat,
-            string notAccuracyMessage)
-        {
-            lock (SyncObj)
-            {
-                if (NotifyCount != notifyCount)
-                {
-                    IsNoticed = false;
-                }
-                NotifyCount = notifyCount;
-                NotificationMessage = notificationMassage;
-                LimitReleaseDateFormat = limitReleaseDateFormat;
-                NotAccuracyMessage = notAccuracyMessage;
-            }
-        }
-
-        /// <summary>
-        /// 規制通知を再度開始します。
-        /// これはStopメソッドを呼び出した後にStartメソッドを呼び出した動作と同じです。
-        /// 現在の規制通知情報はクリアされます。
-        /// 
-        /// Startメソッドでは、過去のポストからセクションを探し出そうとするので、
-        /// 規制通知が不正確な時にこのメソッドを呼び出すと正確になるかもしれません。
-        /// </summary>
-        public void Restart()
-        {
-            Stop();
-            Start();
         }
 
         /// <summary>
@@ -208,14 +171,20 @@ namespace OpenTween.UpdateLimitNotification
         /// </summary>
         private void StartFindSection()
         {
-            PostInSection = new Dictionary<long, PostClass>();
-            PostInFinding = new List<PostClass>();
+            NotifyInfo = new NotifyInformation();
+            NotifyInfo.PostInSection = new Dictionary<long, PostClass>();
+            NotifyInfo.PostInFinding = new List<PostClass>();
+            NotifyInfo.IsFinding = true;
+            NotifyInfo.IsNoticed = false;
+            NotifyInfo.IsAccuracy = false;
 
-            IsFinding = true;
-            IsNoticed = false;
-            IsAccuracy = false;
+            var notifyInfo = NotifyInfo;
 
-            var t = Task.Factory.StartNew(FindSection);
+            var t = Task.Factory.StartNew(
+                () =>
+                    {
+                        FindSection(notifyInfo);
+                    });
 
             // セクションを探し中に例外が発生した場合は、Stopメソッドを呼び出して規制通知を停止します。
             // 再度規制通知の開始を試みるかは使用者に委ねられます。
@@ -229,18 +198,15 @@ namespace OpenTween.UpdateLimitNotification
             t.ContinueWith(
                 (task) =>
                 {
-                    lock (SyncObj)
+                    lock (notifyInfo)
                     {
-                        IsFinding = false;
-                        if (PostInFinding.Count() >= 1)
-                        {
-                            foreach (var post in PostInFinding)
-                            {
-                                CheckPost(post);
-                            }
-                            PostInFinding.Clear();
-                        }
+                        notifyInfo.IsFinding = false;
                     }
+                    foreach (var post in notifyInfo.PostInFinding)
+                    {
+                        CheckPost(post, notifyInfo);
+                    }
+                    notifyInfo.PostInFinding.Clear();
                 }, TaskContinuationOptions.NotOnFaulted);
         }
 
@@ -258,7 +224,7 @@ namespace OpenTween.UpdateLimitNotification
         /// そのためIsAccuracyフラグをfalseにセットし、不正確であることを周知します。
         /// 次のセクションからは前述した動作で探します。
         /// </summary>
-        private void FindSection()
+        private void FindSection(NotifyInformation notifyInfo)
         {
             DateTime now = DateTime.Now;
 
@@ -279,8 +245,8 @@ namespace OpenTween.UpdateLimitNotification
                     if (now > post.PostedOrRetweetedAt.AddHours(SECTION_HOUR))
                     {
                         foundNoPostSection = true;
-                        LastSectionEndTime = post.PostedOrRetweetedAt.AddHours(SECTION_HOUR);
-                        IsAccuracy = true;
+                        notifyInfo.LastSectionEndTime = post.PostedOrRetweetedAt.AddHours(SECTION_HOUR);
+                        notifyInfo.IsAccuracy = true;
                         break;
                     }
                 }
@@ -289,9 +255,9 @@ namespace OpenTween.UpdateLimitNotification
                     if (nextPost.PostedOrRetweetedAt > post.PostedOrRetweetedAt.AddHours(SECTION_HOUR))
                     {
                         foundNoPostSection = true;
-                        LastSectionEndTime = post.PostedOrRetweetedAt.AddHours(SECTION_HOUR);
-                        SectionStartPost = nextPost;
-                        IsAccuracy = true;
+                        notifyInfo.LastSectionEndTime = post.PostedOrRetweetedAt.AddHours(SECTION_HOUR);
+                        notifyInfo.SectionStartPost = nextPost;
+                        notifyInfo.IsAccuracy = true;
                         break;
                     }
                 }
@@ -304,57 +270,106 @@ namespace OpenTween.UpdateLimitNotification
 
                 if (postCreatedDescArray.Count() == 0)
                 {
-                    LastSectionEndTime = now;
-                    IsAccuracy = true;
+                    notifyInfo.LastSectionEndTime = now;
+                    notifyInfo.IsAccuracy = true;
                 }
                 else if (postCreatedDescArray.Count() <= FINDING_GET_COUNT - 1)
                 {
                     int firstPostIndex = postCreatedDescArray.Count() - 1;
-                    LastSectionEndTime = postCreatedDescArray[firstPostIndex].PostedOrRetweetedAt.AddSeconds(-1);
-                    SectionStartPost = postCreatedDescArray[firstPostIndex];
-                    IsAccuracy = true;
+                    notifyInfo.LastSectionEndTime = postCreatedDescArray[firstPostIndex].PostedOrRetweetedAt.AddSeconds(-1);
+                    notifyInfo.SectionStartPost = postCreatedDescArray[firstPostIndex];
+                    notifyInfo.IsAccuracy = true;
                 }
                 else
                 {
-                    LastSectionEndTime = postCreatedDescArray[126].PostedOrRetweetedAt.AddSeconds(-1);
-                    SectionStartPost = postCreatedDescArray[126];
-                    IsAccuracy = false;
+                    notifyInfo.LastSectionEndTime = postCreatedDescArray[126].PostedOrRetweetedAt.AddSeconds(-1);
+                    notifyInfo.SectionStartPost = postCreatedDescArray[126];
+                    notifyInfo.IsAccuracy = false;
                 }
             }
 
-            if (SectionStartPost != null)
+            if (notifyInfo.SectionStartPost != null)
             {
                 while (
-                    SectionStartPost != null && 
-                    now > SectionStartPost.PostedOrRetweetedAt.AddHours(SECTION_HOUR))
+                    notifyInfo.SectionStartPost != null &&
+                    now > notifyInfo.SectionStartPost.PostedOrRetweetedAt.AddHours(SECTION_HOUR))
                 {
-                    LastSectionEndTime = SectionStartPost.PostedOrRetweetedAt.AddHours(SECTION_HOUR);
-                    SectionStartPost =
+                    notifyInfo.LastSectionEndTime = notifyInfo.SectionStartPost.PostedOrRetweetedAt.AddHours(SECTION_HOUR);
+                    notifyInfo.SectionStartPost =
                         (from post in postList
-                         where post.PostedOrRetweetedAt >= LastSectionEndTime
+                         where post.PostedOrRetweetedAt >= notifyInfo.LastSectionEndTime
                          orderby post.PostedOrRetweetedAt
                          select post).FirstOrDefault();
                 }
 
                 var postInSectionQuery =
                     from post in postList
-                    where post.PostedOrRetweetedAt >= SectionStartPost.PostedOrRetweetedAt
+                    where post.PostedOrRetweetedAt >= notifyInfo.SectionStartPost.PostedOrRetweetedAt
                     select post;
 
-                PostInSection.Clear();
-                if (SectionStartPost != null)
+                notifyInfo.PostInSection.Clear();
+                if (notifyInfo.SectionStartPost != null)
                 {
                     foreach (var post in postInSectionQuery)
                     {
-                        if (!PostInSection.ContainsKey(post.StatusId))
+                        if (!notifyInfo.PostInSection.ContainsKey(post.StatusId))
                         {
-                            PostInSection[post.StatusId] = post;
+                            notifyInfo.PostInSection[post.StatusId] = post;
                         }
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// 設定を変更します。
+        /// 
+        /// このメソッドは通知を行う条件や、メッセージなどを変更するだけです。
+        /// 現在の規制通知を止めたり、規制通知情報をクリアしたりなど、主要な動作は変更しません。
+        /// </summary>
+        /// <param name="notifyCount">規制通知を行うポスト数</param>
+        /// <param name="notificationMassage">通知メッセージ</param>
+        /// <param name="limitReleaseDateFormat">規制解除時刻フォーマット</param>
+        /// <param name="notAccuracyMessage">不正確時に付加されるメッセージ</param>
+        public void ChangeSetting(
+            int notifyCount,
+            string notificationMassage,
+            string limitReleaseDateFormat,
+            string notAccuracyMessage)
+        {
+            var notifyInfo = NotifyInfo;
+
+            if (NotifyCount != notifyCount)
+            {
+                if (notifyInfo != null)
+                {
+                    lock (notifyInfo)
+                    {
+                        notifyInfo.IsNoticed = false;
+                    }
+                }
+            }
+
+            NotifyCount = notifyCount;
+            NotificationMessage = notificationMassage;
+            LimitReleaseDateFormat = limitReleaseDateFormat;
+            NotAccuracyMessage = notAccuracyMessage;
+            
+        }
+
+        /// <summary>
+        /// 規制通知を再度開始します。
+        /// これはStopメソッドを呼び出した後にStartメソッドを呼び出した動作と同じです。
+        /// 現在の規制通知情報はクリアされます。
+        /// 
+        /// Startメソッドでは、過去のポストからセクションを探し出そうとするので、
+        /// 規制通知が不正確な時にこのメソッドを呼び出すと正確になるかもしれません。
+        /// </summary>
+        public void Restart()
+        {
+            Stop();
+            StartAsync();
+        }
 
         /// <summary>
         /// TabInformationクラスにポストが追加されたときに呼び出されるイベントです。
@@ -370,6 +385,8 @@ namespace OpenTween.UpdateLimitNotification
         /// <param name="e">追加されたPostClassが入っているPostClassEventArgs</param>
         private void UpdateLimitNotification_AddPostCalled(object sender, Event.PostClassEventArgs e)
         {
+            NotifyInformation notifyInfo;
+
             lock (SyncObj)
             {
                 if (!IsStart)
@@ -377,15 +394,24 @@ namespace OpenTween.UpdateLimitNotification
                     return;
                 }
 
-                if (IsFinding)
+                notifyInfo = NotifyInfo;
+            }
+
+            if (notifyInfo == null)
+            {
+                return;
+            }
+
+            lock (notifyInfo)
+            {
+                if (notifyInfo.IsFinding)
                 {
-                    PostInFinding.Add(e.Post);
-                }
-                else
-                {
-                    CheckPost(e.Post);
+                    notifyInfo.PostInFinding.Add(e.Post);
+                    return;
                 }
             }
+
+            CheckPost(e.Post, notifyInfo);
         }
 
         /// <summary>
@@ -395,82 +421,85 @@ namespace OpenTween.UpdateLimitNotification
         /// 通知ポスト数NotifyCountに達したときに規制通知を行います。
         /// </summary>
         /// <param name="post">チェックするPostClass</param>
-        private void CheckPost(PostClass post)
+        private void CheckPost(PostClass post, NotifyInformation notifyInfo)
         {
             if (post.IsDm)
             {
                 return;
             }
-            if (!String.IsNullOrEmpty(post.RetweetedBy) && !Twitter.IsCurrentUser(post.RetweetedBy) || 
+            if (!String.IsNullOrEmpty(post.RetweetedBy) && !Twitter.IsCurrentUser(post.RetweetedBy) ||
                 String.IsNullOrEmpty(post.RetweetedBy) && !Twitter.IsCurrentUser(post.ScreenName))
             {
                 return;
             }
-            if (LastSectionEndTime > post.PostedOrRetweetedAt)
+
+            lock (notifyInfo)
             {
-                return;
-            }
-
-            if (!PostInSection.ContainsKey(post.StatusId))
-            {
-                PostInSection[post.StatusId] = post;
-            }
-
-            if (SectionStartPost == null ||
-                SectionStartPost.PostedOrRetweetedAt > post.PostedOrRetweetedAt)
-            {
-                SectionStartPost = post;
-            }
-
-            if (post.PostedOrRetweetedAt > SectionStartPost.PostedOrRetweetedAt.AddHours(SECTION_HOUR))
-            {
-                LastSectionEndTime = SectionStartPost.PostedOrRetweetedAt.AddHours(SECTION_HOUR);
-                SectionStartPost = post;
-
-                var outOfSectionArray =
-                    (from postPair in PostInSection
-                        where postPair.Value.PostedOrRetweetedAt < LastSectionEndTime
-                        orderby postPair.Value.PostedOrRetweetedAt
-                        select postPair).ToArray();
-
-                foreach (var outPost in outOfSectionArray)
+                if (notifyInfo.LastSectionEndTime > post.PostedOrRetweetedAt)
                 {
-                    PostInSection.Remove(outPost);
+                    return;
                 }
 
-                IsNoticed = false;
-            }
-            else
-            {
-                if (PostInSection.Count >= NotifyCount)
+                if (!notifyInfo.PostInSection.ContainsKey(post.StatusId))
                 {
-                    if (!IsNoticed)
+                    notifyInfo.PostInSection[post.StatusId] = post;
+                }
+
+                if (notifyInfo.SectionStartPost == null ||
+                    notifyInfo.SectionStartPost.PostedOrRetweetedAt > post.PostedOrRetweetedAt)
+                {
+                    notifyInfo.SectionStartPost = post;
+                }
+
+                if (post.PostedOrRetweetedAt > notifyInfo.SectionStartPost.PostedOrRetweetedAt.AddHours(SECTION_HOUR))
+                {
+                    notifyInfo.LastSectionEndTime = notifyInfo.SectionStartPost.PostedOrRetweetedAt.AddHours(SECTION_HOUR);
+                    notifyInfo.SectionStartPost = post;
+
+                    var outOfSectionArray =
+                        (from postPair in notifyInfo.PostInSection
+                         where postPair.Value.PostedOrRetweetedAt < notifyInfo.LastSectionEndTime
+                         orderby postPair.Value.PostedOrRetweetedAt
+                         select postPair).ToArray();
+
+                    foreach (var outPost in outOfSectionArray)
                     {
-                        IsNoticed = true;
-                        var t = Task.Factory.StartNew(
-                            () =>
-                            {
-                                DateTime limitReleaseDate = SectionStartPost.PostedOrRetweetedAt.AddHours(SECTION_HOUR);
-                                string limitReleaseDateString = limitReleaseDate.ToString(LimitReleaseDateFormat);
-                                string notAccuracyMessage = "";
-                                if (!IsAccuracy)
+                        notifyInfo.PostInSection.Remove(outPost);
+                    }
+
+                    notifyInfo.IsNoticed = false;
+                }
+                else
+                {
+                    if (notifyInfo.PostInSection.Count >= NotifyCount)
+                    {
+                        if (!notifyInfo.IsNoticed)
+                        {
+                            notifyInfo.IsNoticed = true;
+                            var t = Task.Factory.StartNew(
+                                () =>
                                 {
-                                    notAccuracyMessage = NotAccuracyMessage;
-                                }
-                                Twitter.PostStatus(
-                                    String.Format(NotificationMessage,
-                                    PostInSection.Count(), limitReleaseDateString, notAccuracyMessage),
-                                    0);
-                            });
-                        t.ContinueWith(
-                            (task) =>
-                            {
-                                CallTaskExceptionEvent(task.Exception);
-                            }, TaskContinuationOptions.OnlyOnFaulted);
+                                    DateTime limitReleaseDate = notifyInfo.SectionStartPost.PostedOrRetweetedAt.AddHours(SECTION_HOUR);
+                                    string limitReleaseDateString = limitReleaseDate.ToString(LimitReleaseDateFormat);
+                                    string notAccuracyMessage = "";
+                                    if (!notifyInfo.IsAccuracy)
+                                    {
+                                        notAccuracyMessage = NotAccuracyMessage;
+                                    }
+                                    Twitter.PostStatus(
+                                        String.Format(NotificationMessage,
+                                        notifyInfo.PostInSection.Count(), limitReleaseDateString, notAccuracyMessage),
+                                        0);
+                                });
+                            t.ContinueWith(
+                                (task) =>
+                                {
+                                    CallTaskExceptionEvent(task.Exception);
+                                }, TaskContinuationOptions.OnlyOnFaulted);
+                        }
                     }
                 }
-            }
-            
+            }            
         }
 
         /// <summary>
