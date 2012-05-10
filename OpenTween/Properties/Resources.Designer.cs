@@ -2866,6 +2866,186 @@ namespace OpenTween.Properties {
         }
         
         /// <summary>
+        ///   規制通知の正確性： に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ULNAccuracyToolStripMenuItemText1 {
+            get {
+                return ResourceManager.GetString("ULNAccuracyToolStripMenuItemText1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   不明 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ULNAccuracyToolStripMenuItemText2 {
+            get {
+                return ResourceManager.GetString("ULNAccuracyToolStripMenuItemText2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   正確 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ULNAccuracyToolStripMenuItemText3 {
+            get {
+                return ResourceManager.GetString("ULNAccuracyToolStripMenuItemText3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   不正確 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ULNAccuracyToolStripMenuItemText4 {
+            get {
+                return ResourceManager.GetString("ULNAccuracyToolStripMenuItemText4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   セクション中の投稿数： に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ULNCountInSectionToolStripMenuItemText1 {
+            get {
+                return ResourceManager.GetString("ULNCountInSectionToolStripMenuItemText1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   不明 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ULNCountInSectionToolStripMenuItemText2 {
+            get {
+                return ResourceManager.GetString("ULNCountInSectionToolStripMenuItemText2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   投稿内容： に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ULNPostContentToolStripMenuItemText1 {
+            get {
+                return ResourceManager.GetString("ULNPostContentToolStripMenuItemText1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   （投稿開始ポストは見つかりませんでした） に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ULNPostContentToolStripMenuItemText2 {
+            get {
+                return ResourceManager.GetString("ULNPostContentToolStripMenuItemText2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   yyyy年MM月dd日 HH時mm分ss秒 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ULNPostDateFormat {
+            get {
+                return ResourceManager.GetString("ULNPostDateFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   投稿時間： に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ULNPostDateToolStripMenuItemText1 {
+            get {
+                return ResourceManager.GetString("ULNPostDateToolStripMenuItemText1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   不明 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ULNPostDateToolStripMenuItemText2 {
+            get {
+                return ResourceManager.GetString("ULNPostDateToolStripMenuItemText2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   規制解除時刻： に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ULNReleaseDateToolStripMenuItemText1 {
+            get {
+                return ResourceManager.GetString("ULNReleaseDateToolStripMenuItemText1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   不明 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ULNReleaseDateToolStripMenuItemText2 {
+            get {
+                return ResourceManager.GetString("ULNReleaseDateToolStripMenuItemText2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   開始 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ULNRestartToolStripMenuItemText1 {
+            get {
+                return ResourceManager.GetString("ULNRestartToolStripMenuItemText1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   再起動 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ULNRestartToolStripMenuItemText2 {
+            get {
+                return ResourceManager.GetString("ULNRestartToolStripMenuItemText2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   セクションの再検索 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ULNRestartToolStripMenuItemText3 {
+            get {
+                return ResourceManager.GetString("ULNRestartToolStripMenuItemText3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ステータス： に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ULNStatusToolStripMenuItemText1 {
+            get {
+                return ResourceManager.GetString("ULNStatusToolStripMenuItemText1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   停止しています に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ULNStatusToolStripMenuItemText2 {
+            get {
+                return ResourceManager.GetString("ULNStatusToolStripMenuItemText2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   セクションを探しています に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ULNStatusToolStripMenuItemText3 {
+            get {
+                return ResourceManager.GetString("ULNStatusToolStripMenuItemText3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   動作しています に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ULNStatusToolStripMenuItemText4 {
+            get {
+                return ResourceManager.GetString("ULNStatusToolStripMenuItemText4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   You are not authorized. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string Unauthorized {

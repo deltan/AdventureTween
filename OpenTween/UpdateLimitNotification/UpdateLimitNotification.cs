@@ -47,6 +47,9 @@ namespace OpenTween.UpdateLimitNotification
     /// </summary>
     sealed class UpdateLimitNotification
     {
+        /// <summary>
+        /// 規制通知のための情報を保持するクラス
+        /// </summary>
         private class NotifyInformation
         {
             public PostClass SectionStartPost { get; set; }
@@ -57,6 +60,52 @@ namespace OpenTween.UpdateLimitNotification
             public bool IsAccuracy { get; set; }
             public bool IsFinding { get; set; }
             public bool IsNoticed { get; set; }
+        }
+
+        /// <summary>
+        /// 規制通知の状態を表すクラス
+        /// </summary>
+        public class Status
+        {
+            /// <summary>
+            /// 規制通知が開始されているかどうかをあらわすフラグ。
+            /// </summary>
+            public bool IsStarted { get; set; }
+
+            /// <summary>
+            /// セクションを検索中かどうかをあらわすフラグ。
+            /// </summary>
+            public bool IsFinding { get; set; }
+
+            /// <summary>
+            /// 通知情報が正確かどうかをあらわすフラグ。
+            /// </summary>
+            public bool IsAccuracy { get; set; }
+
+            /// <summary>
+            /// セクション中に規制通知を行ったかをあらわすフラグ。
+            /// </summary>
+            public bool IsNoticed { get; set; }
+
+            /// <summary>
+            /// セクションの開始ポスト
+            /// </summary>
+            public PostClass SectionStartPost { get; set; }
+
+            /// <summary>
+            /// セクション中に投稿した回数。
+            /// </summary>
+            public int CountInSection { get; set; }
+
+            /// <summary>
+            /// 規制解除時刻
+            /// </summary>
+            public DateTime ReleaseDate { get; set; }
+
+            /// <summary>
+            /// 規制解除時刻を設定したフォーマットで文字列化したもの
+            /// </summary>
+            public string ReleaseDateString { get; set; }
         }
 
         #region イベント
@@ -102,6 +151,57 @@ namespace OpenTween.UpdateLimitNotification
         private NotifyInformation NotifyInfo { get; set; }
         
         public bool IsStart { get; private set; }
+
+        /// <summary>
+        /// 現時点における規制通知の状態を、Statusクラスにセットした形で取得できます。
+        /// すべての値はオリジナルのコピーです。
+        /// 取得したクラスの値を変更しても、規制通知の動作および状態には影響を及ぼしません。
+        /// 
+        /// 規制通知が開始されていない場合、IsStartedにfalseがセットされ、
+        /// それ以外の値は初期値がセットされます。
+        /// セクション検索中の場合、IsStartedとIsFindingにtrueがセットされ、
+        /// それ以外の値は初期値がセットされます。
+        /// 
+        /// それ以外で、規制通知が正常に稼動している場合は、
+        /// ある１つの時点における値がすべての変数にセットされることが保証されます。
+        /// </summary>
+        public Status CurrentStatus
+        {
+            get
+            {
+                NotifyInformation notifyInfo;
+                Status currentStatus = new Status();
+                lock (SyncObj)
+                {
+                    notifyInfo = NotifyInfo;
+                    currentStatus.IsStarted = IsStart;
+                    if (notifyInfo == null || !currentStatus.IsStarted)
+                    {
+                        return currentStatus;
+                    }
+                }
+                lock (notifyInfo)
+                {
+                    currentStatus.IsFinding = notifyInfo.IsFinding;
+                    if (currentStatus.IsFinding)
+                    {
+                        return currentStatus;
+                    }
+
+                    currentStatus.IsAccuracy = notifyInfo.IsAccuracy;
+                    currentStatus.IsNoticed = notifyInfo.IsNoticed;
+                    if (notifyInfo.SectionStartPost != null)
+                    {
+                        currentStatus.SectionStartPost =
+                            Utility.CopyUtility.DeepCopy<PostClass>(notifyInfo.SectionStartPost);
+                        currentStatus.ReleaseDate = currentStatus.SectionStartPost.CreatedAt.AddHours(SECTION_HOUR);
+                        currentStatus.ReleaseDateString = currentStatus.ReleaseDate.ToString(LimitReleaseDateFormat);
+                    }
+                    currentStatus.CountInSection = notifyInfo.PostInSection.Count();
+                }
+                return currentStatus;
+            }
+        }
 
         private object SyncObj { get; set; }
 

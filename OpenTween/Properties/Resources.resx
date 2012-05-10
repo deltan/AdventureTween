@@ -1156,4 +1156,64 @@
   <data name="EditUpdateLimitNotificationNotAccuracyMessage_Validating1" xml:space="preserve">
     <value>規制通知が不正確な時のメッセージを適切に設定してください。</value>
   </data>
+  <data name="ULNAccuracyToolStripMenuItemText1" xml:space="preserve">
+    <value>規制通知の正確性：</value>
+  </data>
+  <data name="ULNAccuracyToolStripMenuItemText2" xml:space="preserve">
+    <value>不明</value>
+  </data>
+  <data name="ULNAccuracyToolStripMenuItemText3" xml:space="preserve">
+    <value>正確</value>
+  </data>
+  <data name="ULNAccuracyToolStripMenuItemText4" xml:space="preserve">
+    <value>不正確</value>
+  </data>
+  <data name="ULNCountInSectionToolStripMenuItemText1" xml:space="preserve">
+    <value>セクション中の投稿数：</value>
+  </data>
+  <data name="ULNCountInSectionToolStripMenuItemText2" xml:space="preserve">
+    <value>不明</value>
+  </data>
+  <data name="ULNPostContentToolStripMenuItemText1" xml:space="preserve">
+    <value>投稿内容：</value>
+  </data>
+  <data name="ULNPostContentToolStripMenuItemText2" xml:space="preserve">
+    <value>（投稿開始ポストは見つかりませんでした）</value>
+  </data>
+  <data name="ULNPostDateFormat" xml:space="preserve">
+    <value>yyyy年MM月dd日 HH時mm分ss秒</value>
+  </data>
+  <data name="ULNPostDateToolStripMenuItemText1" xml:space="preserve">
+    <value>投稿時間：</value>
+  </data>
+  <data name="ULNPostDateToolStripMenuItemText2" xml:space="preserve">
+    <value>不明</value>
+  </data>
+  <data name="ULNReleaseDateToolStripMenuItemText1" xml:space="preserve">
+    <value>規制解除時刻：</value>
+  </data>
+  <data name="ULNReleaseDateToolStripMenuItemText2" xml:space="preserve">
+    <value>不明</value>
+  </data>
+  <data name="ULNRestartToolStripMenuItemText1" xml:space="preserve">
+    <value>開始</value>
+  </data>
+  <data name="ULNRestartToolStripMenuItemText2" xml:space="preserve">
+    <value>再起動</value>
+  </data>
+  <data name="ULNRestartToolStripMenuItemText3" xml:space="preserve">
+    <value>セクションの再検索</value>
+  </data>
+  <data name="ULNStatusToolStripMenuItemText1" xml:space="preserve">
+    <value>ステータス：</value>
+  </data>
+  <data name="ULNStatusToolStripMenuItemText2" xml:space="preserve">
+    <value>停止しています</value>
+  </data>
+  <data name="ULNStatusToolStripMenuItemText3" xml:space="preserve">
+    <value>セクションを探しています</value>
+  </data>
+  <data name="ULNStatusToolStripMenuItemText4" xml:space="preserve">
+    <value>動作しています</value>
+  </data>
 </root>

@@ -37,8 +37,10 @@ using System.Xml.Serialization;
 
 namespace OpenTween
 {
+    [Serializable()]
     public sealed class PostClass : ICloneable
     {
+        [Serializable()]
         public class StatusGeo
         {
             public double Lng { get; set; }

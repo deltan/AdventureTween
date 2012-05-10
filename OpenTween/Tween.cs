@@ -12474,6 +12474,9 @@ namespace OpenTween
             //    TinyUrlConvertToolStripMenuItem.Enabled = false;
             //else
             //    TinyUrlConvertToolStripMenuItem.Enabled = true;
+
+            // 規制通知
+            ULNToolStripMenuItem.Enabled = SettingDialog.UpdateLimitNotificationEnabled;
         }
 
         private void CopyUserIdStripMenuItem_Click(object sender, EventArgs e)
@@ -13173,6 +13176,134 @@ namespace OpenTween
         {
             MatomeMenuItem.Text = MyCommon.ReplaceAppName(MatomeMenuItem.Text);
             AboutMenuItem.Text = MyCommon.ReplaceAppName(AboutMenuItem.Text);
+        }
+
+        /// <summary>
+        /// 規制通知メニューを開いたとき
+        /// </summary>
+        /// <param name="sender">メインフォーム</param>
+        /// <param name="e">イベント引数</param>
+        private void ULNToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            var currentStatus = UpdateLimitNotification.CurrentStatus;
+
+            if (!currentStatus.IsStarted)
+            {
+                ULNRestartToolStripMenuItem.Enabled = true;
+                ULNRestartToolStripMenuItem.Text = Properties.Resources.ULNRestartToolStripMenuItemText1;
+                ULNStatusToolStripMenuItem.Text =
+                    Properties.Resources.ULNStatusToolStripMenuItemText1 + 
+                    Properties.Resources.ULNStatusToolStripMenuItemText2;
+                ULNReleaseDateToolStripMenuItem.Text = 
+                    Properties.Resources.ULNReleaseDateToolStripMenuItemText1 +
+                    Properties.Resources.ULNReleaseDateToolStripMenuItemText2;
+                ULNCountInSectionToolStripMenuItem.Text =
+                    Properties.Resources.ULNCountInSectionToolStripMenuItemText1 +
+                    Properties.Resources.ULNCountInSectionToolStripMenuItemText2;
+                ULNPostToolStripMenuItem.Enabled = false;
+                ULNAccuracyToolStripMenuItem.Text =
+                    Properties.Resources.ULNAccuracyToolStripMenuItemText1 +
+                    Properties.Resources.ULNAccuracyToolStripMenuItemText2;
+                ULNStopToolStripMenuItem.Enabled = false;
+            }
+            else
+            {
+                if (currentStatus.IsFinding == true)
+                {
+                    ULNRestartToolStripMenuItem.Enabled = false;
+                    ULNRestartToolStripMenuItem.Text = Properties.Resources.ULNRestartToolStripMenuItemText2;
+                    ULNStatusToolStripMenuItem.Text = 
+                        Properties.Resources.ULNStatusToolStripMenuItemText1 +
+                        Properties.Resources.ULNStatusToolStripMenuItemText3;
+                    ULNReleaseDateToolStripMenuItem.Text = 
+                        Properties.Resources.ULNReleaseDateToolStripMenuItemText1 +
+                        Properties.Resources.ULNReleaseDateToolStripMenuItemText2;
+                    ULNCountInSectionToolStripMenuItem.Text = 
+                        Properties.Resources.ULNCountInSectionToolStripMenuItemText1 +
+                        Properties.Resources.ULNCountInSectionToolStripMenuItemText2;
+                    ULNPostToolStripMenuItem.Enabled = false;
+                    ULNAccuracyToolStripMenuItem.Text =
+                        Properties.Resources.ULNAccuracyToolStripMenuItemText1 +
+                        Properties.Resources.ULNAccuracyToolStripMenuItemText2;
+                    ULNStopToolStripMenuItem.Enabled = true;
+                }
+                else
+                {
+                    ULNRestartToolStripMenuItem.Enabled = true;
+                    ULNRestartToolStripMenuItem.Text = Properties.Resources.ULNRestartToolStripMenuItemText3;
+                    ULNStatusToolStripMenuItem.Text = 
+                        Properties.Resources.ULNStatusToolStripMenuItemText1 +
+                        Properties.Resources.ULNStatusToolStripMenuItemText4;
+                    if (currentStatus.ReleaseDateString != null)
+                    {
+                        ULNReleaseDateToolStripMenuItem.Text = 
+                            Properties.Resources.ULNReleaseDateToolStripMenuItemText1 +
+                            currentStatus.ReleaseDateString;
+                    }
+                    else
+                    {
+                        ULNReleaseDateToolStripMenuItem.Text = 
+                            Properties.Resources.ULNReleaseDateToolStripMenuItemText1 +
+                            Properties.Resources.ULNReleaseDateToolStripMenuItemText2;
+                    }
+                    ULNCountInSectionToolStripMenuItem.Text = 
+                        Properties.Resources.ULNCountInSectionToolStripMenuItemText1 + 
+                        currentStatus.CountInSection;
+
+                    ULNPostToolStripMenuItem.Enabled = true;
+                    if (currentStatus.SectionStartPost != null)
+                    {
+                        ULNPostContentToolStripMenuItem.Text =
+                             Properties.Resources.ULNPostContentToolStripMenuItemText1 + 
+                            currentStatus.SectionStartPost.TextFromApi;
+                        ULNPostDateToolStripMenuItem.Text =
+                            Properties.Resources.ULNPostDateToolStripMenuItemText1 +
+                            currentStatus.SectionStartPost.CreatedAt.ToString(Properties.Resources.ULNPostDateFormat);
+                    }
+                    else
+                    {
+                        ULNPostContentToolStripMenuItem.Text = 
+                            Properties.Resources.ULNPostContentToolStripMenuItemText1 +
+                            Properties.Resources.ULNPostContentToolStripMenuItemText2;
+                        ULNPostDateToolStripMenuItem.Text = 
+                            Properties.Resources.ULNPostDateToolStripMenuItemText1 +
+                            Properties.Resources.ULNPostDateToolStripMenuItemText2;
+                    }
+                    if (currentStatus.IsAccuracy)
+                    {
+                        ULNAccuracyToolStripMenuItem.Text = 
+                            Properties.Resources.ULNAccuracyToolStripMenuItemText1 +
+                            Properties.Resources.ULNAccuracyToolStripMenuItemText3;
+                    }
+                    else
+                    {
+                        ULNAccuracyToolStripMenuItem.Text =
+                            Properties.Resources.ULNAccuracyToolStripMenuItemText1 +
+                            Properties.Resources.ULNAccuracyToolStripMenuItemText4;
+                    }
+                    ULNStopToolStripMenuItem.Enabled = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 投稿規制通知・再開／セクション再計算メニュークリック時
+        /// </summary>
+        /// <param name="sender">メインフォーム</param>
+        /// <param name="e">イベント引数</param>
+        private void ULNRestartToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UpdateLimitNotification.RestartAsync(null);
+        }
+
+        /// <summary>
+        /// 投稿規制通知・停止メニュークリック時
+        /// </summary>
+        /// <param name="sender">メインフォーム</param>
+        /// <param name="e">イベント引数</param>
+        private void ULNStopToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UpdateLimitNotification.Stop();
         }
     }
 }
