@@ -613,19 +613,22 @@ namespace OpenTween.UpdateLimitNotification
                         if (!notifyInfo.IsNoticed)
                         {
                             notifyInfo.IsNoticed = true;
+
+                            DateTime limitReleaseDate = notifyInfo.SectionStartPost.PostedOrRetweetedAt.AddHours(SECTION_HOUR);
+                            string limitReleaseDateString = limitReleaseDate.ToString(LimitReleaseDateFormat);
+                            string notAccuracyMessage = "";
+                            if (!notifyInfo.IsAccuracy)
+                            {
+                                notAccuracyMessage = NotAccuracyMessage;
+                            }
+                            int countInSection = notifyInfo.PostInSection.Count();
+
                             var t = Task.Factory.StartNew(
                                 () =>
                                 {
-                                    DateTime limitReleaseDate = notifyInfo.SectionStartPost.PostedOrRetweetedAt.AddHours(SECTION_HOUR);
-                                    string limitReleaseDateString = limitReleaseDate.ToString(LimitReleaseDateFormat);
-                                    string notAccuracyMessage = "";
-                                    if (!notifyInfo.IsAccuracy)
-                                    {
-                                        notAccuracyMessage = NotAccuracyMessage;
-                                    }
                                     Twitter.PostStatus(
                                         String.Format(NotificationMessage,
-                                        notifyInfo.PostInSection.Count(), limitReleaseDateString, notAccuracyMessage),
+                                        countInSection, limitReleaseDateString, notAccuracyMessage),
                                         0);
                                 });
                             t.ContinueWith(
