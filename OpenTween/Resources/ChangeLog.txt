@@ -4,6 +4,7 @@
  * OpenTween Ver 1.0.1までの修正が適用されています。
 
  * FIX: AdventureTweenとして開発が開始されました。
+ * NEW: 投稿の規制通知機能がつきました。
 
 OpenTweenの変更履歴はOpenTweenのWebサイトを参照してください。
 OpenTween以前のTweenの変更履歴はTweenのWebサイトを参照してください。
