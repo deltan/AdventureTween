@@ -33,6 +33,7 @@
             this.ToolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.StatusStrip1 = new System.Windows.Forms.StatusStrip();
             this.StatusLabelUrl = new System.Windows.Forms.ToolStripStatusLabel();
+            this.StatusLabel = new OpenTween.OpenTweenCustomControl.ToolStripLabelHistory();
             this.ToolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.HashStripSplitButton = new System.Windows.Forms.ToolStripSplitButton();
             this.ContextMenuPostMode = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -66,6 +67,7 @@
             this.DeleteTabMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TabImage = new System.Windows.Forms.ImageList(this.components);
             this.ImageSelectionPanel = new System.Windows.Forms.Panel();
+            this.ImageSelectedPicture = new OpenTween.OpenTweenCustomControl.PictureBoxEx();
             this.ImagePathPanel = new System.Windows.Forms.Panel();
             this.ImagefilePathText = new System.Windows.Forms.TextBox();
             this.FilePickButton = new System.Windows.Forms.Button();
@@ -77,6 +79,7 @@
             this.SplitContainer3 = new System.Windows.Forms.SplitContainer();
             this.SplitContainer2 = new System.Windows.Forms.SplitContainer();
             this.TableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.UserPicture = new OpenTween.OpenTweenCustomControl.PictureBoxEx();
             this.ContextMenuUserPicture = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.FollowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.UnFollowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -126,6 +129,7 @@
             this.StatusText = new System.Windows.Forms.TextBox();
             this.lblLen = new System.Windows.Forms.Label();
             this.PostButton = new System.Windows.Forms.Button();
+            this.PreviewPicture = new OpenTween.OpenTweenCustomControl.PictureBoxEx();
             this.PreviewScrollBar = new System.Windows.Forms.VScrollBar();
             this.MenuStrip1 = new System.Windows.Forms.MenuStrip();
             this.MenuItemFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -147,6 +151,7 @@
             this.CopySTOTMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CopyURLMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CopyUserIdStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.PasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.MenuItemSubSearch = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemSearchNext = new System.Windows.Forms.ToolStripMenuItem();
@@ -239,9 +244,11 @@
             this.toolStripSeparator45 = new System.Windows.Forms.ToolStripSeparator();
             this.ULNStatusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ULNReleaseDateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ULNCountInSectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ULNPostToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ULNPostContentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ULNPostDateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ULNAccuracyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator46 = new System.Windows.Forms.ToolStripSeparator();
             this.ULNStopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItemUserStream = new System.Windows.Forms.ToolStripMenuItem();
@@ -319,12 +326,6 @@
             this.ToolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.TimerRefreshIcon = new System.Windows.Forms.Timer(this.components);
             this.PostStateImageList = new System.Windows.Forms.ImageList(this.components);
-            this.ULNCountInSectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ULNAccuracyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.StatusLabel = new OpenTween.OpenTweenCustomControl.ToolStripLabelHistory();
-            this.ImageSelectedPicture = new OpenTween.OpenTweenCustomControl.PictureBoxEx();
-            this.UserPicture = new OpenTween.OpenTweenCustomControl.PictureBoxEx();
-            this.PreviewPicture = new OpenTween.OpenTweenCustomControl.PictureBoxEx();
             this.ToolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.ToolStripContainer1.ContentPanel.SuspendLayout();
             this.ToolStripContainer1.TopToolStripPanel.SuspendLayout();
@@ -341,6 +342,7 @@
             this.TimelinePanel.SuspendLayout();
             this.ContextMenuTabProperty.SuspendLayout();
             this.ImageSelectionPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ImageSelectedPicture)).BeginInit();
             this.ImagePathPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer3)).BeginInit();
             this.SplitContainer3.Panel1.SuspendLayout();
@@ -351,15 +353,14 @@
             this.SplitContainer2.Panel2.SuspendLayout();
             this.SplitContainer2.SuspendLayout();
             this.TableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.UserPicture)).BeginInit();
             this.ContextMenuUserPicture.SuspendLayout();
             this.ContextMenuPostBrowser.SuspendLayout();
             this.ContextMenuSource.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PreviewPicture)).BeginInit();
             this.MenuStrip1.SuspendLayout();
             this.ContextMenuFile.SuspendLayout();
             this.ContextMenuOperate.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ImageSelectedPicture)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.UserPicture)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PreviewPicture)).BeginInit();
             this.SuspendLayout();
             // 
             // ToolStripContainer1
@@ -402,6 +403,15 @@
             this.StatusLabelUrl.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.StatusLabelUrl.Name = "StatusLabelUrl";
             this.StatusLabelUrl.Spring = true;
+            // 
+            // StatusLabel
+            // 
+            this.StatusLabel.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+            this.StatusLabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.StatusLabel.DoubleClickEnabled = true;
+            this.StatusLabel.Name = "StatusLabel";
+            resources.ApplyResources(this.StatusLabel, "StatusLabel");
+            this.StatusLabel.DoubleClick += new System.EventHandler(this.StatusLabel_DoubleClick);
             // 
             // ToolStripStatusLabel1
             // 
@@ -678,6 +688,12 @@
             this.ImageSelectionPanel.Name = "ImageSelectionPanel";
             this.ImageSelectionPanel.VisibleChanged += new System.EventHandler(this.ImageSelectionPanel_VisibleChanged);
             // 
+            // ImageSelectedPicture
+            // 
+            resources.ApplyResources(this.ImageSelectedPicture, "ImageSelectedPicture");
+            this.ImageSelectedPicture.Name = "ImageSelectedPicture";
+            this.ImageSelectedPicture.TabStop = false;
+            // 
             // ImagePathPanel
             // 
             this.ImagePathPanel.Controls.Add(this.ImagefilePathText);
@@ -791,6 +807,19 @@
             this.TableLayoutPanel1.Controls.Add(this.DateTimeLabel, 2, 0);
             this.TableLayoutPanel1.Controls.Add(this.SourceLinkLabel, 3, 0);
             this.TableLayoutPanel1.Name = "TableLayoutPanel1";
+            // 
+            // UserPicture
+            // 
+            this.UserPicture.BackColor = System.Drawing.Color.White;
+            this.UserPicture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.UserPicture.ContextMenuStrip = this.ContextMenuUserPicture;
+            resources.ApplyResources(this.UserPicture, "UserPicture");
+            this.UserPicture.Name = "UserPicture";
+            this.TableLayoutPanel1.SetRowSpan(this.UserPicture, 2);
+            this.UserPicture.TabStop = false;
+            this.UserPicture.DoubleClick += new System.EventHandler(this.UserPicture_DoubleClick);
+            this.UserPicture.MouseEnter += new System.EventHandler(this.UserPicture_MouseEnter);
+            this.UserPicture.MouseLeave += new System.EventHandler(this.UserPicture_MouseLeave);
             // 
             // ContextMenuUserPicture
             // 
@@ -1146,6 +1175,12 @@
             this.PostButton.UseVisualStyleBackColor = true;
             this.PostButton.Click += new System.EventHandler(this.PostButton_Click);
             // 
+            // PreviewPicture
+            // 
+            resources.ApplyResources(this.PreviewPicture, "PreviewPicture");
+            this.PreviewPicture.Name = "PreviewPicture";
+            this.PreviewPicture.TabStop = false;
+            // 
             // PreviewScrollBar
             // 
             resources.ApplyResources(this.PreviewScrollBar, "PreviewScrollBar");
@@ -1267,6 +1302,7 @@
             this.CopySTOTMenuItem,
             this.CopyURLMenuItem,
             this.CopyUserIdStripMenuItem,
+            this.PasteToolStripMenuItem,
             this.ToolStripSeparator6,
             this.MenuItemSubSearch,
             this.MenuItemSearchNext,
@@ -1305,6 +1341,12 @@
             this.CopyUserIdStripMenuItem.Name = "CopyUserIdStripMenuItem";
             resources.ApplyResources(this.CopyUserIdStripMenuItem, "CopyUserIdStripMenuItem");
             this.CopyUserIdStripMenuItem.Click += new System.EventHandler(this.CopyUserIdStripMenuItem_Click);
+            // 
+            // PasteToolStripMenuItem
+            // 
+            this.PasteToolStripMenuItem.Name = "PasteToolStripMenuItem";
+            resources.ApplyResources(this.PasteToolStripMenuItem, "PasteToolStripMenuItem");
+            this.PasteToolStripMenuItem.Click += new System.EventHandler(this.PasteToolStripMenuItem_Click);
             // 
             // ToolStripSeparator6
             // 
@@ -1936,6 +1978,11 @@
             this.ULNReleaseDateToolStripMenuItem.Name = "ULNReleaseDateToolStripMenuItem";
             resources.ApplyResources(this.ULNReleaseDateToolStripMenuItem, "ULNReleaseDateToolStripMenuItem");
             // 
+            // ULNCountInSectionToolStripMenuItem
+            // 
+            this.ULNCountInSectionToolStripMenuItem.Name = "ULNCountInSectionToolStripMenuItem";
+            resources.ApplyResources(this.ULNCountInSectionToolStripMenuItem, "ULNCountInSectionToolStripMenuItem");
+            // 
             // ULNPostToolStripMenuItem
             // 
             this.ULNPostToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1953,6 +2000,11 @@
             // 
             this.ULNPostDateToolStripMenuItem.Name = "ULNPostDateToolStripMenuItem";
             resources.ApplyResources(this.ULNPostDateToolStripMenuItem, "ULNPostDateToolStripMenuItem");
+            // 
+            // ULNAccuracyToolStripMenuItem
+            // 
+            this.ULNAccuracyToolStripMenuItem.Name = "ULNAccuracyToolStripMenuItem";
+            resources.ApplyResources(this.ULNAccuracyToolStripMenuItem, "ULNAccuracyToolStripMenuItem");
             // 
             // toolStripSeparator46
             // 
@@ -2483,50 +2535,6 @@
             this.PostStateImageList.Images.SetKeyName(13, "S13.ico");
             this.PostStateImageList.Images.SetKeyName(14, "S14.ico");
             // 
-            // ULNCountInSectionToolStripMenuItem
-            // 
-            this.ULNCountInSectionToolStripMenuItem.Name = "ULNCountInSectionToolStripMenuItem";
-            resources.ApplyResources(this.ULNCountInSectionToolStripMenuItem, "ULNCountInSectionToolStripMenuItem");
-            // 
-            // ULNAccuracyToolStripMenuItem
-            // 
-            this.ULNAccuracyToolStripMenuItem.Name = "ULNAccuracyToolStripMenuItem";
-            resources.ApplyResources(this.ULNAccuracyToolStripMenuItem, "ULNAccuracyToolStripMenuItem");
-            // 
-            // StatusLabel
-            // 
-            this.StatusLabel.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
-            this.StatusLabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.StatusLabel.DoubleClickEnabled = true;
-            this.StatusLabel.Name = "StatusLabel";
-            resources.ApplyResources(this.StatusLabel, "StatusLabel");
-            this.StatusLabel.DoubleClick += new System.EventHandler(this.StatusLabel_DoubleClick);
-            // 
-            // ImageSelectedPicture
-            // 
-            resources.ApplyResources(this.ImageSelectedPicture, "ImageSelectedPicture");
-            this.ImageSelectedPicture.Name = "ImageSelectedPicture";
-            this.ImageSelectedPicture.TabStop = false;
-            // 
-            // UserPicture
-            // 
-            this.UserPicture.BackColor = System.Drawing.Color.White;
-            this.UserPicture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.UserPicture.ContextMenuStrip = this.ContextMenuUserPicture;
-            resources.ApplyResources(this.UserPicture, "UserPicture");
-            this.UserPicture.Name = "UserPicture";
-            this.TableLayoutPanel1.SetRowSpan(this.UserPicture, 2);
-            this.UserPicture.TabStop = false;
-            this.UserPicture.DoubleClick += new System.EventHandler(this.UserPicture_DoubleClick);
-            this.UserPicture.MouseEnter += new System.EventHandler(this.UserPicture_MouseEnter);
-            this.UserPicture.MouseLeave += new System.EventHandler(this.UserPicture_MouseLeave);
-            // 
-            // PreviewPicture
-            // 
-            resources.ApplyResources(this.PreviewPicture, "PreviewPicture");
-            this.PreviewPicture.Name = "PreviewPicture";
-            this.PreviewPicture.TabStop = false;
-            // 
             // TweenMain
             // 
             this.AllowDrop = true;
@@ -2565,6 +2573,7 @@
             this.TimelinePanel.ResumeLayout(false);
             this.ContextMenuTabProperty.ResumeLayout(false);
             this.ImageSelectionPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ImageSelectedPicture)).EndInit();
             this.ImagePathPanel.ResumeLayout(false);
             this.ImagePathPanel.PerformLayout();
             this.SplitContainer3.Panel1.ResumeLayout(false);
@@ -2578,16 +2587,15 @@
             this.SplitContainer2.ResumeLayout(false);
             this.TableLayoutPanel1.ResumeLayout(false);
             this.TableLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.UserPicture)).EndInit();
             this.ContextMenuUserPicture.ResumeLayout(false);
             this.ContextMenuPostBrowser.ResumeLayout(false);
             this.ContextMenuSource.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PreviewPicture)).EndInit();
             this.MenuStrip1.ResumeLayout(false);
             this.MenuStrip1.PerformLayout();
             this.ContextMenuFile.ResumeLayout(false);
             this.ContextMenuOperate.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.ImageSelectedPicture)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.UserPicture)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PreviewPicture)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2889,6 +2897,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator46;
         private System.Windows.Forms.ToolStripMenuItem ULNCountInSectionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ULNAccuracyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem PasteToolStripMenuItem;
 
     }
 }

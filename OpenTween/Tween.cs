@@ -6499,7 +6499,7 @@ namespace OpenTween
                             OpenURLMenuItem_Click(null, null);
                             return true;
                         case Keys.V:
-                            PasteClipboard(Focused);                     
+                            PasteClipboard(false);                     
                             return false;
                     }
                     //フォーカスList
@@ -6923,12 +6923,14 @@ namespace OpenTween
         }
 
         /// <summary>
-        /// クリップボードの中身をペーストします
+        /// クリップボードの中身をペーストします。
         /// </summary>
-        /// <param name="keyFocused">
-        /// キー入力ででペーストされた場合は、
-        /// キーが入力されたときにフォーカスしていたコントロールの情報が入ります。</param>
-        private void PasteClipboard(FocusedControl keyFocused)
+        /// <param name="pasteStatusText">
+        /// クリップボードにテキストが入っている場合に、
+        /// そのテキストをStatusTextにペーストする場合はtrue。
+        /// ペーストしたくない場合はfalseを指定します。
+        /// </param>
+        private void PasteClipboard(bool pasteStatusText)
         {
             Image image = Clipboard.GetImage();
             if (image != null)
@@ -6970,6 +6972,11 @@ namespace OpenTween
                             }
                         }
                     }, TaskContinuationOptions.OnlyOnFaulted);
+            }
+
+            if (pasteStatusText)
+            {
+                StatusText.Paste();
             }
         }
 
@@ -11936,6 +11943,17 @@ namespace OpenTween
                 if (_curPost.IsDm) this.CopyURLMenuItem.Enabled = false;
                 if (_curPost.IsProtect) this.CopySTOTMenuItem.Enabled = false;
             }
+
+            // クリックボードにテキストか画像が含まれていたら、貼り付けられます
+            if (Clipboard.ContainsText() ||
+                Clipboard.ContainsImage())
+            {
+                this.PasteToolStripMenuItem.Enabled = true;
+            }
+            else
+            {
+                this.PasteToolStripMenuItem.Enabled = false;
+            }
         }
 
         private void NotifyIcon1_MouseMove(object sender, MouseEventArgs e)
@@ -13359,6 +13377,16 @@ namespace OpenTween
         private void ULNStopToolStripMenuItem_Click(object sender, EventArgs e)
         {
             UpdateLimitNotification.Stop();
+        }
+
+        /// <summary>
+        /// 貼り付けメニューがクリックされた時
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PasteClipboard(true);
         }
     }
 }
