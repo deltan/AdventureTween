@@ -45,6 +45,7 @@ using System.Threading;
 using System.Media;
 using System.Web;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace OpenTween
 {
@@ -6497,6 +6498,9 @@ namespace OpenTween
                             // Webページを開く動作
                             OpenURLMenuItem_Click(null, null);
                             return true;
+                        case Keys.V:
+                            PasteClipboard(Focused);                     
+                            return false;
                     }
                     //フォーカスList
                     if (Focused == FocusedControl.ListTab)
@@ -6916,6 +6920,57 @@ namespace OpenTween
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// クリップボードの中身をペーストします
+        /// </summary>
+        /// <param name="keyFocused">
+        /// キー入力ででペーストされた場合は、
+        /// キーが入力されたときにフォーカスしていたコントロールの情報が入ります。</param>
+        private void PasteClipboard(FocusedControl keyFocused)
+        {
+            Image image = Clipboard.GetImage();
+            if (image != null)
+            {
+                var t = Task.Factory.StartNew(() =>
+                    {
+                        image.Save("PasteImage.png", System.Drawing.Imaging.ImageFormat.Png);
+                    });
+
+                ImagefilePathText.CausesValidation = false;
+                ImageSelectionPanel.Visible = true;
+                ImageSelectionPanel.Enabled = true;
+                TimelinePanel.Visible = false;
+                TimelinePanel.Enabled = false;
+                StatusText.Focus();
+                ImagefilePathText.CausesValidation = true;
+
+                t.ContinueWith((task) =>
+                    {
+                        if (this.IsHandleCreated)
+                        {
+                            this.Invoke(new Action(() =>
+                                {
+                                    ImagefilePathText.Text = "PasteImage.png";
+                                    ImageFromSelectedFile();
+                                }));
+                        }
+                    }, TaskContinuationOptions.NotOnFaulted);
+                t.ContinueWith((task) =>
+                    {
+                        if (task.Exception != null)
+                        {
+                            if (this.IsHandleCreated)
+                            {
+                                this.Invoke(new Action(() =>
+                                    {
+                                        StatusLabel.Text = "エラーによりペーストした画像は利用できません。";
+                                    }));
+                            }
+                        }
+                    }, TaskContinuationOptions.OnlyOnFaulted);
+            }
         }
 
         private void ScrollDownPostBrowser(bool forward)
