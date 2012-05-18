@@ -6943,12 +6943,14 @@ namespace OpenTween
             if (image != null)
             {
                 // 保存パス確定
-                string saveFolder;
+                // パス文字列に関するエラーは設定画面で検証されるものとし、ここでのエラーチェックは行わない。
+                // （パスに利用できない文字が入っていた場合などに例外が発生するので、
+                //   その場合は、ラーがあったことのみを通知し、再設定を促す）
+                string saveFolder = SettingDialog.PastedImageSaveFolder;
                 string savePath;
                 var saveFormat = ImageFormat.Png;
                 try
                 {
-                    saveFolder = SettingDialog.PastedImageSaveFolder;
                     string dateString =
                         DateTime.Now.ToString(SettingDialog.PastedImageSaveDateFormat);
                     string saveFileName =
@@ -7013,13 +7015,52 @@ namespace OpenTween
                     }, TaskContinuationOptions.NotOnFaulted);
                 t.ContinueWith((task) =>
                     {
+
                         if (task.Exception != null)
                         {
+                            var errorCause = new StringBuilder();
+                            foreach (Exception exception in task.Exception.InnerExceptions)
+                            {
+                                if (exception is UnauthorizedAccessException)
+                                {
+                                    errorCause.AppendLine(Properties.Resources.PasteClipboard_SaveErrorCause1);
+                                }
+                                else if (exception is PathTooLongException)
+                                {
+                                    errorCause.AppendLine(Properties.Resources.PasteClipboard_SaveErrorCause2);
+                                }
+                                else if (exception is ArgumentException ||
+                                    exception is ArgumentNullException ||
+                                    exception is DirectoryNotFoundException ||
+                                    exception is NotSupportedException)
+                                {
+                                    errorCause.AppendLine();
+                                }
+                                else if (exception is IOException)
+                                {
+                                    errorCause.AppendLine(Properties.Resources.PasteClipboard_SaveErrorCause3);
+                                }
+                                else
+                                {
+                                    errorCause.AppendLine(Properties.Resources.PasteClipboard_SaveErrorCause4);
+                                }
+
+                                if (exception != null)
+                                {
+                                    errorCause.AppendLine(
+                                        Properties.Resources.PasteClipboard_SaveErrorCause5 +
+                                        exception.Message);
+                                }
+                            }
+
                             if (this.IsHandleCreated)
                             {
                                 this.Invoke(new Action(() =>
-                                    {
-                                        StatusLabel.Text = Properties.Resources.PasteClipboard_SaveError;
+                                    {   
+                                        MessageBox.Show(
+                                            Properties.Resources.PasteClipboard_SaveError +
+                                            "\n\n" +
+                                            errorCause.ToString());
                                     }));
                             }
                         }

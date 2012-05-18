@@ -1765,11 +1765,56 @@ namespace OpenTween.Properties {
         }
         
         /// <summary>
-        ///   エラーが発生したため、ペーストした画像はアップロードできません。 に類似しているローカライズされた文字列を検索します。
+        ///   以下の原因により、貼り付けられた画像の保存に失敗しました。問題を解決した後、再度画像を貼り付けてください。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string PasteClipboard_SaveError {
             get {
                 return ResourceManager.GetString("PasteClipboard_SaveError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   貼り付けられた画像の保存先にアクセスする権限がありません。権限を与えるか、保存先を設定しなおしてください。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PasteClipboard_SaveErrorCause1 {
+            get {
+                return ResourceManager.GetString("PasteClipboard_SaveErrorCause1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   貼り付けられた画像の保存先のパスが長すぎます。保存先を設定しなおしてください。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PasteClipboard_SaveErrorCause2 {
+            get {
+                return ResourceManager.GetString("PasteClipboard_SaveErrorCause2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   貼り付けられた画像の保存先が有効なパスではありません。保存先を設定しなおしてください。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PasteClipboard_SaveErrorCause3 {
+            get {
+                return ResourceManager.GetString("PasteClipboard_SaveErrorCause3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   何らかのエラーが発生しました。設定を確認してください。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PasteClipboard_SaveErrorCause4 {
+            get {
+                return ResourceManager.GetString("PasteClipboard_SaveErrorCause4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   エラー情報： に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PasteClipboard_SaveErrorCause5 {
+            get {
+                return ResourceManager.GetString("PasteClipboard_SaveErrorCause5", resourceCulture);
             }
         }
         
