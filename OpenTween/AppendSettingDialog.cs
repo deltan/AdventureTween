@@ -2687,14 +2687,7 @@ namespace OpenTween
             catch (ArgumentException)
             {
                 e.Cancel = true;
-                var sb = new StringBuilder();
-                foreach (var c in Path.GetInvalidPathChars())
-                {
-                    sb.Append(c);
-                    sb.Append(" ");
-                }
-                MessageBox.Show(
-                    String.Format(Properties.Resources.PIPasteImagePanel_Validating2, sb.ToString()));
+                MessageBox.Show(Properties.Resources.PIPasteImagePanel_Validating2);
                 return;
             }
 
@@ -2732,9 +2725,21 @@ namespace OpenTween
         /// <param name="e"></param>
         private void EditPastedImageSaveFileName_Validating(object sender, CancelEventArgs e)
         {
+            EditPastedImageSaveFileName.Text = EditPastedImageSaveFileName.Text.Trim();
+
+            bool containsInvalidChars = 
+                Utility.FileUtility.ContainsInvalidFileNameChars(EditPastedImageSaveFileName.Text);
+            if (containsInvalidChars)
+            {
+                e.Cancel = true;
+                MessageBox.Show(Properties.Resources.PIEditPastedImageSaveFileName_Validating3);
+                return;
+            }
+
+            string fileName;
             try
             {
-                var fileName = String.Format(EditPastedImageSaveFileName.Text,
+                fileName = String.Format(EditPastedImageSaveFileName.Text,
                     Properties.Resources.PIEditPastedImageSaveFileName_Validating1);
             }
             catch
@@ -2759,9 +2764,21 @@ namespace OpenTween
         /// <param name="e"></param>
         private void EditPastedImageSaveDateFormat_Validating(object sender, CancelEventArgs e)
         {
+            EditPastedImageSaveDateFormat.Text = EditPastedImageSaveDateFormat.Text.Trim();
+
+            bool containsInvalidChars = 
+                Utility.FileUtility.ContainsInvalidFileNameChars(EditPastedImageSaveDateFormat.Text);
+            if (containsInvalidChars)
+            {
+                e.Cancel = true;
+                MessageBox.Show(Properties.Resources.PIEditPastedImageSaveDateFormat_Validating2);
+                return;
+            }
+
+            string dateString;
             try
             {
-                var dateString = DateTime.Now.ToString(EditPastedImageSaveDateFormat.Text);
+                dateString = DateTime.Now.ToString(EditPastedImageSaveDateFormat.Text);
             }
             catch
             {
@@ -2776,6 +2793,18 @@ namespace OpenTween
                 MessageBox.Show(Properties.Resources.PIEditPastedImageSaveDateFormat_Validating1);
                 return;
             }
+        }
+
+        /// <summary>
+        /// 貼り付けられた画像を保存するフォルダの位置の検証
+        /// 貼り付けられた画像を保存するフォルダの位置の前後の空白をカットする。
+        /// 貼り付けられた画像を保存するフォルダの位置自体は検証は、パネルの検証で行う
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EditPastedImageSaveFolder_Validating(object sender, CancelEventArgs e)
+        {
+            EditPastedImageSaveFolder.Text = EditPastedImageSaveFolder.Text.Trim();
         }
     }
 }

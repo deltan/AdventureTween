@@ -1837,6 +1837,15 @@ namespace OpenTween.Properties {
         }
         
         /// <summary>
+        ///   保存日時フォーマットに、ファイル名として使用できない文字が含まれています。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PIEditPastedImageSaveDateFormat_Validating2 {
+            get {
+                return ResourceManager.GetString("PIEditPastedImageSaveDateFormat_Validating2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   2999年12月31日23時59分59秒 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string PIEditPastedImageSaveFileName_Validating1 {
@@ -1855,6 +1864,15 @@ namespace OpenTween.Properties {
         }
         
         /// <summary>
+        ///   貼り付けた画像を保存するファイル名に、ファイル名として使用できない文字が含まれています。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PIEditPastedImageSaveFileName_Validating3 {
+            get {
+                return ResourceManager.GetString("PIEditPastedImageSaveFileName_Validating3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   貼り付けた画像を保存するフォルダの位置には、絶対パスを指定してください に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string PIPasteImagePanel_Validating1 {
@@ -1864,7 +1882,7 @@ namespace OpenTween.Properties {
         }
         
         /// <summary>
-        ///   貼り付けた画像を保存するフォルダの位置には、次の文字列は使えません {0} に類似しているローカライズされた文字列を検索します。
+        ///   貼り付けた画像を保存するフォルダの位置にファイルパスとして使用できない文字が含まれています。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string PIPasteImagePanel_Validating2 {
             get {
