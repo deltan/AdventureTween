@@ -505,8 +505,25 @@ namespace OpenTween
                 this.UpdateLimitNotificationMessage = EditUpdateLimitNotificationMessage.Text;
                 this.UpdateLimitNitificationLimitReleaseDateFormat = EditUpdateLimitNotificationLimitReleaseDateFormat.Text;
                 this.UpdateLimitNotificationNotAccuracyMessage = EditUpdateLimitNotificationNotAccuracyMessage.Text;
+
+                // 画像貼り付け設定
+                this.PastedImageSaveFolder = EditPastedImageSaveFolder.Text;
+                this.PastedImageSaveFileName = EditPastedImageSaveFileName.Text;
+                this.PastedImageSaveDateFormat = EditPastedImageSaveDateFormat.Text;
+                switch (ComboPastedImageSaveFormat.SelectedIndex)
+                {
+                    case 0:
+                        this.PastedImageSaveFormat = MyCommon.PASTED_IMAGE_SAVE_FORMAT.Png;
+                        break;
+                    case 1:
+                        this.PastedImageSaveFormat = MyCommon.PASTED_IMAGE_SAVE_FORMAT.Jpeg;
+                        break;
+                    case 2:
+                        this.PastedImageSaveFormat = MyCommon.PASTED_IMAGE_SAVE_FORMAT.Gif;
+                        break;
+                }
             }
-            catch(Exception)
+            catch (Exception)
             {
                 MessageBox.Show(Properties.Resources.Save_ClickText3);
                 this.DialogResult = DialogResult.Cancel;
@@ -922,6 +939,29 @@ namespace OpenTween
             EditUpdateLimitNotificationLimitReleaseDateFormat.Text = this.UpdateLimitNitificationLimitReleaseDateFormat;
             EditUpdateLimitNotificationNotAccuracyMessage.Text = this.UpdateLimitNotificationNotAccuracyMessage;
 
+            // 画像貼り付け　保存フォーマットコンボ作成
+            ComboPastedImageSaveFormat.Items.Clear();
+            ComboPastedImageSaveFormat.Items.Add("PNG");
+            ComboPastedImageSaveFormat.Items.Add("JPEG");
+            ComboPastedImageSaveFormat.Items.Add("GIF");
+
+            // 画像貼り付け設定
+            EditPastedImageSaveFolder.Text = this.PastedImageSaveFolder;
+            EditPastedImageSaveFileName.Text = this.PastedImageSaveFileName;
+            EditPastedImageSaveDateFormat.Text = this.PastedImageSaveDateFormat;
+            switch (this.PastedImageSaveFormat)
+            {
+                case MyCommon.PASTED_IMAGE_SAVE_FORMAT.Png:
+                    ComboPastedImageSaveFormat.SelectedIndex = 0;
+                    break;
+                case MyCommon.PASTED_IMAGE_SAVE_FORMAT.Jpeg:
+                    ComboPastedImageSaveFormat.SelectedIndex = 1;
+                    break;
+                case MyCommon.PASTED_IMAGE_SAVE_FORMAT.Gif:
+                    ComboPastedImageSaveFormat.SelectedIndex = 2;
+                    break;
+            }
+
             this.TreeViewSetting.Nodes["BasedNode"].Tag = BasedPanel;
             this.TreeViewSetting.Nodes["BasedNode"].Nodes["PeriodNode"].Tag = GetPeriodPanel;
             this.TreeViewSetting.Nodes["BasedNode"].Nodes["StartUpNode"].Tag = StartupPanel;
@@ -930,6 +970,7 @@ namespace OpenTween
             this.TreeViewSetting.Nodes["ActionNode"].Tag = ActionPanel;
             this.TreeViewSetting.Nodes["ActionNode"].Nodes["TweetActNode"].Tag = TweetActPanel;
             this.TreeViewSetting.Nodes["ActionNode"].Nodes["PostLimitNoticeNode"].Tag = PostLimitNoticePanel;
+            this.TreeViewSetting.Nodes["ActionNode"].Nodes["PasteImageNode"].Tag = PasteImagePanel;
             this.TreeViewSetting.Nodes["PreviewNode"].Tag = PreviewPanel;
             this.TreeViewSetting.Nodes["PreviewNode"].Nodes["TweetPrvNode"].Tag = TweetPrvPanel;
             this.TreeViewSetting.Nodes["PreviewNode"].Nodes["NotifyNode"].Tag = NotifyPanel;
@@ -954,7 +995,7 @@ namespace OpenTween
             {
                 prd = int.Parse(UserstreamPeriod.Text);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 MessageBox.Show(Properties.Resources.UserstreamPeriod_ValidatingText1);
                 e.Cancel = true;
@@ -977,7 +1018,7 @@ namespace OpenTween
             {
                 prd = int.Parse(TimelinePeriod.Text);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 MessageBox.Show(Properties.Resources.TimelinePeriod_ValidatingText1);
                 e.Cancel = true;
@@ -1000,7 +1041,7 @@ namespace OpenTween
             {
                 prd = int.Parse(ReplyPeriod.Text);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 MessageBox.Show(Properties.Resources.TimelinePeriod_ValidatingText1);
                 e.Cancel = true;
@@ -1023,7 +1064,7 @@ namespace OpenTween
             {
                 prd = int.Parse(DMPeriod.Text);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 MessageBox.Show(Properties.Resources.DMPeriod_ValidatingText1);
                 e.Cancel = true;
@@ -1046,7 +1087,7 @@ namespace OpenTween
             {
                 prd = int.Parse(PubSearchPeriod.Text);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 MessageBox.Show(Properties.Resources.PubSearchPeriod_ValidatingText1);
                 e.Cancel = true;
@@ -1067,7 +1108,7 @@ namespace OpenTween
             {
                 prd = int.Parse(ListsPeriod.Text);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 MessageBox.Show(Properties.Resources.DMPeriod_ValidatingText1);
                 e.Cancel = true;
@@ -1090,7 +1131,7 @@ namespace OpenTween
             {
                 prd = int.Parse(UserTimelinePeriod.Text);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 MessageBox.Show(Properties.Resources.DMPeriod_ValidatingText1);
                 e.Cancel = true;
@@ -1120,7 +1161,7 @@ namespace OpenTween
 
         private void btnFontAndColor_Click(object sender, EventArgs e) // Handles btnUnread.Click, btnDetail.Click, btnListFont.Click, btnInputFont.Click
         {
-            Button Btn = (Button) sender;
+            Button Btn = (Button)sender;
             DialogResult rtn;
 
             FontDialog1.AllowVerticalFonts = false;
@@ -1158,7 +1199,7 @@ namespace OpenTween
             {
                 rtn = FontDialog1.ShowDialog();
             }
-            catch(ArgumentException ex)
+            catch (ArgumentException ex)
             {
                 MessageBox.Show(ex.Message);
                 return;
@@ -1361,10 +1402,12 @@ namespace OpenTween
         public bool SortOrderLock { get; set; }
         public HttpConnection.ProxyType SelectedProxyType
         {
-            get {
+            get
+            {
                 return _MyProxyType;
             }
-            set {
+            set
+            {
                 _MyProxyType = value;
             }
         }
@@ -1414,6 +1457,12 @@ namespace OpenTween
         public string UpdateLimitNotificationMessage { get; set; }
         public string UpdateLimitNitificationLimitReleaseDateFormat { get; set; }
         public string UpdateLimitNotificationNotAccuracyMessage { get; set; }
+
+        // 画像貼り付けのプロパティ
+        public string PastedImageSaveFolder { get; set; }
+        public string PastedImageSaveFileName { get; set; }
+        public string PastedImageSaveDateFormat { get; set; }
+        public MyCommon.PASTED_IMAGE_SAVE_FORMAT PastedImageSaveFormat { get; set; }
 
         private void Button3_Click(object sender, EventArgs e)
         {
@@ -1500,7 +1549,7 @@ namespace OpenTween
             {
                 LabelDateTimeFormatApplied.Text = DateTime.Now.ToString(CmbDateTimeFormat.Text);
             }
-            catch(FormatException)
+            catch (FormatException)
             {
                 LabelDateTimeFormatApplied.Text = Properties.Resources.CreateDateTimeFormatSampleText1;
                 return false;
@@ -1534,7 +1583,7 @@ namespace OpenTween
             {
                 tm = int.Parse(ConnectionTimeOut.Text);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 MessageBox.Show(Properties.Resources.ConnectionTimeOut_ValidatingText1);
                 e.Cancel = true;
@@ -1560,7 +1609,7 @@ namespace OpenTween
             {
                 cnt = int.Parse(TextCountApi.Text);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 MessageBox.Show(Properties.Resources.TextCountApi_Validating1);
                 e.Cancel = true;
@@ -1582,7 +1631,7 @@ namespace OpenTween
             {
                 cnt = int.Parse(TextCountApiReply.Text);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 MessageBox.Show(Properties.Resources.TextCountApi_Validating1);
                 e.Cancel = true;
@@ -1873,7 +1922,7 @@ namespace OpenTween
                 // 初回起動時などにnullの場合あり
                 ListsTabNum = TabInformations.GetInstance().GetTabsByType(MyCommon.TabUsageType.Lists).Count;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return;
             }
@@ -1883,7 +1932,7 @@ namespace OpenTween
                 // 初回起動時などにnullの場合あり
                 UserTimelineTabNum = TabInformations.GetInstance().GetTabsByType(MyCommon.TabUsageType.UserTimeline).Count;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return;
             }
@@ -1942,7 +1991,8 @@ namespace OpenTween
                     if (Twitter.AccountState == MyCommon.ACCOUNT_STATE.Valid)
                     {
                         MyCommon.TwitterApiInfo.UsingCount = UsingApi;
-                        Thread proc = new Thread(new System.Threading.ThreadStart(() => {
+                        Thread proc = new Thread(new System.Threading.ThreadStart(() =>
+                        {
                             tw.GetInfoApi(null); //取得エラー時はinfoCountは初期状態（値：-1）
                             if (this.IsHandleCreated && !this.IsDisposed) Invoke(new MethodInvoker(DisplayApiMaxCount));
                         }));
@@ -2068,7 +2118,7 @@ namespace OpenTween
             {
                 cnt = int.Parse(GetMoreTextCountApi.Text);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 MessageBox.Show(Properties.Resources.TextCountApi_Validating1);
                 e.Cancel = true;
@@ -2106,7 +2156,7 @@ namespace OpenTween
             {
                 cnt = int.Parse(FirstTextCountApi.Text);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 MessageBox.Show(Properties.Resources.TextCountApi_Validating1);
                 e.Cancel = true;
@@ -2415,9 +2465,9 @@ namespace OpenTween
                     System.Diagnostics.Process.Start(myPath);
                 }
             }
-            catch(Exception)
+            catch (Exception)
             {
-//              MessageBox.Show("ブラウザの起動に失敗、またはタイムアウトしました。" + ex.ToString());
+                //              MessageBox.Show("ブラウザの起動に失敗、またはタイムアウトしました。" + ex.ToString());
             }
         }
 
@@ -2435,7 +2485,8 @@ namespace OpenTween
         /// AppendSettingDialogのコンストラクタ
         /// フォームのコンポーネントを初期化します。
         /// </summary>
-        public AppendSettingDialog() : this(true)
+        public AppendSettingDialog()
+            : this(true)
         {
         }
 
@@ -2533,7 +2584,7 @@ namespace OpenTween
                 string message = String.Format(
                     EditUpdateLimitNotificationMessage.Text,
                     100,
-                    Properties.Resources.EditUpdateLimitNotificationMessage_Validating2, 
+                    Properties.Resources.EditUpdateLimitNotificationMessage_Validating2,
                     Properties.Resources.EditUpdateLimitNotificationMessage_Validating3);
             }
             catch
@@ -2588,6 +2639,141 @@ namespace OpenTween
             {
                 e.Cancel = true;
                 MessageBox.Show(Properties.Resources.EditUpdateLimitNotificationNotAccuracyMessage_Validating1);
+                return;
+            }
+        }
+
+        /// <summary>
+        /// 貼り付けた画像を保存するフォルダの位置の開くボタンを選択したときの処理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonOpenPastedImageFolder_Click(object sender, EventArgs e)
+        {
+            var fbd = new FolderBrowserDialog();
+            fbd.Description = Properties.Resources.PIButtonOpenPastedImageFolder_Click1;
+            fbd.SelectedPath = EditPastedImageSaveFolder.Text;
+
+            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                EditPastedImageSaveFolder.Text = fbd.SelectedPath;
+            }
+        }
+
+        /// <summary>
+        /// 画像貼り付けパネル内のデータの検証をします。
+        /// 以下の検証が行われます。
+        /// 
+        /// 貼り付けた画像を保存するフォルダの位置を検証します。
+        /// 入力されたフォルダの位置が絶対パスでなければNG。
+        /// 使えない文字列が入力されていればNG。
+        /// 存在しておらず、フォルダを作成できなければNG。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PasteImagePanel_Validating(object sender, CancelEventArgs e)
+        {
+            string saveFolder = EditPastedImageSaveFolder.Text;
+
+            try
+            {
+                if (!Path.IsPathRooted(saveFolder))
+                {
+                    e.Cancel = true;
+                    MessageBox.Show(Properties.Resources.PIPasteImagePanel_Validating1);
+                    return;
+                }
+            }
+            catch (ArgumentException)
+            {
+                e.Cancel = true;
+                var sb = new StringBuilder();
+                foreach (var c in Path.GetInvalidPathChars())
+                {
+                    sb.Append(c);
+                    sb.Append(" ");
+                }
+                MessageBox.Show(
+                    String.Format(Properties.Resources.PIPasteImagePanel_Validating2, sb.ToString()));
+                return;
+            }
+
+            bool exists = Directory.Exists(saveFolder);
+            if (!exists)
+            {
+                try
+                {
+                    var dInfo = Directory.CreateDirectory(saveFolder);
+                    if (dInfo == null)
+                    {
+                        throw new Exception();
+                    }
+                }
+                catch
+                {
+                    e.Cancel = true;
+                    MessageBox.Show(Properties.Resources.PIPasteImagePanel_Validating3);
+                    return;
+                }
+
+                // 一旦ディレクトリを削除するが、ここでエラーが起きて削除できなくても良いことにする
+                try
+                {
+                    Directory.Delete(saveFolder);
+                }
+                catch { }
+            }
+        }
+
+        /// <summary>
+        /// 貼り付けた画像を保存するファイル名を検証
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EditPastedImageSaveFileName_Validating(object sender, CancelEventArgs e)
+        {
+            try
+            {
+                var fileName = String.Format(EditPastedImageSaveFileName.Text,
+                    Properties.Resources.PIEditPastedImageSaveFileName_Validating1);
+            }
+            catch
+            {
+                e.Cancel = true;
+                MessageBox.Show(Properties.Resources.PIEditPastedImageSaveFileName_Validating2);
+                return;
+            }
+
+            if (EditPastedImageSaveFileName.Text.Length <= 0)
+            {
+                e.Cancel = true;
+                MessageBox.Show(Properties.Resources.PIEditPastedImageSaveFileName_Validating2);
+                return;
+            }
+        }
+
+        /// <summary>
+        /// 画像貼り付けの保存日時フォーマットの検証
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EditPastedImageSaveDateFormat_Validating(object sender, CancelEventArgs e)
+        {
+            try
+            {
+                var dateString = DateTime.Now.ToString(EditPastedImageSaveDateFormat.Text);
+            }
+            catch
+            {
+                e.Cancel = true;
+                MessageBox.Show(Properties.Resources.PIEditPastedImageSaveDateFormat_Validating1);
+                return;
+            }
+
+            if (EditPastedImageSaveDateFormat.Text.Length <= 0)
+            {
+                e.Cancel = true;
+                MessageBox.Show(Properties.Resources.PIEditPastedImageSaveDateFormat_Validating1);
                 return;
             }
         }

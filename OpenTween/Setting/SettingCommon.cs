@@ -228,6 +228,12 @@ namespace OpenTween
         public string UpdateLimitNotificationMessage = "【規制情報】規制が近いので注意しましょう。規制解除時刻(予想)は、{1}です。セクション中、{0}回ポストしました。{2}";
         public string UpdateLimitNotificationLimitReleaseDateFormat = "HH時mm分ss秒";
         public string UpdateLimitNotificationNotAccuracyMessage = "（この規制情報は不正確です。）";
+
+        // 画像貼り付け設定
+        public string PastedImageSaveFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+        public string PastedImageSaveFileName = "AdventureTweenに貼り付けられた画像_{0}";
+        public string PastedImageSaveDateFormat = "yyyy年MM月dd日HH時mm分ss秒";
+        public MyCommon.PASTED_IMAGE_SAVE_FORMAT PastedImageSaveFormat = MyCommon.PASTED_IMAGE_SAVE_FORMAT.Png;
     }
 
     public class UserAccount

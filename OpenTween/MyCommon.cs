@@ -1,4 +1,4 @@
-﻿// OpenTween - Client of Twitter
+﻿// AdventureTween - Client of Twitter
 // Copyright (c) 2007-2011 kiri_feather (@kiri_feather) <kiri.feather@gmail.com>
 //           (c) 2008-2011 Moz (@syo68k)
 //           (c) 2008-2011 takeshik (@takeshik) <http://www.takeshik.org/>
@@ -6,9 +6,10 @@
 //           (c) 2010-2011 fantasticswallow (@f_swallow) <http://twitter.com/f_swallow>
 //           (c) 2011      Egtra (@egtra) <http://dev.activebasic.com/egtra/>
 //           (c) 2011      kim_upsilon (@kim_upsilon) <https://upsilo.net/~upsilon/>
+//           (c) 2012      deltan (@deltan12345) <deltanpayo@gmail.com>
 // All rights reserved.
 // 
-// This file is part of OpenTween.
+// This file is part of AdventureTween.
 // 
 // This program is free software; you can redistribute it and/or modify it
 // under the terms of the GNU General public License as published by the Free
@@ -216,6 +217,25 @@ namespace OpenTween
 
             All = (None | Favorite | Unfavorite | Follow | ListMemberAdded | ListMemberRemoved |
                    Block | Unblock | UserUpdate | Deleted | ListCreated | ListUpdated),
+        }
+
+        /// <summary>
+        /// 貼り付けられた画像の保存フォーマット
+        /// </summary>
+        public enum PASTED_IMAGE_SAVE_FORMAT
+        {
+            /// <summary>
+            /// PNG形式
+            /// </summary>
+            Png,
+            /// <summary>
+            /// JPEG形式
+            /// </summary>
+            Jpeg,
+            /// <summary>
+            /// GIF形式
+            /// </summary>
+            Gif,
         }
 
         public static void TraceOut(Exception ex, string Message)

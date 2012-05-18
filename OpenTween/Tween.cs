@@ -869,6 +869,12 @@ namespace OpenTween
             SettingDialog.UpdateLimitNitificationLimitReleaseDateFormat = _cfgCommon.UpdateLimitNotificationLimitReleaseDateFormat;
             SettingDialog.UpdateLimitNotificationNotAccuracyMessage = _cfgCommon.UpdateLimitNotificationNotAccuracyMessage;
 
+            // 画像貼り付け設定
+            SettingDialog.PastedImageSaveFolder = _cfgCommon.PastedImageSaveFolder;
+            SettingDialog.PastedImageSaveFileName = _cfgCommon.PastedImageSaveFileName;
+            SettingDialog.PastedImageSaveDateFormat = _cfgCommon.PastedImageSaveDateFormat;
+            SettingDialog.PastedImageSaveFormat = _cfgCommon.PastedImageSaveFormat;
+
             //ハッシュタグ関連
             HashSupl = new AtIdSupplement(_cfgCommon.HashTags, "#");
             HashMgr = new HashtagManage(HashSupl,
@@ -7912,6 +7918,12 @@ namespace OpenTween
                 _cfgCommon.UpdateLimitNotificationMessage = SettingDialog.UpdateLimitNotificationMessage;
                 _cfgCommon.UpdateLimitNotificationLimitReleaseDateFormat = SettingDialog.UpdateLimitNitificationLimitReleaseDateFormat;
                 _cfgCommon.UpdateLimitNotificationNotAccuracyMessage = SettingDialog.UpdateLimitNotificationNotAccuracyMessage;
+
+                // 画像貼り付け設定
+                _cfgCommon.PastedImageSaveFolder = SettingDialog.PastedImageSaveFolder;
+                _cfgCommon.PastedImageSaveFileName = SettingDialog.PastedImageSaveFileName;
+                _cfgCommon.PastedImageSaveDateFormat = SettingDialog.PastedImageSaveDateFormat;
+                _cfgCommon.PastedImageSaveFormat = SettingDialog.PastedImageSaveFormat;
 
                 _cfgCommon.Save();
             }
