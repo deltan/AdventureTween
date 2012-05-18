@@ -1237,4 +1237,19 @@
   <data name="PIPasteImagePanel_Validating3" xml:space="preserve">
     <value>貼り付けた画像を保存するフォルダの位置には、フォルダが作成可能な適切な場所に設定してください。</value>
   </data>
+  <data name="PasteClipboard_SaveError" xml:space="preserve">
+    <value>エラーが発生したため、ペーストした画像はアップロードできません。</value>
+  </data>
+  <data name="PasteClipboard_SaveExtensionGIF" xml:space="preserve">
+    <value>.gif</value>
+  </data>
+  <data name="PasteClipboard_SaveExtensionJPEG" xml:space="preserve">
+    <value>.jpeg</value>
+  </data>
+  <data name="PasteClipboard_SaveExtensionPNG" xml:space="preserve">
+    <value>.png</value>
+  </data>
+  <data name="PasteClipboard_SavePathError" xml:space="preserve">
+    <value>画像貼り付けに関する設定が正しくありません。設定を見直してください。</value>
+  </data>
 </root>

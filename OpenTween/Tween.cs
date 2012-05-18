@@ -46,6 +46,7 @@ using System.Media;
 using System.Web;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Drawing.Imaging;
 
 namespace OpenTween
 {
@@ -6941,11 +6942,55 @@ namespace OpenTween
             Image image = Clipboard.GetImage();
             if (image != null)
             {
+                // 保存パス確定
+                string saveFolder;
+                string savePath;
+                var saveFormat = ImageFormat.Png;
+                try
+                {
+                    saveFolder = SettingDialog.PastedImageSaveFolder;
+                    string dateString =
+                        DateTime.Now.ToString(SettingDialog.PastedImageSaveDateFormat);
+                    string saveFileName =
+                        String.Format(SettingDialog.PastedImageSaveFileName, dateString);
+                    savePath =
+                        Path.Combine(saveFolder, saveFileName);
+                    switch (SettingDialog.PastedImageSaveFormat)
+                    {
+                        case MyCommon.PASTED_IMAGE_SAVE_FORMAT.Png:
+                            saveFormat = ImageFormat.Png;
+                            savePath = Path.ChangeExtension(savePath, 
+                                Properties.Resources.PasteClipboard_SaveExtensionPNG);
+                            break;
+                        case MyCommon.PASTED_IMAGE_SAVE_FORMAT.Jpeg:
+                            saveFormat = ImageFormat.Jpeg;
+                            savePath = Path.ChangeExtension(savePath,
+                                Properties.Resources.PasteClipboard_SaveExtensionJPEG);
+                            break;
+                        case MyCommon.PASTED_IMAGE_SAVE_FORMAT.Gif:
+                            saveFormat = ImageFormat.Gif;
+                            savePath = Path.ChangeExtension(savePath, 
+                                Properties.Resources.PasteClipboard_SaveExtensionGIF);
+                            break;
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show(Properties.Resources.PasteClipboard_SavePathError);
+                    return;
+                }
+
+                // 非同期で画像保存
                 var t = Task.Factory.StartNew(() =>
                     {
-                        image.Save("PasteImage.png", System.Drawing.Imaging.ImageFormat.Png);
+                        if (!Directory.Exists(saveFolder))
+                        {
+                            Directory.CreateDirectory(saveFolder);
+                        }
+                        image.Save(savePath, saveFormat);
                     });
 
+                // 画像投稿画面に遷移
                 ImagefilePathText.CausesValidation = false;
                 ImageSelectionPanel.Visible = true;
                 ImageSelectionPanel.Enabled = true;
@@ -6954,13 +6999,14 @@ namespace OpenTween
                 StatusText.Focus();
                 ImagefilePathText.CausesValidation = true;
 
+                // 画像保存が終わったときの処理（成功と失敗それぞれ）
                 t.ContinueWith((task) =>
                     {
                         if (this.IsHandleCreated)
                         {
                             this.Invoke(new Action(() =>
                                 {
-                                    ImagefilePathText.Text = "PasteImage.png";
+                                    ImagefilePathText.Text = savePath;
                                     ImageFromSelectedFile();
                                 }));
                         }
@@ -6973,7 +7019,7 @@ namespace OpenTween
                             {
                                 this.Invoke(new Action(() =>
                                     {
-                                        StatusLabel.Text = "エラーによりペーストした画像は利用できません。";
+                                        StatusLabel.Text = Properties.Resources.PasteClipboard_SaveError;
                                     }));
                             }
                         }

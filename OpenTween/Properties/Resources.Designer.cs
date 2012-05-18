@@ -1765,6 +1765,51 @@ namespace OpenTween.Properties {
         }
         
         /// <summary>
+        ///   エラーが発生したため、ペーストした画像はアップロードできません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PasteClipboard_SaveError {
+            get {
+                return ResourceManager.GetString("PasteClipboard_SaveError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   .gif に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PasteClipboard_SaveExtensionGIF {
+            get {
+                return ResourceManager.GetString("PasteClipboard_SaveExtensionGIF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   .jpeg に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PasteClipboard_SaveExtensionJPEG {
+            get {
+                return ResourceManager.GetString("PasteClipboard_SaveExtensionJPEG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   .png に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PasteClipboard_SaveExtensionPNG {
+            get {
+                return ResourceManager.GetString("PasteClipboard_SaveExtensionPNG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   画像貼り付けに関する設定が正しくありません。設定を見直してください。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PasteClipboard_SavePathError {
+            get {
+                return ResourceManager.GetString("PasteClipboard_SavePathError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   貼り付けた画像を保存するフォルダを指定します。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string PIButtonOpenPastedImageFolder_Click1 {
