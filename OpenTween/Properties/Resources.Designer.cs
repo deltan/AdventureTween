@@ -644,7 +644,7 @@ namespace OpenTween.Properties {
         }
         
         /// <summary>
-        ///   Tween更新確認 に類似しているローカライズされた文字列を検索します。
+        ///   %AppName%更新確認 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string CheckNewVersionText1 {
             get {
@@ -662,7 +662,7 @@ namespace OpenTween.Properties {
         }
         
         /// <summary>
-        ///   Tween更新結果 に類似しているローカライズされた文字列を検索します。
+        ///   %AppName%更新結果 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string CheckNewVersionText2 {
             get {
@@ -1599,7 +1599,7 @@ namespace OpenTween.Properties {
         }
         
         /// <summary>
-        ///   この設定ファイルは Tween により自動生成されました。手動で変更しないでください。 に類似しているローカライズされた文字列を検索します。
+        ///   この設定ファイルは %AppName% により自動生成されました。手動で変更しないでください。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string LoadConfigurationText1 {
             get {
@@ -2535,7 +2535,7 @@ namespace OpenTween.Properties {
         }
         
         /// <summary>
-        ///   Tweenは既に起動されています。2重起動する場合は、別フォルダのTween.exeを実行してください。 に類似しているローカライズされた文字列を検索します。
+        ///   %AppName%は既に起動されています。2重起動する場合は、別フォルダの{0}.exeを実行してください。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string StartupText1 {
             get {
@@ -2544,7 +2544,7 @@ namespace OpenTween.Properties {
         }
         
         /// <summary>
-        ///   Tween二重起動チェック に類似しているローカライズされた文字列を検索します。
+        ///   %AppName%二重起動チェック に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string StartupText2 {
             get {
@@ -2821,7 +2821,7 @@ namespace OpenTween.Properties {
         }
         
         /// <summary>
-        ///      共通言語ランタイム          : {0} に類似しているローカライズされた文字列を検索します。
+        ///      共通言語ランタイム: {0} に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string TraceOutText5 {
             get {
@@ -2830,7 +2830,7 @@ namespace OpenTween.Properties {
         }
         
         /// <summary>
-        ///      Tween.exeのバージョン    : {0} に類似しているローカライズされた文字列を検索します。
+        ///      {0}.exeのバージョン: {1} に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string TraceOutText6 {
             get {
@@ -3127,7 +3127,7 @@ namespace OpenTween.Properties {
         }
         
         /// <summary>
-        ///      共通言語ランタイム          : {0} に類似しているローカライズされた文字列を検索します。
+        ///      共通言語ランタイム: {0} に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string UnhandledExceptionText6 {
             get {
@@ -3136,7 +3136,7 @@ namespace OpenTween.Properties {
         }
         
         /// <summary>
-        ///      Tween.exeのバージョン    : {0} に類似しているローカライズされた文字列を検索します。
+        ///      {0}.exeのバージョン: {1} に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string UnhandledExceptionText7 {
             get {

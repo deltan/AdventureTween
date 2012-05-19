@@ -76,15 +76,16 @@ namespace OpenTween
         private const string detailHtmlFormat5 = "); } --></style></head><body style=\"margin:0px; background-color:rgb(";
         private const string detailHtmlFormatMono6 = ");\"><pre>";
         private const string detailHtmlFormatMono7 = "</pre></body></html>";
-        private const string detailHtmlFormat1 = "<html><head><style type=\"text/css\"><!-- p {font-family: \"";
-        private const string detailHtmlFormat6 = ");\"><p>";
-        private const string detailHtmlFormat7 = "</p></body></html>";
+        private const string detailHtmlFormat1 = "<html><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=10;IE=9;IE=8\"><style type=\"text/css\"><!-- p {font-family: \"";
+        private const string detailHtmlFormat6 = ");\"><p><span style=\"vertical-align:text-bottom\">";
+        private const string detailHtmlFormat7 = "</span></p></body></html>";
         private string detailHtmlFormatHeader;
         private string detailHtmlFormatFooter;
         private bool _myStatusError = false;
         private bool _myStatusOnline = false;
         private bool soundfileListup = false;
         private SpaceKeyCanceler _spaceKeyCanceler;
+        private FormWindowState _formWindowState = FormWindowState.Normal; // フォームの状態保存用 通知領域からアイコンをクリックして復帰した際に使用する
 
         //設定ファイル関連
         //private SettingToConfig _cfg; //旧
@@ -3292,7 +3293,7 @@ namespace OpenTween
                 this.Visible = true;
                 if (this.WindowState == FormWindowState.Minimized)
                 {
-                    this.WindowState = FormWindowState.Normal;
+                    this.WindowState = _formWindowState;
                 }
                 this.Activate();
                 this.BringToFront();
@@ -4279,7 +4280,10 @@ namespace OpenTween
                 {
                     //ハッシュタグの場合は、タブで開く
                     string urlStr = HttpUtility.UrlDecode(e.Url.AbsoluteUri);
-                    string hash = urlStr.Substring(urlStr.IndexOf("#"));
+                    int i = urlStr.IndexOf('#');
+                    if (i == -1) return;
+
+                    string hash = urlStr.Substring(i);
                     HashSupl.AddItem(hash);
                     HashMgr.AddHashToHistory(hash.Trim(), false);
                     AddNewTabForSearch(hash);
@@ -5120,7 +5124,44 @@ namespace OpenTween
             //}
             foreach (Match m in Regex.Matches(StatusText.Text, Twitter.rgUrl, RegexOptions.IgnoreCase))
             {
-                pLen += m.Result("${url}").Length - SettingDialog.TwitterConfiguration.ShortUrlLength;
+                string before = m.Result("${before}");
+                string url = m.Result("${url}");
+                string protocol = m.Result("${protocol}");
+                string domain = m.Result("${domain}");
+                string path = m.Result("${path}");
+                if (protocol.Length == 0)
+                {
+                    if (Regex.IsMatch(before, Twitter.url_invalid_without_protocol_preceding_chars))
+                    {
+                        continue;
+                    }
+
+                    bool last_url_invalid_match = false;
+                    string lasturl = null;
+                    foreach (Match mm in Regex.Matches(domain, Twitter.url_valid_ascii_domain, RegexOptions.IgnoreCase))
+                    {
+                        lasturl = mm.ToString();
+                        last_url_invalid_match = Regex.IsMatch(lasturl, Twitter.url_invalid_short_domain, RegexOptions.IgnoreCase);
+                        if (!last_url_invalid_match)
+                        {
+                            pLen += lasturl.Length - SettingDialog.TwitterConfiguration.ShortUrlLength;
+                        }
+                    }
+
+                    if (path.Length != 0)
+                    {
+                        if (last_url_invalid_match)
+                        {
+                            pLen += lasturl.Length - SettingDialog.TwitterConfiguration.ShortUrlLength;
+                        }
+                        pLen += path.Length;
+                    }
+                }
+                else
+                {
+                    pLen += url.Length - SettingDialog.TwitterConfiguration.ShortUrlLength;
+                }
+                
                 //if (m.Result("${url}").Length > SettingDialog.TwitterConfiguration.ShortUrlLength)
                 //{
                 //    pLen += m.Result("${url}").Length - SettingDialog.TwitterConfiguration.ShortUrlLength;
@@ -5979,10 +6020,57 @@ namespace OpenTween
 
         private void CheckNewVersion(bool startup = false)
         {
-            // TODO 自動アップデート機能の実装
-            if (!startup)
+            if (string.IsNullOrEmpty(MyCommon.fileVersion))
             {
-                MessageBox.Show(this, "OpenTween の自動アップデート機能は未実装です。OpenTween のウェブサイトで更新を確認し手動でアップデートしてください。", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            string retMsg;
+            try
+            {
+                retMsg = tw.GetVersionInfo();
+            }
+            catch
+            {
+                retMsg = "";
+            }
+
+            if (string.IsNullOrEmpty(retMsg))
+            {
+                StatusLabel.Text = Properties.Resources.CheckNewVersionText9;
+                if (!startup) MessageBox.Show(Properties.Resources.CheckNewVersionText10, MyCommon.ReplaceAppName(Properties.Resources.CheckNewVersionText2), MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
+                return;
+            }
+
+            // 改行2つで前後パートを分割（前半がバージョン番号など、後半が詳細テキスト）
+            string[] msgPart = retMsg.Split(new string[] {"\n\n", "\r\n\r\n"}, 2, StringSplitOptions.None);
+
+            string[] msgHeader = msgPart[0].Split(new string[] {"\n", "\r\n"}, StringSplitOptions.None);
+            string msgBody = msgPart.Length == 2 ? msgPart[1] : "";
+
+            msgBody = Regex.Replace(msgBody, "(?<!\r)\n", "\r\n"); // LF -> CRLF
+
+            string currentVersion = msgHeader[0];
+            string downloadUrl = msgHeader[1];
+
+            if (currentVersion.Replace(".", "").CompareTo(MyCommon.fileVersion.Replace(".", "")) > 0)
+            {
+                string dialogText = string.Format(Properties.Resources.CheckNewVersionText3, MyCommon.GetReadableVersion(currentVersion));
+                using (DialogAsShieldIcon dialog = new DialogAsShieldIcon())
+                {
+                    DialogResult ret = dialog.ShowDialog(this, dialogText, msgBody, MyCommon.ReplaceAppName(Properties.Resources.CheckNewVersionText1), MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (ret == DialogResult.Yes)
+                    {
+                        this.OpenUriAsync(downloadUrl);
+                    }
+                }
+            }
+            else
+            {
+                if (!startup)
+                {
+                    MessageBox.Show(Properties.Resources.CheckNewVersionText7 + MyCommon.GetReadableVersion() + Properties.Resources.CheckNewVersionText8 + MyCommon.GetReadableVersion(currentVersion), MyCommon.ReplaceAppName(Properties.Resources.CheckNewVersionText2), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
         }
 
@@ -9599,6 +9687,10 @@ namespace OpenTween
                     this.SplitContainer3.SplitterDistance = _cfgLocal.PreviewDistance;
                 }
                 _initialLayout = false;
+            }
+            if (this.WindowState != FormWindowState.Minimized)
+            {
+                _formWindowState = this.WindowState;
             }
         }
 

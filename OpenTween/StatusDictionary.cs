@@ -1703,7 +1703,7 @@ namespace OpenTween
                 post = tb.Posts[Id];
             }
 
-            if (post.IsRead = Read) return; //状態変更なければ終了
+            if (post.IsRead == Read) return; //状態変更なければ終了
 
             post.IsRead = Read; //指定の状態に変更
 
