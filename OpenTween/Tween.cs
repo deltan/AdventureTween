@@ -6020,6 +6020,13 @@ namespace OpenTween
 
         private void CheckNewVersion(bool startup = false)
         {
+            if (!startup)
+            {
+                MessageBox.Show(Properties.Resources.CheckNewVersionText99,
+                    Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            return;
+
             if (string.IsNullOrEmpty(MyCommon.fileVersion))
             {
                 return;

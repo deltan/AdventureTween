@@ -1216,4 +1216,7 @@
   <data name="ULNStatusToolStripMenuItemText4" xml:space="preserve">
     <value>動作しています</value>
   </data>
+  <data name="CheckNewVersionText99" xml:space="preserve">
+    <value>AdventureTweenはリリースされていないため、アップデートも用意されていません。</value>
+  </data>
 </root>
