@@ -143,18 +143,22 @@
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAAB1TeXN0
-        ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQoAAAAEVGV4dAROYW1lCUlzQ2hlY2tlZApJbWFnZUluZGV4
+        ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQsAAAAEVGV4dAROYW1lCUlzQ2hlY2tlZApJbWFnZUluZGV4
         CEltYWdlS2V5ElNlbGVjdGVkSW1hZ2VJbmRleBBTZWxlY3RlZEltYWdlS2V5CkNoaWxkQ291bnQJY2hp
-        bGRyZW4wCWNoaWxkcmVuMQEBAAABAAEABAQBCAgIHVN5c3RlbS5XaW5kb3dzLkZvcm1zLlRyZWVOb2Rl
-        AgAAAB1TeXN0ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQIAAAACAAAABgMAAAAG5YuV5L2cBgQAAAAK
-        QWN0aW9uTm9kZQD/////BgUAAAAA/////wkFAAAAAgAAAAkGAAAACQcAAAAFBgAAAB1TeXN0ZW0uV2lu
-        ZG93cy5Gb3Jtcy5UcmVlTm9kZQgAAAAEVGV4dAROYW1lCUlzQ2hlY2tlZApJbWFnZUluZGV4CEltYWdl
-        S2V5ElNlbGVjdGVkSW1hZ2VJbmRleBBTZWxlY3RlZEltYWdlS2V5CkNoaWxkQ291bnQBAQAAAQABAAEI
-        CAgCAAAABggAAAAG5oqV56i/BgkAAAAMVHdlZXRBY3ROb2RlAP////8JBQAAAP////8JBQAAAAAAAAAF
-        BwAAAB1TeXN0ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQgAAAAEVGV4dAROYW1lCUlzQ2hlY2tlZApJ
-        bWFnZUluZGV4CEltYWdlS2V5ElNlbGVjdGVkSW1hZ2VJbmRleBBTZWxlY3RlZEltYWdlS2V5CkNoaWxk
-        Q291bnQBAQAAAQABAAEICAgCAAAABgsAAAAS5oqV56i/6KaP5Yi26YCa55+lBgwAAAATUG9zdExpbWl0
-        Tm90aWNlTm9kZQD/////CQUAAAD/////CQUAAAAAAAAACw==
+        bGRyZW4wCWNoaWxkcmVuMQljaGlsZHJlbjIBAQAAAQABAAQEBAEICAgdU3lzdGVtLldpbmRvd3MuRm9y
+        bXMuVHJlZU5vZGUCAAAAHVN5c3RlbS5XaW5kb3dzLkZvcm1zLlRyZWVOb2RlAgAAAB1TeXN0ZW0uV2lu
+        ZG93cy5Gb3Jtcy5UcmVlTm9kZQIAAAACAAAABgMAAAAG5YuV5L2cBgQAAAAKQWN0aW9uTm9kZQD/////
+        BgUAAAAA/////wkFAAAAAwAAAAkGAAAACQcAAAAJCAAAAAUGAAAAHVN5c3RlbS5XaW5kb3dzLkZvcm1z
+        LlRyZWVOb2RlCAAAAARUZXh0BE5hbWUJSXNDaGVja2VkCkltYWdlSW5kZXgISW1hZ2VLZXkSU2VsZWN0
+        ZWRJbWFnZUluZGV4EFNlbGVjdGVkSW1hZ2VLZXkKQ2hpbGRDb3VudAEBAAABAAEAAQgICAIAAAAGCQAA
+        AAbmipXnqL8GCgAAAAxUd2VldEFjdE5vZGUA/////wkFAAAA/////wkFAAAAAAAAAAUHAAAAHVN5c3Rl
+        bS5XaW5kb3dzLkZvcm1zLlRyZWVOb2RlCAAAAARUZXh0BE5hbWUJSXNDaGVja2VkCkltYWdlSW5kZXgI
+        SW1hZ2VLZXkSU2VsZWN0ZWRJbWFnZUluZGV4EFNlbGVjdGVkSW1hZ2VLZXkKQ2hpbGRDb3VudAEBAAAB
+        AAEAAQgICAIAAAAGDAAAABLmipXnqL/opo/liLbpgJrnn6UGDQAAABNQb3N0TGltaXROb3RpY2VOb2Rl
+        AP////8JBQAAAP////8JBQAAAAAAAAAFCAAAAB1TeXN0ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQgA
+        AAAEVGV4dAROYW1lCUlzQ2hlY2tlZApJbWFnZUluZGV4CEltYWdlS2V5ElNlbGVjdGVkSW1hZ2VJbmRl
+        eBBTZWxlY3RlZEltYWdlS2V5CkNoaWxkQ291bnQBAQAAAQABAAEICAgCAAAABg8AAAAS55S75YOP6LK8
+        44KK5LuY44GRBhAAAAAOUGFzdGVJbWFnZU5vZGUA/////wkFAAAA/////wkFAAAAAAAAAAs=
 </value>
   </data>
   <data name="TreeViewSetting.Nodes2" mimetype="application/x-microsoft.net.object.binary.base64">
@@ -452,6 +456,9 @@
   <data name="Label71.Text" xml:space="preserve">
     <value>URL自动缩短优先使用</value>
   </data>
+  <data name="GroupBox2.Text" xml:space="preserve">
+    <value>代理设置</value>
+  </data>
   <data name="Label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>41, 12</value>
   </data>
@@ -469,9 +476,6 @@
   </data>
   <data name="Label43.Text" xml:space="preserve">
     <value>有新回复时画面闪烁</value>
-  </data>
-  <data name="GroupBox2.Text" xml:space="preserve">
-    <value>代理设置</value>
   </data>
   <data name="AuthClearButton.Text" xml:space="preserve">
     <value>清除</value>
@@ -725,11 +729,11 @@
   <data name="Label38.Text" xml:space="preserve">
     <value>未读管理</value>
   </data>
-  <data name="HotkeyCheck.Text" xml:space="preserve">
-    <value>生效</value>
-  </data>
   <data name="GroupBox3.Text" xml:space="preserve">
     <value>热键</value>
+  </data>
+  <data name="HotkeyCheck.Text" xml:space="preserve">
+    <value>生效</value>
   </data>
   <data name="Label57.Size" type="System.Drawing.Size, System.Drawing">
     <value>312, 12</value>
@@ -793,6 +797,9 @@
   </data>
   <data name="CheckReadOldPosts.Text" xml:space="preserve">
     <value>启用</value>
+  </data>
+  <data name="GroupBox1.Text" xml:space="preserve">
+    <value>字体和颜色设置</value>
   </data>
   <data name="btnRetweet.Text" xml:space="preserve">
     <value>文本色</value>
@@ -865,9 +872,6 @@
   </data>
   <data name="Label61.Text" xml:space="preserve">
     <value>列表字体</value>
-  </data>
-  <data name="GroupBox1.Text" xml:space="preserve">
-    <value>字体和颜色设置</value>
   </data>
   <data name="Label65.Size" type="System.Drawing.Size, System.Drawing">
     <value>65, 12</value>

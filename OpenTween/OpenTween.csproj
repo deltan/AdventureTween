@@ -257,6 +257,7 @@
     <Compile Include="UserInfo.cs" />
     <Compile Include="Utility\CopyUtility.cs" />
     <Compile Include="Utility\DelegateUtility.cs" />
+    <Compile Include="Utility\FileUtility.cs" />
     <Compile Include="WebBrowserController.cs" />
     <Compile Include="Win32Api.cs" />
   </ItemGroup>

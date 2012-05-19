@@ -161,18 +161,22 @@
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAAB1TeXN0
-        ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQoAAAAEVGV4dAROYW1lCUlzQ2hlY2tlZApJbWFnZUluZGV4
+        ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQsAAAAEVGV4dAROYW1lCUlzQ2hlY2tlZApJbWFnZUluZGV4
         CEltYWdlS2V5ElNlbGVjdGVkSW1hZ2VJbmRleBBTZWxlY3RlZEltYWdlS2V5CkNoaWxkQ291bnQJY2hp
-        bGRyZW4wCWNoaWxkcmVuMQEBAAABAAEABAQBCAgIHVN5c3RlbS5XaW5kb3dzLkZvcm1zLlRyZWVOb2Rl
-        AgAAAB1TeXN0ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQIAAAACAAAABgMAAAAG5YuV5L2cBgQAAAAK
-        QWN0aW9uTm9kZQD/////BgUAAAAA/////wkFAAAAAgAAAAkGAAAACQcAAAAFBgAAAB1TeXN0ZW0uV2lu
-        ZG93cy5Gb3Jtcy5UcmVlTm9kZQgAAAAEVGV4dAROYW1lCUlzQ2hlY2tlZApJbWFnZUluZGV4CEltYWdl
-        S2V5ElNlbGVjdGVkSW1hZ2VJbmRleBBTZWxlY3RlZEltYWdlS2V5CkNoaWxkQ291bnQBAQAAAQABAAEI
-        CAgCAAAABggAAAAG5oqV56i/BgkAAAAMVHdlZXRBY3ROb2RlAP////8JBQAAAP////8JBQAAAAAAAAAF
-        BwAAAB1TeXN0ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQgAAAAEVGV4dAROYW1lCUlzQ2hlY2tlZApJ
-        bWFnZUluZGV4CEltYWdlS2V5ElNlbGVjdGVkSW1hZ2VJbmRleBBTZWxlY3RlZEltYWdlS2V5CkNoaWxk
-        Q291bnQBAQAAAQABAAEICAgCAAAABgsAAAAS5oqV56i/6KaP5Yi26YCa55+lBgwAAAATUG9zdExpbWl0
-        Tm90aWNlTm9kZQD/////CQUAAAD/////CQUAAAAAAAAACw==
+        bGRyZW4wCWNoaWxkcmVuMQljaGlsZHJlbjIBAQAAAQABAAQEBAEICAgdU3lzdGVtLldpbmRvd3MuRm9y
+        bXMuVHJlZU5vZGUCAAAAHVN5c3RlbS5XaW5kb3dzLkZvcm1zLlRyZWVOb2RlAgAAAB1TeXN0ZW0uV2lu
+        ZG93cy5Gb3Jtcy5UcmVlTm9kZQIAAAACAAAABgMAAAAG5YuV5L2cBgQAAAAKQWN0aW9uTm9kZQD/////
+        BgUAAAAA/////wkFAAAAAwAAAAkGAAAACQcAAAAJCAAAAAUGAAAAHVN5c3RlbS5XaW5kb3dzLkZvcm1z
+        LlRyZWVOb2RlCAAAAARUZXh0BE5hbWUJSXNDaGVja2VkCkltYWdlSW5kZXgISW1hZ2VLZXkSU2VsZWN0
+        ZWRJbWFnZUluZGV4EFNlbGVjdGVkSW1hZ2VLZXkKQ2hpbGRDb3VudAEBAAABAAEAAQgICAIAAAAGCQAA
+        AAbmipXnqL8GCgAAAAxUd2VldEFjdE5vZGUA/////wkFAAAA/////wkFAAAAAAAAAAUHAAAAHVN5c3Rl
+        bS5XaW5kb3dzLkZvcm1zLlRyZWVOb2RlCAAAAARUZXh0BE5hbWUJSXNDaGVja2VkCkltYWdlSW5kZXgI
+        SW1hZ2VLZXkSU2VsZWN0ZWRJbWFnZUluZGV4EFNlbGVjdGVkSW1hZ2VLZXkKQ2hpbGRDb3VudAEBAAAB
+        AAEAAQgICAIAAAAGDAAAABLmipXnqL/opo/liLbpgJrnn6UGDQAAABNQb3N0TGltaXROb3RpY2VOb2Rl
+        AP////8JBQAAAP////8JBQAAAAAAAAAFCAAAAB1TeXN0ZW0uV2luZG93cy5Gb3Jtcy5UcmVlTm9kZQgA
+        AAAEVGV4dAROYW1lCUlzQ2hlY2tlZApJbWFnZUluZGV4CEltYWdlS2V5ElNlbGVjdGVkSW1hZ2VJbmRl
+        eBBTZWxlY3RlZEltYWdlS2V5CkNoaWxkQ291bnQBAQAAAQABAAEICAgCAAAABg8AAAAS55S75YOP6LK8
+        44KK5LuY44GRBhAAAAAOUGFzdGVJbWFnZU5vZGUA/////wkFAAAA/////wkFAAAAAAAAAAs=
 </value>
   </data>
   <data name="TreeViewSetting.Nodes2" mimetype="application/x-microsoft.net.object.binary.base64">
@@ -257,6 +261,329 @@
     <value>SplitContainer1</value>
   </data>
   <data name="&gt;&gt;SplitContainer1.Panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="ComboPastedImageSaveFormat.Location" type="System.Drawing.Point, System.Drawing">
+    <value>137, 233</value>
+  </data>
+  <data name="ComboPastedImageSaveFormat.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 20</value>
+  </data>
+  <data name="ComboPastedImageSaveFormat.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;ComboPastedImageSaveFormat.Name" xml:space="preserve">
+    <value>ComboPastedImageSaveFormat</value>
+  </data>
+  <data name="&gt;&gt;ComboPastedImageSaveFormat.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ComboPastedImageSaveFormat.Parent" xml:space="preserve">
+    <value>PasteImagePanel</value>
+  </data>
+  <data name="&gt;&gt;ComboPastedImageSaveFormat.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="label74.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label74.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label74.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 239</value>
+  </data>
+  <data name="label74.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 12</value>
+  </data>
+  <data name="label74.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="label74.Text" xml:space="preserve">
+    <value>保存形式</value>
+  </data>
+  <data name="&gt;&gt;label74.Name" xml:space="preserve">
+    <value>label74</value>
+  </data>
+  <data name="&gt;&gt;label74.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label74.Parent" xml:space="preserve">
+    <value>PasteImagePanel</value>
+  </data>
+  <data name="&gt;&gt;label74.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="ButtonOpenPastedImageFolder.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="ButtonOpenPastedImageFolder.Location" type="System.Drawing.Point, System.Drawing">
+    <value>458, 64</value>
+  </data>
+  <data name="ButtonOpenPastedImageFolder.Size" type="System.Drawing.Size, System.Drawing">
+    <value>45, 23</value>
+  </data>
+  <data name="ButtonOpenPastedImageFolder.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="ButtonOpenPastedImageFolder.Text" xml:space="preserve">
+    <value>開く</value>
+  </data>
+  <data name="&gt;&gt;ButtonOpenPastedImageFolder.Name" xml:space="preserve">
+    <value>ButtonOpenPastedImageFolder</value>
+  </data>
+  <data name="&gt;&gt;ButtonOpenPastedImageFolder.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ButtonOpenPastedImageFolder.Parent" xml:space="preserve">
+    <value>PasteImagePanel</value>
+  </data>
+  <data name="&gt;&gt;ButtonOpenPastedImageFolder.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="label68.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label68.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label68.Location" type="System.Drawing.Point, System.Drawing">
+    <value>14, 20</value>
+  </data>
+  <data name="label68.Size" type="System.Drawing.Size, System.Drawing">
+    <value>461, 12</value>
+  </data>
+  <data name="label68.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="label68.Text" xml:space="preserve">
+    <value>AdventureTweenでは、クリップボードの画像を貼り付けると、そのままアップロードすることができます</value>
+  </data>
+  <data name="&gt;&gt;label68.Name" xml:space="preserve">
+    <value>label68</value>
+  </data>
+  <data name="&gt;&gt;label68.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label68.Parent" xml:space="preserve">
+    <value>PasteImagePanel</value>
+  </data>
+  <data name="&gt;&gt;label68.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="label70.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label70.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label70.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 141</value>
+  </data>
+  <data name="label70.Size" type="System.Drawing.Size, System.Drawing">
+    <value>343, 36</value>
+  </data>
+  <data name="label70.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="label70.Text" xml:space="preserve">
+    <value>※ファイル名中に、以下の{0}の変数を指定すると、各値に置き換わります
+
+{0} : 保存日時</value>
+  </data>
+  <data name="&gt;&gt;label70.Name" xml:space="preserve">
+    <value>label70</value>
+  </data>
+  <data name="&gt;&gt;label70.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label70.Parent" xml:space="preserve">
+    <value>PasteImagePanel</value>
+  </data>
+  <data name="&gt;&gt;label70.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="label73.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label73.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label73.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 199</value>
+  </data>
+  <data name="label73.Size" type="System.Drawing.Size, System.Drawing">
+    <value>103, 12</value>
+  </data>
+  <data name="label73.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="label73.Text" xml:space="preserve">
+    <value>保存日時フォーマット</value>
+  </data>
+  <data name="&gt;&gt;label73.Name" xml:space="preserve">
+    <value>label73</value>
+  </data>
+  <data name="&gt;&gt;label73.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label73.Parent" xml:space="preserve">
+    <value>PasteImagePanel</value>
+  </data>
+  <data name="&gt;&gt;label73.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="EditPastedImageSaveDateFormat.Location" type="System.Drawing.Point, System.Drawing">
+    <value>137, 196</value>
+  </data>
+  <data name="EditPastedImageSaveDateFormat.Size" type="System.Drawing.Size, System.Drawing">
+    <value>366, 19</value>
+  </data>
+  <data name="EditPastedImageSaveDateFormat.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;EditPastedImageSaveDateFormat.Name" xml:space="preserve">
+    <value>EditPastedImageSaveDateFormat</value>
+  </data>
+  <data name="&gt;&gt;EditPastedImageSaveDateFormat.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;EditPastedImageSaveDateFormat.Parent" xml:space="preserve">
+    <value>PasteImagePanel</value>
+  </data>
+  <data name="&gt;&gt;EditPastedImageSaveDateFormat.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="EditPastedImageSaveFileName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>19, 114</value>
+  </data>
+  <data name="EditPastedImageSaveFileName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>484, 19</value>
+  </data>
+  <data name="EditPastedImageSaveFileName.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;EditPastedImageSaveFileName.Name" xml:space="preserve">
+    <value>EditPastedImageSaveFileName</value>
+  </data>
+  <data name="&gt;&gt;EditPastedImageSaveFileName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;EditPastedImageSaveFileName.Parent" xml:space="preserve">
+    <value>PasteImagePanel</value>
+  </data>
+  <data name="&gt;&gt;EditPastedImageSaveFileName.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="label75.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label75.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label75.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 99</value>
+  </data>
+  <data name="label75.Size" type="System.Drawing.Size, System.Drawing">
+    <value>392, 12</value>
+  </data>
+  <data name="label75.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="label75.Text" xml:space="preserve">
+    <value>貼り付けた画像を保存するファイル名（変数を使わない場合、上書き保存されます）</value>
+  </data>
+  <data name="&gt;&gt;label75.Name" xml:space="preserve">
+    <value>label75</value>
+  </data>
+  <data name="&gt;&gt;label75.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label75.Parent" xml:space="preserve">
+    <value>PasteImagePanel</value>
+  </data>
+  <data name="&gt;&gt;label75.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="EditPastedImageSaveFolder.Location" type="System.Drawing.Point, System.Drawing">
+    <value>19, 66</value>
+  </data>
+  <data name="EditPastedImageSaveFolder.Size" type="System.Drawing.Size, System.Drawing">
+    <value>426, 19</value>
+  </data>
+  <data name="EditPastedImageSaveFolder.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;EditPastedImageSaveFolder.Name" xml:space="preserve">
+    <value>EditPastedImageSaveFolder</value>
+  </data>
+  <data name="&gt;&gt;EditPastedImageSaveFolder.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;EditPastedImageSaveFolder.Parent" xml:space="preserve">
+    <value>PasteImagePanel</value>
+  </data>
+  <data name="&gt;&gt;EditPastedImageSaveFolder.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="label78.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label78.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label78.Location" type="System.Drawing.Point, System.Drawing">
+    <value>17, 52</value>
+  </data>
+  <data name="label78.Size" type="System.Drawing.Size, System.Drawing">
+    <value>201, 12</value>
+  </data>
+  <data name="label78.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="label78.Text" xml:space="preserve">
+    <value>貼り付けた画像を保存するフォルダの位置</value>
+  </data>
+  <data name="&gt;&gt;label78.Name" xml:space="preserve">
+    <value>label78</value>
+  </data>
+  <data name="&gt;&gt;label78.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label78.Parent" xml:space="preserve">
+    <value>PasteImagePanel</value>
+  </data>
+  <data name="&gt;&gt;label78.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="PasteImagePanel.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="PasteImagePanel.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="PasteImagePanel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="PasteImagePanel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>518, 368</value>
+  </data>
+  <data name="PasteImagePanel.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="PasteImagePanel.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;PasteImagePanel.Name" xml:space="preserve">
+    <value>PasteImagePanel</value>
+  </data>
+  <data name="&gt;&gt;PasteImagePanel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;PasteImagePanel.Parent" xml:space="preserve">
+    <value>SplitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;PasteImagePanel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="label58.AutoSize" type="System.Boolean, mscorlib">
@@ -618,7 +945,7 @@
     <value>SplitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;PostLimitNoticePanel.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="StartupReaded.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -768,7 +1095,7 @@
     <value>SplitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;StartupPanel.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="Label2.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1392,7 +1719,7 @@ Growl.CoreLibrary.DLL</value>
     <value>SplitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;PreviewPanel.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="CheckHashSupple.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1653,7 +1980,7 @@ Growl.CoreLibrary.DLL</value>
     <value>SplitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;TweetActPanel.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="ListTextCountApi.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>Disable</value>
@@ -2130,7 +2457,7 @@ Growl.CoreLibrary.DLL</value>
     <value>SplitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;GetCountPanel.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="ShortenTcoCheck.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2457,7 +2784,7 @@ Growl.CoreLibrary.DLL</value>
     <value>SplitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;ShortUrlPanel.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="AuthUserCombo.Location" type="System.Drawing.Point, System.Drawing">
     <value>109, 26</value>
@@ -2781,7 +3108,7 @@ Growl.CoreLibrary.DLL</value>
     <value>SplitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;BasedPanel.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="IsListsIncludeRtsCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -3255,7 +3582,7 @@ Growl.CoreLibrary.DLL</value>
     <value>SplitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;TweetPrvPanel.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="IsRemoveSameFavEventCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -3684,7 +4011,7 @@ Growl.CoreLibrary.DLL</value>
     <value>SplitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;NotifyPanel.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="IsPreviewFoursquareCheckBox.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -4551,7 +4878,7 @@ Growl.CoreLibrary.DLL</value>
     <value>SplitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;CooperatePanel.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="Label55.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -4908,7 +5235,7 @@ Growl.CoreLibrary.DLL</value>
     <value>SplitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;ProxyPanel.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
   <data name="TwitterSearchAPIText.Location" type="System.Drawing.Point, System.Drawing">
     <value>262, 125</value>
@@ -5172,7 +5499,7 @@ Growl.CoreLibrary.DLL</value>
     <value>SplitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;ConnectionPanel.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
   <data name="UserstreamPeriod.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>Disable</value>
@@ -5816,7 +6143,7 @@ Growl.CoreLibrary.DLL</value>
     <value>SplitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;GetPeriodPanel.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>13</value>
   </data>
   <data name="TabMouseLockCheck.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -6548,7 +6875,7 @@ Growl.CoreLibrary.DLL</value>
     <value>SplitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;ActionPanel.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>14</value>
   </data>
   <data name="btnRetweet.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -7352,7 +7679,7 @@ Growl.CoreLibrary.DLL</value>
     <value>SplitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;FontPanel.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>15</value>
   </data>
   <data name="Label65.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -8246,7 +8573,7 @@ Growl.CoreLibrary.DLL</value>
     <value>SplitContainer1.Panel2</value>
   </data>
   <data name="&gt;&gt;FontPanel2.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>16</value>
   </data>
   <data name="&gt;&gt;SplitContainer1.Panel2.Name" xml:space="preserve">
     <value>SplitContainer1.Panel2</value>

@@ -32,6 +32,18 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppendSettingDialog));
             this.SplitContainer1 = new System.Windows.Forms.SplitContainer();
             this.TreeViewSetting = new System.Windows.Forms.TreeView();
+            this.PasteImagePanel = new System.Windows.Forms.Panel();
+            this.ComboPastedImageSaveFormat = new System.Windows.Forms.ComboBox();
+            this.label74 = new System.Windows.Forms.Label();
+            this.ButtonOpenPastedImageFolder = new System.Windows.Forms.Button();
+            this.label68 = new System.Windows.Forms.Label();
+            this.label70 = new System.Windows.Forms.Label();
+            this.label73 = new System.Windows.Forms.Label();
+            this.EditPastedImageSaveDateFormat = new System.Windows.Forms.TextBox();
+            this.EditPastedImageSaveFileName = new System.Windows.Forms.TextBox();
+            this.label75 = new System.Windows.Forms.Label();
+            this.EditPastedImageSaveFolder = new System.Windows.Forms.TextBox();
+            this.label78 = new System.Windows.Forms.Label();
             this.PostLimitNoticePanel = new System.Windows.Forms.Panel();
             this.label58 = new System.Windows.Forms.Label();
             this.label56 = new System.Windows.Forms.Label();
@@ -305,6 +317,7 @@
             this.SplitContainer1.Panel1.SuspendLayout();
             this.SplitContainer1.Panel2.SuspendLayout();
             this.SplitContainer1.SuspendLayout();
+            this.PasteImagePanel.SuspendLayout();
             this.PostLimitNoticePanel.SuspendLayout();
             this.StartupPanel.SuspendLayout();
             this.PreviewPanel.SuspendLayout();
@@ -340,6 +353,7 @@
             // SplitContainer1.Panel2
             // 
             this.SplitContainer1.Panel2.BackColor = System.Drawing.SystemColors.Control;
+            this.SplitContainer1.Panel2.Controls.Add(this.PasteImagePanel);
             this.SplitContainer1.Panel2.Controls.Add(this.PostLimitNoticePanel);
             this.SplitContainer1.Panel2.Controls.Add(this.StartupPanel);
             this.SplitContainer1.Panel2.Controls.Add(this.PreviewPanel);
@@ -373,6 +387,85 @@
             this.TreeViewSetting.ShowLines = false;
             this.TreeViewSetting.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.TreeViewSetting_BeforeSelect);
             this.TreeViewSetting.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeViewSetting_AfterSelect);
+            // 
+            // PasteImagePanel
+            // 
+            this.PasteImagePanel.Controls.Add(this.ComboPastedImageSaveFormat);
+            this.PasteImagePanel.Controls.Add(this.label74);
+            this.PasteImagePanel.Controls.Add(this.ButtonOpenPastedImageFolder);
+            this.PasteImagePanel.Controls.Add(this.label68);
+            this.PasteImagePanel.Controls.Add(this.label70);
+            this.PasteImagePanel.Controls.Add(this.label73);
+            this.PasteImagePanel.Controls.Add(this.EditPastedImageSaveDateFormat);
+            this.PasteImagePanel.Controls.Add(this.EditPastedImageSaveFileName);
+            this.PasteImagePanel.Controls.Add(this.label75);
+            this.PasteImagePanel.Controls.Add(this.EditPastedImageSaveFolder);
+            this.PasteImagePanel.Controls.Add(this.label78);
+            resources.ApplyResources(this.PasteImagePanel, "PasteImagePanel");
+            this.PasteImagePanel.Name = "PasteImagePanel";
+            this.PasteImagePanel.Validating += new System.ComponentModel.CancelEventHandler(this.PasteImagePanel_Validating);
+            // 
+            // ComboPastedImageSaveFormat
+            // 
+            this.ComboPastedImageSaveFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ComboPastedImageSaveFormat.FormattingEnabled = true;
+            resources.ApplyResources(this.ComboPastedImageSaveFormat, "ComboPastedImageSaveFormat");
+            this.ComboPastedImageSaveFormat.Name = "ComboPastedImageSaveFormat";
+            // 
+            // label74
+            // 
+            resources.ApplyResources(this.label74, "label74");
+            this.label74.Name = "label74";
+            // 
+            // ButtonOpenPastedImageFolder
+            // 
+            resources.ApplyResources(this.ButtonOpenPastedImageFolder, "ButtonOpenPastedImageFolder");
+            this.ButtonOpenPastedImageFolder.Name = "ButtonOpenPastedImageFolder";
+            this.ButtonOpenPastedImageFolder.UseVisualStyleBackColor = true;
+            this.ButtonOpenPastedImageFolder.Click += new System.EventHandler(this.ButtonOpenPastedImageFolder_Click);
+            // 
+            // label68
+            // 
+            resources.ApplyResources(this.label68, "label68");
+            this.label68.Name = "label68";
+            // 
+            // label70
+            // 
+            resources.ApplyResources(this.label70, "label70");
+            this.label70.Name = "label70";
+            // 
+            // label73
+            // 
+            resources.ApplyResources(this.label73, "label73");
+            this.label73.Name = "label73";
+            // 
+            // EditPastedImageSaveDateFormat
+            // 
+            resources.ApplyResources(this.EditPastedImageSaveDateFormat, "EditPastedImageSaveDateFormat");
+            this.EditPastedImageSaveDateFormat.Name = "EditPastedImageSaveDateFormat";
+            this.EditPastedImageSaveDateFormat.Validating += new System.ComponentModel.CancelEventHandler(this.EditPastedImageSaveDateFormat_Validating);
+            // 
+            // EditPastedImageSaveFileName
+            // 
+            resources.ApplyResources(this.EditPastedImageSaveFileName, "EditPastedImageSaveFileName");
+            this.EditPastedImageSaveFileName.Name = "EditPastedImageSaveFileName";
+            this.EditPastedImageSaveFileName.Validating += new System.ComponentModel.CancelEventHandler(this.EditPastedImageSaveFileName_Validating);
+            // 
+            // label75
+            // 
+            resources.ApplyResources(this.label75, "label75");
+            this.label75.Name = "label75";
+            // 
+            // EditPastedImageSaveFolder
+            // 
+            resources.ApplyResources(this.EditPastedImageSaveFolder, "EditPastedImageSaveFolder");
+            this.EditPastedImageSaveFolder.Name = "EditPastedImageSaveFolder";
+            this.EditPastedImageSaveFolder.Validating += new System.ComponentModel.CancelEventHandler(this.EditPastedImageSaveFolder_Validating);
+            // 
+            // label78
+            // 
+            resources.ApplyResources(this.label78, "label78");
+            this.label78.Name = "label78";
             // 
             // PostLimitNoticePanel
             // 
@@ -2424,6 +2517,8 @@
             this.SplitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SplitContainer1)).EndInit();
             this.SplitContainer1.ResumeLayout(false);
+            this.PasteImagePanel.ResumeLayout(false);
+            this.PasteImagePanel.PerformLayout();
             this.PostLimitNoticePanel.ResumeLayout(false);
             this.PostLimitNoticePanel.PerformLayout();
             this.StartupPanel.ResumeLayout(false);
@@ -2741,5 +2836,17 @@
         internal System.Windows.Forms.CheckBox CheckUpdateLimitNotificationTweet;
         internal System.Windows.Forms.CheckBox CheckUpdateLimitNotificationEnabled;
         private System.Windows.Forms.Label label58;
+        internal System.Windows.Forms.Panel PasteImagePanel;
+        private System.Windows.Forms.ComboBox ComboPastedImageSaveFormat;
+        private System.Windows.Forms.Label label74;
+        private System.Windows.Forms.Button ButtonOpenPastedImageFolder;
+        private System.Windows.Forms.Label label68;
+        private System.Windows.Forms.Label label70;
+        private System.Windows.Forms.Label label73;
+        private System.Windows.Forms.TextBox EditPastedImageSaveDateFormat;
+        private System.Windows.Forms.TextBox EditPastedImageSaveFileName;
+        private System.Windows.Forms.Label label75;
+        private System.Windows.Forms.TextBox EditPastedImageSaveFolder;
+        private System.Windows.Forms.Label label78;
     }
 }

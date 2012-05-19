@@ -1219,4 +1219,61 @@
   <data name="CheckNewVersionText99" xml:space="preserve">
     <value>AdventureTweenはリリースされていないため、アップデートも用意されていません。</value>
   </data>
+  <data name="PIButtonOpenPastedImageFolder_Click1" xml:space="preserve">
+    <value>貼り付けた画像を保存するフォルダを指定します。</value>
+  </data>
+  <data name="PIEditPastedImageSaveDateFormat_Validating1" xml:space="preserve">
+    <value>保存日時フォーマットを適切に設定してください。</value>
+  </data>
+  <data name="PIEditPastedImageSaveFileName_Validating1" xml:space="preserve">
+    <value>2999年12月31日23時59分59秒</value>
+  </data>
+  <data name="PIEditPastedImageSaveFileName_Validating2" xml:space="preserve">
+    <value>貼り付けた画像を保存するファイル名を適切に設定してください。</value>
+  </data>
+  <data name="PIPasteImagePanel_Validating1" xml:space="preserve">
+    <value>貼り付けた画像を保存するフォルダの位置には、絶対パスを指定してください</value>
+  </data>
+  <data name="PIPasteImagePanel_Validating2" xml:space="preserve">
+    <value>貼り付けた画像を保存するフォルダの位置にファイルパスとして使用できない文字が含まれています。</value>
+  </data>
+  <data name="PIPasteImagePanel_Validating3" xml:space="preserve">
+    <value>貼り付けた画像を保存するフォルダの位置には、フォルダが作成可能な適切な場所に設定してください。</value>
+  </data>
+  <data name="PasteClipboard_SaveError" xml:space="preserve">
+    <value>以下の原因により、貼り付けられた画像の保存に失敗しました。問題を解決した後、再度画像を貼り付けてください。</value>
+  </data>
+  <data name="PasteClipboard_SaveExtensionGIF" xml:space="preserve">
+    <value>.gif</value>
+  </data>
+  <data name="PasteClipboard_SaveExtensionJPEG" xml:space="preserve">
+    <value>.jpeg</value>
+  </data>
+  <data name="PasteClipboard_SaveExtensionPNG" xml:space="preserve">
+    <value>.png</value>
+  </data>
+  <data name="PasteClipboard_SavePathError" xml:space="preserve">
+    <value>画像貼り付けに関する設定が正しくありません。設定を見直してください。</value>
+  </data>
+  <data name="PIEditPastedImageSaveDateFormat_Validating2" xml:space="preserve">
+    <value>保存日時フォーマットに、ファイル名として使用できない文字が含まれています。</value>
+  </data>
+  <data name="PIEditPastedImageSaveFileName_Validating3" xml:space="preserve">
+    <value>貼り付けた画像を保存するファイル名に、ファイル名として使用できない文字が含まれています。</value>
+  </data>
+  <data name="PasteClipboard_SaveErrorCause1" xml:space="preserve">
+    <value>貼り付けられた画像の保存先にアクセスする権限がありません。権限を与えるか、保存先を設定しなおしてください。</value>
+  </data>
+  <data name="PasteClipboard_SaveErrorCause2" xml:space="preserve">
+    <value>貼り付けられた画像の保存先のパスが長すぎます。保存先を設定しなおしてください。</value>
+  </data>
+  <data name="PasteClipboard_SaveErrorCause3" xml:space="preserve">
+    <value>貼り付けられた画像の保存先が有効なパスではありません。保存先を設定しなおしてください。</value>
+  </data>
+  <data name="PasteClipboard_SaveErrorCause4" xml:space="preserve">
+    <value>何らかのエラーが発生しました。設定を確認してください。</value>
+  </data>
+  <data name="PasteClipboard_SaveErrorCause5" xml:space="preserve">
+    <value>エラー情報：</value>
+  </data>
 </root>

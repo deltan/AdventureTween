@@ -45,6 +45,8 @@ using System.Threading;
 using System.Media;
 using System.Web;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using System.Drawing.Imaging;
 
 namespace OpenTween
 {
@@ -868,6 +870,12 @@ namespace OpenTween
             SettingDialog.UpdateLimitNotificationMessage = _cfgCommon.UpdateLimitNotificationMessage;
             SettingDialog.UpdateLimitNitificationLimitReleaseDateFormat = _cfgCommon.UpdateLimitNotificationLimitReleaseDateFormat;
             SettingDialog.UpdateLimitNotificationNotAccuracyMessage = _cfgCommon.UpdateLimitNotificationNotAccuracyMessage;
+
+            // 画像貼り付け設定
+            SettingDialog.PastedImageSaveFolder = _cfgCommon.PastedImageSaveFolder;
+            SettingDialog.PastedImageSaveFileName = _cfgCommon.PastedImageSaveFileName;
+            SettingDialog.PastedImageSaveDateFormat = _cfgCommon.PastedImageSaveDateFormat;
+            SettingDialog.PastedImageSaveFormat = _cfgCommon.PastedImageSaveFormat;
 
             //ハッシュタグ関連
             HashSupl = new AtIdSupplement(_cfgCommon.HashTags, "#");
@@ -6592,6 +6600,9 @@ namespace OpenTween
                             // Webページを開く動作
                             OpenURLMenuItem_Click(null, null);
                             return true;
+                        case Keys.V:
+                            PasteClipboard(false);                     
+                            return false;
                     }
                     //フォーカスList
                     if (Focused == FocusedControl.ListTab)
@@ -7011,6 +7022,150 @@ namespace OpenTween
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// クリップボードの中身をペーストします。
+        /// </summary>
+        /// <param name="pasteStatusText">
+        /// クリップボードにテキストが入っている場合に、
+        /// そのテキストをStatusTextにペーストする場合はtrue。
+        /// ペーストしたくない場合はfalseを指定します。
+        /// </param>
+        private void PasteClipboard(bool pasteStatusText)
+        {
+            Image image = Clipboard.GetImage();
+            if (image != null)
+            {
+                // 保存パス確定
+                // パス文字列に関するエラーは設定画面で検証されるものとし、ここでのエラーチェックは行わない。
+                // （パスに利用できない文字が入っていた場合などに例外が発生するので、
+                //   その場合は、ラーがあったことのみを通知し、再設定を促す）
+                string saveFolder = SettingDialog.PastedImageSaveFolder;
+                string savePath;
+                var saveFormat = ImageFormat.Png;
+                try
+                {
+                    string dateString =
+                        DateTime.Now.ToString(SettingDialog.PastedImageSaveDateFormat);
+                    string saveFileName =
+                        String.Format(SettingDialog.PastedImageSaveFileName, dateString);
+                    savePath =
+                        Path.Combine(saveFolder, saveFileName);
+                    switch (SettingDialog.PastedImageSaveFormat)
+                    {
+                        case MyCommon.PASTED_IMAGE_SAVE_FORMAT.Png:
+                            saveFormat = ImageFormat.Png;
+                            savePath = Path.ChangeExtension(savePath, 
+                                Properties.Resources.PasteClipboard_SaveExtensionPNG);
+                            break;
+                        case MyCommon.PASTED_IMAGE_SAVE_FORMAT.Jpeg:
+                            saveFormat = ImageFormat.Jpeg;
+                            savePath = Path.ChangeExtension(savePath,
+                                Properties.Resources.PasteClipboard_SaveExtensionJPEG);
+                            break;
+                        case MyCommon.PASTED_IMAGE_SAVE_FORMAT.Gif:
+                            saveFormat = ImageFormat.Gif;
+                            savePath = Path.ChangeExtension(savePath, 
+                                Properties.Resources.PasteClipboard_SaveExtensionGIF);
+                            break;
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show(Properties.Resources.PasteClipboard_SavePathError);
+                    return;
+                }
+
+                // 非同期で画像保存
+                var t = Task.Factory.StartNew(() =>
+                    {
+                        if (!Directory.Exists(saveFolder))
+                        {
+                            Directory.CreateDirectory(saveFolder);
+                        }
+                        image.Save(savePath, saveFormat);
+                    });
+
+                // 画像投稿画面に遷移
+                ImagefilePathText.CausesValidation = false;
+                ImageSelectionPanel.Visible = true;
+                ImageSelectionPanel.Enabled = true;
+                TimelinePanel.Visible = false;
+                TimelinePanel.Enabled = false;
+                StatusText.Focus();
+                ImagefilePathText.CausesValidation = true;
+
+                // 画像保存が終わったときの処理（成功と失敗それぞれ）
+                t.ContinueWith((task) =>
+                    {
+                        if (this.IsHandleCreated)
+                        {
+                            this.Invoke(new Action(() =>
+                                {
+                                    ImagefilePathText.Text = savePath;
+                                    ImageFromSelectedFile();
+                                }));
+                        }
+                    }, TaskContinuationOptions.NotOnFaulted);
+                t.ContinueWith((task) =>
+                    {
+
+                        if (task.Exception != null)
+                        {
+                            var errorCause = new StringBuilder();
+                            foreach (Exception exception in task.Exception.InnerExceptions)
+                            {
+                                if (exception is UnauthorizedAccessException)
+                                {
+                                    errorCause.AppendLine(Properties.Resources.PasteClipboard_SaveErrorCause1);
+                                }
+                                else if (exception is PathTooLongException)
+                                {
+                                    errorCause.AppendLine(Properties.Resources.PasteClipboard_SaveErrorCause2);
+                                }
+                                else if (exception is ArgumentException ||
+                                    exception is ArgumentNullException ||
+                                    exception is DirectoryNotFoundException ||
+                                    exception is NotSupportedException)
+                                {
+                                    errorCause.AppendLine();
+                                }
+                                else if (exception is IOException)
+                                {
+                                    errorCause.AppendLine(Properties.Resources.PasteClipboard_SaveErrorCause3);
+                                }
+                                else
+                                {
+                                    errorCause.AppendLine(Properties.Resources.PasteClipboard_SaveErrorCause4);
+                                }
+
+                                if (exception != null)
+                                {
+                                    errorCause.AppendLine(
+                                        Properties.Resources.PasteClipboard_SaveErrorCause5 +
+                                        exception.Message);
+                                }
+                            }
+
+                            if (this.IsHandleCreated)
+                            {
+                                this.Invoke(new Action(() =>
+                                    {   
+                                        MessageBox.Show(
+                                            Properties.Resources.PasteClipboard_SaveError +
+                                            "\n\n" +
+                                            errorCause.ToString());
+                                    }));
+                            }
+                        }
+                    }, TaskContinuationOptions.OnlyOnFaulted);
+            }
+
+            if (pasteStatusText)
+            {
+                StatusText.Paste();
+            }
         }
 
         private void ScrollDownPostBrowser(bool forward)
@@ -7945,6 +8100,12 @@ namespace OpenTween
                 _cfgCommon.UpdateLimitNotificationMessage = SettingDialog.UpdateLimitNotificationMessage;
                 _cfgCommon.UpdateLimitNotificationLimitReleaseDateFormat = SettingDialog.UpdateLimitNitificationLimitReleaseDateFormat;
                 _cfgCommon.UpdateLimitNotificationNotAccuracyMessage = SettingDialog.UpdateLimitNotificationNotAccuracyMessage;
+
+                // 画像貼り付け設定
+                _cfgCommon.PastedImageSaveFolder = SettingDialog.PastedImageSaveFolder;
+                _cfgCommon.PastedImageSaveFileName = SettingDialog.PastedImageSaveFileName;
+                _cfgCommon.PastedImageSaveDateFormat = SettingDialog.PastedImageSaveDateFormat;
+                _cfgCommon.PastedImageSaveFormat = SettingDialog.PastedImageSaveFormat;
 
                 _cfgCommon.Save();
             }
@@ -11980,6 +12141,17 @@ namespace OpenTween
                 if (_curPost.IsDm) this.CopyURLMenuItem.Enabled = false;
                 if (_curPost.IsProtect) this.CopySTOTMenuItem.Enabled = false;
             }
+
+            // クリックボードにテキストか画像が含まれていたら、貼り付けられます
+            if (Clipboard.ContainsText() ||
+                Clipboard.ContainsImage())
+            {
+                this.PasteToolStripMenuItem.Enabled = true;
+            }
+            else
+            {
+                this.PasteToolStripMenuItem.Enabled = false;
+            }
         }
 
         private void NotifyIcon1_MouseMove(object sender, MouseEventArgs e)
@@ -13403,6 +13575,16 @@ namespace OpenTween
         private void ULNStopToolStripMenuItem_Click(object sender, EventArgs e)
         {
             UpdateLimitNotification.Stop();
+        }
+
+        /// <summary>
+        /// 貼り付けメニューがクリックされた時
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PasteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PasteClipboard(true);
         }
     }
 }

@@ -1774,11 +1774,182 @@ namespace OpenTween.Properties {
         }
         
         /// <summary>
+        ///   以下の原因により、貼り付けられた画像の保存に失敗しました。問題を解決した後、再度画像を貼り付けてください。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PasteClipboard_SaveError {
+            get {
+                return ResourceManager.GetString("PasteClipboard_SaveError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   貼り付けられた画像の保存先にアクセスする権限がありません。権限を与えるか、保存先を設定しなおしてください。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PasteClipboard_SaveErrorCause1 {
+            get {
+                return ResourceManager.GetString("PasteClipboard_SaveErrorCause1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   貼り付けられた画像の保存先のパスが長すぎます。保存先を設定しなおしてください。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PasteClipboard_SaveErrorCause2 {
+            get {
+                return ResourceManager.GetString("PasteClipboard_SaveErrorCause2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   貼り付けられた画像の保存先が有効なパスではありません。保存先を設定しなおしてください。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PasteClipboard_SaveErrorCause3 {
+            get {
+                return ResourceManager.GetString("PasteClipboard_SaveErrorCause3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   何らかのエラーが発生しました。設定を確認してください。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PasteClipboard_SaveErrorCause4 {
+            get {
+                return ResourceManager.GetString("PasteClipboard_SaveErrorCause4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   エラー情報： に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PasteClipboard_SaveErrorCause5 {
+            get {
+                return ResourceManager.GetString("PasteClipboard_SaveErrorCause5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   .gif に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PasteClipboard_SaveExtensionGIF {
+            get {
+                return ResourceManager.GetString("PasteClipboard_SaveExtensionGIF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   .jpeg に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PasteClipboard_SaveExtensionJPEG {
+            get {
+                return ResourceManager.GetString("PasteClipboard_SaveExtensionJPEG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   .png に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PasteClipboard_SaveExtensionPNG {
+            get {
+                return ResourceManager.GetString("PasteClipboard_SaveExtensionPNG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   画像貼り付けに関する設定が正しくありません。設定を見直してください。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PasteClipboard_SavePathError {
+            get {
+                return ResourceManager.GetString("PasteClipboard_SavePathError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   貼り付けた画像を保存するフォルダを指定します。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PIButtonOpenPastedImageFolder_Click1 {
+            get {
+                return ResourceManager.GetString("PIButtonOpenPastedImageFolder_Click1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   投稿する画像を選択 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string PickPictureDialog1 {
             get {
                 return ResourceManager.GetString("PickPictureDialog1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   保存日時フォーマットを適切に設定してください。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PIEditPastedImageSaveDateFormat_Validating1 {
+            get {
+                return ResourceManager.GetString("PIEditPastedImageSaveDateFormat_Validating1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   保存日時フォーマットに、ファイル名として使用できない文字が含まれています。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PIEditPastedImageSaveDateFormat_Validating2 {
+            get {
+                return ResourceManager.GetString("PIEditPastedImageSaveDateFormat_Validating2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   2999年12月31日23時59分59秒 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PIEditPastedImageSaveFileName_Validating1 {
+            get {
+                return ResourceManager.GetString("PIEditPastedImageSaveFileName_Validating1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   貼り付けた画像を保存するファイル名を適切に設定してください。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PIEditPastedImageSaveFileName_Validating2 {
+            get {
+                return ResourceManager.GetString("PIEditPastedImageSaveFileName_Validating2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   貼り付けた画像を保存するファイル名に、ファイル名として使用できない文字が含まれています。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PIEditPastedImageSaveFileName_Validating3 {
+            get {
+                return ResourceManager.GetString("PIEditPastedImageSaveFileName_Validating3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   貼り付けた画像を保存するフォルダの位置には、絶対パスを指定してください に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PIPasteImagePanel_Validating1 {
+            get {
+                return ResourceManager.GetString("PIPasteImagePanel_Validating1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   貼り付けた画像を保存するフォルダの位置にファイルパスとして使用できない文字が含まれています。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PIPasteImagePanel_Validating2 {
+            get {
+                return ResourceManager.GetString("PIPasteImagePanel_Validating2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   貼り付けた画像を保存するフォルダの位置には、フォルダが作成可能な適切な場所に設定してください。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PIPasteImagePanel_Validating3 {
+            get {
+                return ResourceManager.GetString("PIPasteImagePanel_Validating3", resourceCulture);
             }
         }
         
