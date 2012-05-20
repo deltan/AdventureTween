@@ -6,6 +6,7 @@
  * FIX: AdventureTweenとして開発が開始されました。
  * NEW: 投稿の規制通知機能がつきました。
  * NEW: 画像貼り付け機能がつきました。
+ * FIX: 発言詳細のサムネエリアが50x46になってしまっていた問題を修正。
 
 OpenTweenの変更履歴はOpenTweenのWebサイトを参照してください。
 OpenTween以前のTweenの変更履歴はTweenのWebサイトを参照してください。
