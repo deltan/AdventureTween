@@ -137,6 +137,7 @@ namespace OpenTween.UpdateLimitNotification
         #endregion
 
         private const int FINDING_GET_COUNT = 200;
+        private const int FINDING_GET_COUNT_MAX = 3200;
         private const int SECTION_HOUR = 3;
 
         // 他クラス
@@ -347,75 +348,118 @@ namespace OpenTween.UpdateLimitNotification
         /// この方法で求められたセクションは正確です。
         /// IsAccuracyフラグがtrueにセットされます。
         /// 
+        /// Twitterではユーザータイムラインを3200件取得できるみたいなので、
+        /// 200件取得ずつ3200件まで取得してセクションを探します。
+        /// 
         /// セクションが見つからない場合は、現在の実装では、126番目のポストをセクションの最初のポストとみなしています。
         /// これは適当な実装です。がある程度きっちりした実装にしても不正確になるでしょう。
         /// そのためIsAccuracyフラグをfalseにセットし、不正確であることを周知します。
         /// 次のセクションからは前述した動作で探します。
         /// </summary>
+        /// <param name="notifyInfo">通知のための情報</param>
         private void FindSection(NotifyInformation notifyInfo)
         {
             DateTime now = DateTime.Now;
 
-            IList<PostClass> postList = null;
-            postList = Twitter.GetUserTimelinePostClassApi(FINDING_GET_COUNT, 0);
+            var allPostList = new List<PostClass>();
 
-            var postCreatedDescQuery =
-                from post in postList
-                orderby post.PostedOrRetweetedAt descending
-                select post;
+            long maxId = 0;
+            int receivedCount = 0;
+            int receivableCount = FINDING_GET_COUNT_MAX;
 
             bool foundNoPostSection = false;
             PostClass nextPost = null;
-            foreach (var post in postCreatedDescQuery)
+
+            // 受信可能な件数取得するか、３時間以上無発言の区間が見つけられるまでループ
+            while (receivableCount >= 1)
             {
-                if (nextPost == null)
+                int getCount = receivableCount > FINDING_GET_COUNT ? FINDING_GET_COUNT : receivableCount;
+                var getPostList = Twitter.GetUserTimelinePostClassApi(getCount, maxId);
+                receivedCount += getPostList.Count();
+                allPostList.AddRange(getPostList);
+
+                var postCreatedDescQuery =
+                    from post in getPostList
+                    orderby post.PostedOrRetweetedAt descending
+                    select post;
+                
+                foreach (var post in postCreatedDescQuery)
                 {
-                    if (now > post.PostedOrRetweetedAt.AddHours(SECTION_HOUR))
+                    if (nextPost == null)
+                    {
+                        if (now > post.PostedOrRetweetedAt.AddHours(SECTION_HOUR))
+                        {
+                            foundNoPostSection = true;
+                            notifyInfo.LastSectionEndTime = post.PostedOrRetweetedAt.AddHours(SECTION_HOUR);
+                            notifyInfo.IsAccuracy = true;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        if (nextPost.PostedOrRetweetedAt > post.PostedOrRetweetedAt.AddHours(SECTION_HOUR))
+                        {
+                            foundNoPostSection = true;
+                            notifyInfo.LastSectionEndTime = post.PostedOrRetweetedAt.AddHours(SECTION_HOUR);
+                            notifyInfo.SectionStartPost = nextPost;
+                            notifyInfo.IsAccuracy = true;
+                            break;
+                        }
+                    }
+                    nextPost = post;
+                }
+
+                if (!foundNoPostSection)
+                {
+                    var postCreatedDescArray = postCreatedDescQuery.ToArray();
+
+                    if (postCreatedDescArray.Count() == 0)
                     {
                         foundNoPostSection = true;
-                        notifyInfo.LastSectionEndTime = post.PostedOrRetweetedAt.AddHours(SECTION_HOUR);
+                        notifyInfo.LastSectionEndTime = now;
                         notifyInfo.IsAccuracy = true;
-                        break;
                     }
+                    else if (postCreatedDescArray.Count() <= FINDING_GET_COUNT - 1)
+                    {
+                        foundNoPostSection = true;
+                        int firstPostIndex = postCreatedDescArray.Count() - 1;
+                        notifyInfo.LastSectionEndTime = postCreatedDescArray[firstPostIndex].PostedOrRetweetedAt.AddSeconds(-1);
+                        notifyInfo.SectionStartPost = postCreatedDescArray[firstPostIndex];
+                        notifyInfo.IsAccuracy = true;
+                    }
+                    else
+                    {
+                        notifyInfo.IsAccuracy = false;
+                    }
+                }
+
+                if (foundNoPostSection)
+                {
+                    break;
                 }
                 else
                 {
-                    if (nextPost.PostedOrRetweetedAt > post.PostedOrRetweetedAt.AddHours(SECTION_HOUR))
-                    {
-                        foundNoPostSection = true;
-                        notifyInfo.LastSectionEndTime = post.PostedOrRetweetedAt.AddHours(SECTION_HOUR);
-                        notifyInfo.SectionStartPost = nextPost;
-                        notifyInfo.IsAccuracy = true;
-                        break;
-                    }
+                    receivableCount = FINDING_GET_COUNT_MAX - receivedCount;
+                    maxId = postCreatedDescQuery.Last().StatusId;
                 }
-                nextPost = post;
             }
 
+            // 受信可能な件数取得しても３時間以上無発言の区間が見つからなかった場合、
+            // 適当な発言をセクションの最初のポストとする
             if (!foundNoPostSection)
             {
-                var postCreatedDescArray = postCreatedDescQuery.ToArray();
+                var allPostCreatedDescQuery =
+                    from post in allPostList
+                    orderby post.PostedOrRetweetedAt descending
+                    select post;
+                var allPostCreatedDescArray = allPostCreatedDescQuery.ToArray();
 
-                if (postCreatedDescArray.Count() == 0)
-                {
-                    notifyInfo.LastSectionEndTime = now;
-                    notifyInfo.IsAccuracy = true;
-                }
-                else if (postCreatedDescArray.Count() <= FINDING_GET_COUNT - 1)
-                {
-                    int firstPostIndex = postCreatedDescArray.Count() - 1;
-                    notifyInfo.LastSectionEndTime = postCreatedDescArray[firstPostIndex].PostedOrRetweetedAt.AddSeconds(-1);
-                    notifyInfo.SectionStartPost = postCreatedDescArray[firstPostIndex];
-                    notifyInfo.IsAccuracy = true;
-                }
-                else
-                {
-                    notifyInfo.LastSectionEndTime = postCreatedDescArray[126].PostedOrRetweetedAt.AddSeconds(-1);
-                    notifyInfo.SectionStartPost = postCreatedDescArray[126];
-                    notifyInfo.IsAccuracy = false;
-                }
+                notifyInfo.LastSectionEndTime = allPostCreatedDescArray[126].PostedOrRetweetedAt.AddSeconds(-1);
+                notifyInfo.SectionStartPost = allPostCreatedDescArray[126];
             }
 
+            // ここまでに見つかった情報は現在のセクションの情報とは限らないので、
+            // 現在のセクションの情報を求めます
             if (notifyInfo.SectionStartPost != null)
             {
                 while (
@@ -424,14 +468,14 @@ namespace OpenTween.UpdateLimitNotification
                 {
                     notifyInfo.LastSectionEndTime = notifyInfo.SectionStartPost.PostedOrRetweetedAt.AddHours(SECTION_HOUR);
                     notifyInfo.SectionStartPost =
-                        (from post in postList
+                        (from post in allPostList
                          where post.PostedOrRetweetedAt >= notifyInfo.LastSectionEndTime
                          orderby post.PostedOrRetweetedAt
                          select post).FirstOrDefault();
                 }
 
                 var postInSectionQuery =
-                    from post in postList
+                    from post in allPostList
                     where post.PostedOrRetweetedAt >= notifyInfo.SectionStartPost.PostedOrRetweetedAt
                     select post;
 
