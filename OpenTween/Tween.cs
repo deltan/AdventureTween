@@ -71,14 +71,14 @@ namespace OpenTween
         private Point _tabMouseDownPoint;
         private string _rclickTabName;      //右クリックしたタブの名前（Tabコントロール機能不足対応）
         private readonly object _syncObject = new object();    //ロック用
-        private const string detailHtmlFormatMono1 = "<html><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=10;IE=9;IE=8\"><style type=\"text/css\"><!-- pre {font-family: \"";
+        private const string detailHtmlFormatMono1 = "<html><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=8\"><style type=\"text/css\"><!-- pre {font-family: \"";
         private const string detailHtmlFormat2 = "\", sans-serif; font-size: ";
         private const string detailHtmlFormat3 = "pt; margin: 0; word-wrap: break-word; color:rgb(";
         private const string detailHtmlFormat4 = ");} a:link, a:visited, a:active, a:hover {color:rgb(";
         private const string detailHtmlFormat5 = "); } --></style></head><body style=\"margin:0px; background-color:rgb(";
         private const string detailHtmlFormatMono6 = ");\"><pre>";
         private const string detailHtmlFormatMono7 = "</pre></body></html>";
-        private const string detailHtmlFormat1 = "<html><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=10;IE=9;IE=8\"><style type=\"text/css\"><!-- p {font-family: \"";
+        private const string detailHtmlFormat1 = "<html><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=8\"><style type=\"text/css\"><!-- p {font-family: \"";
         private const string detailHtmlFormat6 = ");\"><p><span style=\"vertical-align:text-bottom\">";
         private const string detailHtmlFormat7 = "</span></p></body></html>";
         private string detailHtmlFormatHeader;
@@ -1271,13 +1271,6 @@ namespace OpenTween
                 ListTab.DrawItem += ListTab_DrawItem;
                 ListTab.ImageList = null;
             }
-
-#if UA
-            ab = new AdsBrowser();
-            this.SplitContainer4.Panel2.Controls.Add(ab);
-#else
-            SplitContainer4.Panel2Collapsed = true;
-#endif
 
             _ignoreConfigSave = false;
             this.TweenMain_Resize(null, null);
@@ -3467,7 +3460,6 @@ namespace OpenTween
                     _mySpDis = this.SplitContainer1.SplitterDistance;
                     _mySpDis3 = this.SplitContainer3.SplitterDistance;
                     if (StatusText.Multiline) _mySpDis2 = this.StatusText.Height;
-                    _myAdSpDis = this.SplitContainer4.SplitterDistance;
                     _modifySettingLocal = true;
                 }
             }
@@ -4744,7 +4736,7 @@ namespace OpenTween
                 if (ListTab.TabPages[idx].Text == TabName) break;
             }
 
-            if (_statuses.IsDefaultTab(TabName)) return false;
+            if (_statuses.IsDefaultTab(TabName) || _statuses.Tabs[TabName].Locked) return false;
 
             if (confirm)
             {
@@ -8886,27 +8878,52 @@ namespace OpenTween
 
         private void TabMenuControl(string tabName)
         {
-            if (_statuses.Tabs[tabName].TabType != MyCommon.TabUsageType.Mentions && _statuses.IsDefaultTab(tabName))
+            this.FilterEditMenuItem.Enabled = true;
+            this.EditRuleTbMenuItem.Enabled = true;
+
+            if (_statuses.IsDefaultTab(tabName))
             {
-                FilterEditMenuItem.Enabled = true;
-                this.EditRuleTbMenuItem.Enabled = true;
-                DeleteTabMenuItem.Enabled = false;
-                this.DeleteTbMenuItem.Enabled = false;
+                this.LockTabMenuItem.Enabled = false;
+                this.LockTbMenuItem.Enabled = false;
             }
-            else if (_statuses.Tabs[tabName].TabType == MyCommon.TabUsageType.Mentions)
+            else
             {
-                FilterEditMenuItem.Enabled = true;
-                this.EditRuleTbMenuItem.Enabled = true;
-                DeleteTabMenuItem.Enabled = false;
+                this.LockTabMenuItem.Enabled = true;
+                this.LockTbMenuItem.Enabled = true;
+            }
+
+            if (_statuses.IsDefaultTab(tabName) || _statuses.Tabs[tabName].Locked)
+            {
+                this.LockTabMenuItem.Checked = true;
+                this.LockTbMenuItem.Checked = true;
+                this.DeleteTabMenuItem.Enabled = false;
                 this.DeleteTbMenuItem.Enabled = false;
             }
             else
             {
-                FilterEditMenuItem.Enabled = true;
-                this.EditRuleTbMenuItem.Enabled = true;
-                DeleteTabMenuItem.Enabled = true;
+                this.LockTabMenuItem.Checked = false;
+                this.LockTbMenuItem.Checked = false;
+                this.DeleteTabMenuItem.Enabled = true;
                 this.DeleteTbMenuItem.Enabled = true;
             }
+        }
+
+        private void LockTabMenuItem_Click(object sender, EventArgs e)
+        {
+            var checkState = ((ToolStripMenuItem)sender).Checked;
+
+            // チェック状態を同期
+            this.LockTbMenuItem.Checked = checkState;
+            this.LockTabMenuItem.Checked = checkState;
+
+            // ロック中はタブの削除を無効化
+            this.DeleteTabMenuItem.Enabled = !checkState;
+            this.DeleteTbMenuItem.Enabled = !checkState;
+
+            if (string.IsNullOrEmpty(_rclickTabName)) return;
+            _statuses.Tabs[_rclickTabName].Locked = checkState;
+
+            SaveConfigsTabs();
         }
 
         private void UreadManageMenuItem_Click(object sender, EventArgs e)
@@ -9823,10 +9840,6 @@ namespace OpenTween
                 //{
                 //    this.SplitContainer4.SplitterDistance = _cfgLocal.AdSplitterDistance; //Splitterの位置設定
                 //}
-                if (!SplitContainer4.Panel2Collapsed && _cfgLocal.AdSplitterDistance > this.SplitContainer4.Panel1MinSize)
-                {
-                    this.SplitContainer4.SplitterDistance = _cfgLocal.AdSplitterDistance; //Splitterの位置設定
-                }
                 if (_cfgLocal.SplitterDistance > this.SplitContainer1.Panel1MinSize &&
                     _cfgLocal.SplitterDistance < this.SplitContainer1.Height - this.SplitContainer1.Panel2MinSize - this.SplitContainer1.SplitterWidth)
                 {
@@ -9883,15 +9896,6 @@ namespace OpenTween
             {
                 _mySpDis = SplitContainer1.SplitterDistance;
                 if (StatusText.Multiline) _mySpDis2 = StatusText.Height;
-                _modifySettingLocal = true;
-            }
-        }
-
-        private void SplitContainer4_SplitterMoved(object sender, SplitterEventArgs e)
-        {
-            if (this.WindowState == FormWindowState.Normal && !_initialLayout)
-            {
-                _myAdSpDis = SplitContainer4.SplitterDistance;
                 _modifySettingLocal = true;
             }
         }
@@ -13358,22 +13362,6 @@ namespace OpenTween
         private void ImageSelectionPanel_VisibleChanged(object sender, EventArgs e)
         {
             this.StatusText_TextChanged(null, null);
-        }
-
-        private void SplitContainer4_Resize(object sender, EventArgs e)
-        {
-            if (this.WindowState == FormWindowState.Minimized) return;
-            if (SplitContainer4.Panel2Collapsed) return;
-            if (SplitContainer4.Height < SplitContainer4.SplitterWidth + SplitContainer4.Panel2MinSize + SplitContainer4.SplitterDistance &&
-                SplitContainer4.Height - SplitContainer4.SplitterWidth - SplitContainer4.Panel2MinSize > 0)
-            {
-                SplitContainer4.SplitterDistance = SplitContainer4.Height - SplitContainer4.SplitterWidth - SplitContainer4.Panel2MinSize;
-            }
-            if (SplitContainer4.Panel2.Height > 90 &&
-                SplitContainer4.Height - SplitContainer4.SplitterWidth - 90 > 0)
-            {
-                SplitContainer4.SplitterDistance = SplitContainer4.Height - SplitContainer4.SplitterWidth - 90;
-            }
         }
 
         private void SourceCopyMenuItem_Click(object sender, EventArgs e)

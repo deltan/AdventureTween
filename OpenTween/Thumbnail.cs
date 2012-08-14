@@ -544,10 +544,10 @@ namespace OpenTween
         private bool ImgUr_GetUrl(GetUrlArgs args)
         {
             var mc = Regex.Match(string.IsNullOrEmpty(args.extended) ? args.url : args.extended,
-                                          @"^http://imgur\.com/(\w+)\.jpg$", RegexOptions.IgnoreCase);
+                                          @"^http://(?:i\.)?imgur\.com/(\w+)(?:\..{3})?$", RegexOptions.IgnoreCase);
             if (mc.Success)
             {
-                args.imglist.Add(new KeyValuePair<string, string>(args.url, mc.Result("http://i.imgur.com/${1}l.jpg")));
+                args.imglist.Add(new KeyValuePair<string, string>(args.url, mc.Result("http://img.imgur.com/${1}l.jpg")));
                 return true;
             }
             else
@@ -1714,7 +1714,7 @@ namespace OpenTween
                 var http = new HttpVarious();
                 if (http.GetData(Regex.Replace(mc.Groups[0].Value, "amp;", ""), null, out src, 0, out args.errmsg, ""))
                 {
-                    var _mc = Regex.Match(src, mc.Result(@"http://img([0-9]+)\.pixiv\.net/img/.+/${illustId}_[ms]\.([a-zA-Z]+)"));
+                    var _mc = Regex.Match(src, mc.Result(@"http://i([0-9]+)\.pixiv\.net/.+/${illustId}_[ms]\.([a-zA-Z]+)"));
                     if (_mc.Success)
                     {
                         var _img = http.GetImage(_mc.Value, args.url.Value, 0, out args.errmsg);
@@ -2127,7 +2127,8 @@ namespace OpenTween
             if (mc.Success)
             {
                 // TODO 成功時はサムネイルURLを作成しimglist.Addする
-                args.imglist.Add(new KeyValuePair<string, string>(args.url, mc.Value));
+                // http://p.twipple.jp/wiki/API_Thumbnail/ja
+                args.imglist.Add(new KeyValuePair<string, string>(args.url, mc.Result("http://p.twipple.jp/show/large/${contentId}")));
                 return true;
             }
             else
@@ -2151,37 +2152,14 @@ namespace OpenTween
         private bool TwipplePhoto_CreateImage(CreateImageArgs args)
         {
             // TODO: サムネイル画像読み込み処理を記述します
-            var http = new HttpVarious();
-            var mc = Regex.Match(args.url.Value, "^http://p.twipple.jp/(?<contentId>[0-9a-z]+)", RegexOptions.IgnoreCase);
-            if (mc.Success)
-            {
-                var src = "";
-                if (http.GetData(args.url.Key, null, out src, 0, out args.errmsg, ""))
-                {
-                    var thumbnail_url = "";
-                    var ContentId = mc.Groups["contentId"].Value;
-                    var DataDir = new StringBuilder();
+            var image = new HttpVarious().GetImage(args.url.Value, args.url.Key, 10000, out args.errmsg);
+            if (image == null)
+                return false;
 
-                    // DataDir作成
-                    DataDir.Append("data");
-                    for (int i = 0; i < ContentId.Length; i++)
-                    {
-                        DataDir.Append("/");
-                        DataDir.Append(ContentId[i]);
-                    }
-
-                    // サムネイルURL抽出
-                    thumbnail_url = Regex.Match(src, @"http://p\.twipple\.jp/" + DataDir.ToString() + @"_s\.([a-zA-Z]+)").Value;
-
-                    if (string.IsNullOrEmpty(thumbnail_url)) return false;
-                    var _img = http.GetImage(thumbnail_url, args.url.Key, 0, out args.errmsg);
-                    if (_img == null) return false;
-                    args.pics.Add(new KeyValuePair<string, Image>(args.url.Key, _img));
-                    args.tooltipText.Add(new KeyValuePair<string, string>(args.url.Key, ""));
-                    return true;
-                }
-            }
-            return false;
+            // 成功した場合はURLに対応する画像、ツールチップテキストを登録
+            args.pics.Add(new KeyValuePair<string, Image>(args.url.Key, image));
+            args.tooltipText.Add(new KeyValuePair<string, string>(args.url.Key, ""));
+            return true;
         }
 
 #endregion
@@ -2536,7 +2514,7 @@ namespace OpenTween
             if (mc.Success)
             {
                 // TODO 成功時はサムネイルURLを作成しimglist.Addする
-                args.imglist.Add(new KeyValuePair<string, string>(args.url, mc.Value));
+                args.imglist.Add(new KeyValuePair<string, string>(args.url, mc.Value + "media/?size=m"));
                 return true;
             }
             else
@@ -2559,27 +2537,18 @@ namespace OpenTween
         /// <remarks></remarks>
         private bool instagram_CreateImage(CreateImageArgs args)
         {
-            // TODO: サムネイル画像読み込み処理を記述します
-
-            var src = "";
             var http = new HttpVarious();
-            if (http.GetData(args.url.Value, null, out src, 0, out args.errmsg, ""))
-            {
-                var mc = Regex.Match(src, "<meta property=\"og:image\" content=\"(?<url>.+)\" ?/>");
-                if (mc.Success)
-                {
-                    var _img = http.GetImage(mc.Groups["url"].Value, args.url.Key, 0, out args.errmsg);
-                    if (_img == null) return false;
-                    args.pics.Add(new KeyValuePair<string, Image>(args.url.Key, _img));
-                    args.tooltipText.Add(new KeyValuePair<string, string>(args.url.Key, ""));
-                    return true;
-                }
-                else
-                {
-                    args.errmsg = "Pattern NotFound";
-                }
-            }
-            return false;
+            var imgUrl = http.GetRedirectTo(args.url.Value);
+
+            if (string.IsNullOrEmpty(imgUrl)) return false;
+
+            var img = http.GetImage(imgUrl, args.url.Key, 10000, out args.errmsg);
+            if (img == null) return false;
+
+            // 成功した場合はURLに対応する画像、ツールチップテキストを登録
+            args.pics.Add(new KeyValuePair<string, Image>(args.url.Key, img));
+            args.tooltipText.Add(new KeyValuePair<string, string>(args.url.Key, ""));
+            return true;
         }
 
 #endregion

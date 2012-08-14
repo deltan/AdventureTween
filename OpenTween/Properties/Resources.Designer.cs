@@ -338,6 +338,15 @@ namespace OpenTween.Properties {
         }
         
         /// <summary>
+        ///   ブラウザの起動に失敗しました。エラーコード: {0} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string BrowserStartFailed {
+            get {
+                return ResourceManager.GetString("BrowserStartFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   実行形式ファイル(*.exe)|*.exe|すべてのファイル(*.*)|*.* に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string Button3_ClickText1 {
@@ -628,11 +637,14 @@ namespace OpenTween.Properties {
         /// <summary>
         ///   更新履歴
         ///
-        ///==== Ver 0.0.0(2012/05/19)
-        /// * OpenTween Ver 1.0.2までの修正が適用されています。
+        ///==== Ver 0.0.0(2012/08/14)
+        /// * OpenTween Ver 1.0.4までの修正が適用されています。
         ///
         /// * FIX: AdventureTweenとして開発が開始されました。
         /// * NEW: 投稿の規制通知機能がつきました。
+        /// * NEW: 画像貼り付け機能がつきました。
+        /// * FIX: 発言詳細のサムネエリアが50x46になってしまっていた問題を修正。
+        /// * FIX: 投稿の規制通知のセクション検索処理を修正。不正確になる可能性が減ります。
         ///
         ///OpenTweenの変更履歴はOpenTweenのWebサイトを参照してください。
         ///OpenTween以前のTweenの変更履歴はTweenのWebサイトを参照してください。

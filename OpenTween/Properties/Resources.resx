@@ -1276,4 +1276,7 @@
   <data name="PasteClipboard_SaveErrorCause5" xml:space="preserve">
     <value>エラー情報：</value>
   </data>
+  <data name="BrowserStartFailed" xml:space="preserve">
+    <value>ブラウザの起動に失敗しました。エラーコード: {0}</value>
+  </data>
 </root>
