@@ -2883,8 +2883,6 @@
         private System.Windows.Forms.ToolStripMenuItem ULNCountInSectionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ULNAccuracyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem PasteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem LockTabMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem LockTbMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ProtectTabMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ProtectTbMenuItem;
 
