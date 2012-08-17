@@ -2419,7 +2419,7 @@ namespace OpenTween
             OldestUnreadId = -1;
             TabName = "";
             _filters = new List<FiltersClass>();
-            Locked = false;
+            Protected = false;
             Notify = true;
             SoundFile = "";
             _unreadManage = true;
@@ -2661,7 +2661,9 @@ namespace OpenTween
             }
         }
 
-        public bool Locked { get; set; }
+        // v1.0.5で「タブを固定(Locked)」から「タブを保護(Protected)」に名称変更
+        [XmlElement(ElementName = "Locked")]
+        public bool Protected { get; set; }
 
         public bool Notify { get; set; }
 

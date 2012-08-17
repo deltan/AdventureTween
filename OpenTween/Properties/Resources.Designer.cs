@@ -637,8 +637,8 @@ namespace OpenTween.Properties {
         /// <summary>
         ///   更新履歴
         ///
-        ///==== Ver 0.0.0(2012/08/14)
-        /// * OpenTween Ver 1.0.4までの修正が適用されています。
+        ///==== Ver 0.0.0(2012/08/17)
+        /// * OpenTween Ver 1.0.5までの修正が適用されています。
         ///
         /// * FIX: AdventureTweenとして開発が開始されました。
         /// * NEW: 投稿の規制通知機能がつきました。
@@ -720,20 +720,11 @@ namespace OpenTween.Properties {
         }
         
         /// <summary>
-        ///   最新版をお使いです。更新の必要はありませんでした。使用中Ver： に類似しているローカライズされた文字列を検索します。
+        ///   最新版をお使いです。更新の必要はありませんでした。使用中Ver：{0} 最新Ver：{1} に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string CheckNewVersionText7 {
             get {
                 return ResourceManager.GetString("CheckNewVersionText7", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   最新Ver： に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string CheckNewVersionText8 {
-            get {
-                return ResourceManager.GetString("CheckNewVersionText8", resourceCulture);
             }
         }
         
